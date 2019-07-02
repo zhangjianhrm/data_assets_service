@@ -34,14 +34,17 @@ export default {
 .home__data {
   display: flex;
   width: 1210px;
+  height: 80px;
   justify-content: space-between;
   &_item {
+    height: 60px;
     padding: 10px;
     cursor: pointer;
     &:hover {
       background-color: rgba(255, 255, 255, 0.2);
     }
     > section {
+      height: 30px;
       overflow: hidden;
       h4 {
         float: left;
@@ -63,7 +66,9 @@ export default {
       }
     }
     > h3 {
+      height: 30px;
       color: #fff;
+      line-height: 30px;
       b {
         font-size: 20px;
         margin-right: 4px;

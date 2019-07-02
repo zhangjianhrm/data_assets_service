@@ -1,7 +1,7 @@
 <template>
   <div class="code-standard">
     <el-tabs v-model="activeName2">
-      <el-tab-pane name="executionCode" label="执行代码">
+      <el-tab-pane name="executionCode" label="学校执行代码">
         <p class="code-standard_count">
           <span>
             相关：
@@ -30,7 +30,7 @@
           <i class="el-icon-arrow-down"></i>
         </button>
       </el-tab-pane>
-      <el-tab-pane name="cankaodaima" label="参考代码">sssssssssssssssssssss</el-tab-pane>
+      <el-tab-pane name="cankaodaima" label="国家标准代码">sssssssssssssssssssss</el-tab-pane>
     </el-tabs>
     <!-- 执行代码采标率 -->
     <rate-bar-graph></rate-bar-graph>

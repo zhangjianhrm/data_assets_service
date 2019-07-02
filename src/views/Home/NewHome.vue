@@ -1,11 +1,11 @@
 <template>
   <div class="new-home">
-    <galaxy></galaxy>
-    <header-nav id="header-nav" :opacity="true"></header-nav>
-    <home-scroll-data id="home-scroll-data"></home-scroll-data>
-    <home-search id="home-search"></home-search>
-    <home-data id="home-data"></home-data>
-    <home-plus id="home-plus"></home-plus>
+    <galaxy class="new-home__galaxy"></galaxy>
+    <header-nav class="new-home__header" :opacity="true"></header-nav>
+    <home-scroll-data class="new-home__scroll-data"></home-scroll-data>
+    <home-search class="new-home__search"></home-search>
+    <home-data class="new-home__data"></home-data>
+    <home-plus class="new-home__plus"></home-plus>
   </div>
 </template>
 <script>
@@ -33,121 +33,45 @@ export default {
 <style lang="scss">
 @import "~@/styles/variables.scss";
 .new-home {
-  position: relative;
   height: 100vh;
   overflow: hidden;
-  #header-nav {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  &__galaxy {
     position: absolute;
     top: 0;
-    z-index: 1;
+    z-index: -1;
   }
-  #home-scroll-data {
+  &__header {
     position: absolute;
-    top: 160px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: 1;
-  }
-  #home-search {
-    position: absolute;
-    top: 250px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: 1;
-  }
-  #home-data {
-    position: absolute;
-    top: 400px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: 1;
-  }
-  #home-news {
-    z-index: 1;
-    position: absolute;
-    right: 0;
-    bottom: 50px;
-    left: 0;
-  }
-  #home-plus {
-    z-index: 1;
-    position: absolute;
-    right: 0;
-    top: 470px;
-    left: 0;
-    margin: auto;
+    top: 0;
   }
   @media only screen and (min-height: 500px) and (min-height: 579px) {
-    #home-scroll-data {
-      top: 100px;
-    }
-    #home-search {
-      top: 200px;
-    }
-    #home-data {
-      top: 350px;
-    }
-    #home-plus {
-      top: 470px;
+    &__scroll-data {
+      margin-top: 100px;
     }
   }
   @media only screen and (min-height: 580px) and (min-height: 619px) {
-    #home-scroll-data {
-      top: 120px;
-    }
-    #home-search {
-      top: 200px;
-    }
-    #home-data {
-      top: 350px;
-    }
-    #home-plus {
-      top: 450px;
+    &__scroll-data {
+      margin-top: 120px;
     }
   }
   @media only screen and (min-height: 620px) and (min-height: 749px) {
-    #home-scroll-data {
-      top: 130px;
-    }
-    #home-search {
-      top: 220px;
-    }
-    #home-data {
-      top: 370px;
-    }
-    #home-plus {
-      top: 480px;
+    &__scroll-data {
+      margin-top: 130px;
     }
   }
   @media only screen and (min-height: 750px) and (min-height: 899px) {
-    #home-scroll-data {
-      top: 130px;
-    }
-    #home-search {
-      top: 220px;
-    }
-    #home-data {
-      top: 370px;
-    }
-    #home-plus {
-      top: 520px;
+    &__scroll-data {
+      margin-top: 140px;
     }
   }
   @media only screen and (min-height: 900px) {
-    #home-scroll-data {
-      top: 180px;
-    }
-    #home-search {
-      top: 270px;
-    }
-    #home-data {
-      top: 420px;
-    }
-    #home-plus {
-      top: 580px;
+    &__scroll-data {
+      margin-top: 180px;
     }
   }
 }

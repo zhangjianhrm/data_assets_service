@@ -66,6 +66,7 @@ export default {
 @import "~@/styles/variables.scss";
 .home__scroll_data {
   width: 1210px;
+  height: 60px;
   text-align: center;
   > span {
     font-size: 18px;
