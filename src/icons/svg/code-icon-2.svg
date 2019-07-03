@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>编组 19</title>
+    <desc>Created with Sketch.</desc>
+    <g id="信息标准" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="信息标准v4" transform="translate(-531.000000, -577.000000)" stroke="#000000" stroke-width="3">
+            <g id="执行代码" transform="translate(0.000000, 300.000000)">
+                <g id="编组-5" transform="translate(372.000000, 277.000000)">
+                    <g id="编组-19" transform="translate(162.000000, 0.000000)">
+                        <path d="M30.1832816,5.36656315 L52.8291796,50.6583592 C53.5701474,52.1402947 52.9694743,53.9423138 51.4875388,54.6832816 C51.0709725,54.8915647 50.6116333,55 50.145898,55 L4.85410197,55 C3.19724772,55 1.85410197,53.6568542 1.85410197,52 C1.85410197,51.5342647 1.96253724,51.0749255 2.17082039,50.6583592 L24.8167184,5.36656315 C25.5576862,3.88462765 27.3597053,3.28395461 28.8416408,4.02492236 C29.422223,4.31521346 29.8929905,4.78598094 30.1832816,5.36656315 Z" id="三角形"></path>
+                        <path d="M27.5,6.5 L27.5,33.5" id="直线-6" stroke-linecap="square"></path>
+                        <path d="M27.5,32.5 L52.5,54" id="直线-7" stroke-linecap="square"></path>
+                        <path d="M27.5,32.5 L3.5,54" id="直线-8" stroke-linecap="square"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

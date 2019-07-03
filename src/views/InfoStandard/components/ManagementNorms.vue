@@ -21,8 +21,12 @@
             <p style="width:100%;" @mouseenter="openCollapse(item.name)">{{item.title}}</p>
           </template>
           <el-scrollbar wrap-class="management-norms__left_item">
-            <el-checkbox-group v-model="checkList">
-              <el-checkbox v-for="(item,index) in item.document" :key="index" :label="item.name"></el-checkbox>
+            <el-checkbox-group
+              v-model="checkList"
+              v-for="(item,index) in item.document"
+              :key="index"
+            >
+              <el-checkbox v-for="(item,index) in item" :key="index" :label="item.name"></el-checkbox>
             </el-checkbox-group>
           </el-scrollbar>
         </el-collapse-item>
@@ -52,16 +56,17 @@
         :autoplay="false"
         :loop="false"
       >
-        <el-carousel-item>
+        <el-carousel-item v-for="(item,index) in item.document" :key="index">
           <el-checkbox-group v-model="checkList">
-            <el-checkbox v-for="(item,index) in item.document" :key="index" :label="item.name">
-              <div class="color-books" @click.native="test">
-                <svg-icon icon-class="cube" />
-                <svg-icon icon-class="collected" v-show="item.collected" />
-                <div></div>
-              </div>
+            <el-checkbox v-for="(item,index) in item" :key="index" :label="item.name">
+              <el-tooltip class="item" effect="dark" content="点击阅览" placement="top">
+                <div class="color-books" @click.prevent="test">
+                  <svg-icon icon-class="cube" />
+                  <svg-icon icon-class="collected" v-show="item.collected" />
+                  <div></div>
+                </div>
+              </el-tooltip>
               <section>
-                <p>GB-T 2261.3-2003</p>
                 <p>{{item.name}}</p>
               </section>
             </el-checkbox>
@@ -79,137 +84,184 @@ export default {
     return {
       input4: "",
       collapseActiveName: 0,
-      // collapseTempName: 0,
       checkList: ["复选框 A"],
       documentLibrary: [
         {
           name: 0,
           title: "信息标准管理规范文档库",
           document: [
-            {
-              name: "复选框 0-1",
-              id: "0-1",
-              collected: false
-            },
-            {
-              name: "复选框 0-2",
-              id: "0-2",
-              collected: true
-            },
-            {
-              name: "复选框 0-3",
-              id: "0-3",
-              collected: false
-            },
-            {
-              name: "复选框 0-4",
-              id: "0-4",
-              collected: false
-            }
+            [
+              {
+                name: "复选框 0-1",
+                id: "0-1",
+                collected: false
+              },
+              {
+                name: "复选框 0-2",
+                id: "0-2",
+                collected: true
+              },
+              {
+                name: "复选框 0-3",
+                id: "0-3",
+                collected: false
+              },
+              {
+                name: "复选框 0-4",
+                id: "0-4",
+                collected: false
+              },
+              {
+                name: "复选框 0-5",
+                id: "0-5",
+                collected: false
+              },
+              {
+                name: "复选框 0-6",
+                id: "0-6",
+                collected: false
+              },
+              {
+                name: "复选框 0-7",
+                id: "0-7",
+                collected: false
+              },
+              {
+                name: "复选框 0-8",
+                id: "0-8",
+                collected: false
+              },
+              {
+                name: "复选框 0-9",
+                id: "0-9",
+                collected: false
+              }
+            ],
+            [
+              {
+                name: "复选框 0-10",
+                id: "0-10",
+                collected: false
+              },
+              {
+                name: "复选框 0-11",
+                id: "0-11",
+                collected: false
+              }
+            ]
           ]
         },
         {
           name: 1,
           title: "数据集成管理规范文档库",
           document: [
-            {
-              name: "复选框 A",
-              id: "1-1",
-              collected: false
-            },
-            {
-              name: "复选框 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-              id: "1-2",
-              collected: false
-            },
-            {
-              name: "复选框 C",
-              id: "1-2",
-              collected: false
-            },
-            {
-              name: "复选框 D",
-              id: "1-2",
-              collected: false
-            }
+            [
+              {
+                name: "复选框 A",
+                id: "1-1",
+                collected: false
+              },
+              {
+                name:
+                  "复选框 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                id: "1-2",
+                collected: false
+              },
+              {
+                name: "复选框 C",
+                id: "1-2",
+                collected: false
+              },
+              {
+                name: "复选框 D",
+                id: "1-2",
+                collected: false
+              }
+            ]
           ]
         },
         {
           name: 2,
           title: "数据管理规范文档库",
           document: [
-            {
-              name: "复选框 E",
-              id: "2-1",
-              collected: false
-            },
-            {
-              name: "复选框 F",
-              id: "2-2",
-              collected: false
-            },
-            {
-              name: "复选框 G",
-              id: "2-3",
-              collected: false
-            },
-            {
-              name: "复选框 H",
-              id: "2-4",
-              collected: false
-            }
+            [
+              {
+                name: "复选框 E",
+                id: "2-1",
+                collected: false
+              },
+              {
+                name: "复选框 F",
+                id: "2-2",
+                collected: false
+              },
+              {
+                name: "复选框 G",
+                id: "2-3",
+                collected: false
+              },
+              {
+                name: "复选框 H",
+                id: "2-4",
+                collected: false
+              }
+            ]
           ]
         },
         {
           name: 3,
           title: "数据治理规范文档库",
           document: [
-            {
-              name: "复选框 I",
-              id: "3-1",
-              collected: false
-            },
-            {
-              name: "复选框 J",
-              id: "3-2",
-              collected: false
-            },
-            {
-              name: "复选框 K",
-              id: "3-3",
-              collected: false
-            },
-            {
-              name: "复选框 L",
-              id: "3-4",
-              collected: false
-            }
+            [
+              {
+                name: "复选框 I",
+                id: "3-1",
+                collected: false
+              },
+              {
+                name: "复选框 J",
+                id: "3-2",
+                collected: false
+              },
+              {
+                name: "复选框 K",
+                id: "3-3",
+                collected: false
+              },
+              {
+                name: "复选框 L",
+                id: "3-4",
+                collected: false
+              }
+            ]
           ]
         },
         {
           name: 4,
           title: "数据安全管理规范文档库",
           document: [
-            {
-              name: "复选框 M",
-              id: "4-1",
-              collected: false
-            },
-            {
-              name: "复选框 N",
-              id: "4-2",
-              collected: false
-            },
-            {
-              name: "复选框 O",
-              id: "4-3",
-              collected: false
-            },
-            {
-              name: "复选框 P",
-              id: "4-4",
-              collected: false
-            }
+            [
+              {
+                name: "复选框 M",
+                id: "4-1",
+                collected: false
+              },
+              {
+                name: "复选框 N",
+                id: "4-2",
+                collected: false
+              },
+              {
+                name: "复选框 O",
+                id: "4-3",
+                collected: false
+              },
+              {
+                name: "复选框 P",
+                id: "4-4",
+                collected: false
+              }
+            ]
           ]
         }
       ],
@@ -411,15 +463,10 @@ export default {
       margin-bottom: 30px;
       margin-right: 0px;
       position: relative;
-      transition: all 0.4s;
-      transform-origin: top;
-      &:hover {
-        transform: scale(1.1, 1.1);
-      }
       &__input {
         position: absolute;
-        top: 3px;
-        left: 59px;
+        bottom: 21px;
+        left: 0px;
       }
       &__label {
         display: block;
@@ -432,6 +479,11 @@ export default {
           background: rgb(80, 127, 223);
           margin-bottom: 20px;
           position: relative;
+          transition: all 0.2s;
+          transform-origin: top;
+          &:hover {
+            transform: scale(1.1, 1.1);
+          }
           > svg:nth-child(1) {
             position: absolute;
             right: 12px;
@@ -465,7 +517,7 @@ export default {
           p {
             width: 80%;
             margin: 0 auto;
-            text-align: center;
+            text-align: left;
             font-size: 14px;
             line-height: 20px;
             overflow: hidden;

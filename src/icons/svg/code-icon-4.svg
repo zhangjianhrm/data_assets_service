@@ -1,0 +1,20 @@
+<svg width="60px" height="60px">
+    <g id="信息标准" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="信息标准v4" transform="translate(-852.000000, -579.000000)">
+            <g id="执行代码" transform="translate(0.000000, 300.000000)">
+                <g id="编组-5" transform="translate(372.000000, 277.000000)">
+                    <g id="编组-21" transform="translate(487.000000, 8.000000)">
+                        <rect id="矩形" stroke="#2C62FF" stroke-width="3" x="1.5" y="1.5" width="43" height="45" rx="2"></rect>
+                        <text id="T" font-family="PingFangSC-Medium, PingFang SC" font-size="28" font-weight="400" letter-spacing="-0.5252289" fill="#2C62FF">
+                            <tspan x="6" y="30">T</tspan>
+                        </text>
+                        <path d="M27.5,11.5 L39,11.5" id="直线-9" stroke="#2C62FF" stroke-width="3" stroke-linecap="square"></path>
+                        <path d="M27.5,20.5 L39,20.5" id="直线-9" stroke="#2C62FF" stroke-width="3" stroke-linecap="square"></path>
+                        <path d="M27.5,28.5 L39,28.5" id="直线-9" stroke="#2C62FF" stroke-width="3" stroke-linecap="square"></path>
+                        <path d="M7,38.5 L39,38.5" id="直线-10" stroke="#2C62FF" stroke-width="3" stroke-linecap="square"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
