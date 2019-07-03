@@ -108,16 +108,71 @@ const router = new Router({
     },
     // 数据目录
     {
-      path: "/data_catalogue",
+      path: "/data_catalog",
       component: Layout,
       children: [
+        // 数据目录首页
         {
-          name: "DataCatalogue",
+          name: "DataCatalog",
           path: "/",
-          component: () => import("./views/DataCatalogue/DataCatalogue"),
+          component: () => import("./views/DataCatalog/Index"),
           meta: {
             title: "数据目录"
           }
+        },
+        // 二级页面
+        {
+          path: "catalog",
+          component: {
+            render(h) {
+              return h("router-view");
+            }
+          },
+          // redirect: '/subpage',
+          children: [
+            // 二级页面内容
+            {
+              name: "Catalog",
+              path: "/",
+              component: () =>
+                import("./views/DataCatalog/components/DataCatalogCard"),
+              meta: {
+                title: "信息标准二级"
+              }
+            },
+            // 三级页面
+            {
+              path: "sanjiyemian",
+              component: {
+                render(h) {
+                  return h("router-view");
+                }
+              },
+              // redirect: '/sanjiyemian',
+              children: [
+                // 三级页面内容
+                {
+                  name: "sanjiyemian",
+                  path: "/",
+                  component: () =>
+                    import("./views/InfoStandard/components/sanjiyemian"),
+                  meta: {
+                    title: "信息标准三级"
+                  }
+                },
+                // 四级页面内容
+                {
+                  name: "sijiyemian",
+                  path: "sijiyemian",
+                  component: () =>
+                    import("./views/InfoStandard/components/sijiyemian"),
+                  meta: {
+                    title: "信息标准四级"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },

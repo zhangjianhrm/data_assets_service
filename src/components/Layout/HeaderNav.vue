@@ -10,11 +10,11 @@
     @select="handleSelect"
   >
     <el-menu-item index="/">
-      <img :src="logo">
+      <img :src="logo" />
     </el-menu-item>
     <el-menu-item v-for="(item,index) in navItem" :key="index" :index="item.route">{{item.name}}</el-menu-item>
     <el-menu-item index="/" class="header__avatar">
-      <img src="https://xue-static.uiiiuiii.com/basic_course_timg_waiting.jpg">
+      <img src="https://xue-static.uiiiuiii.com/basic_course_timg_waiting.jpg" />
     </el-menu-item>
   </el-menu>
 </template>
@@ -36,9 +36,9 @@ export default {
         { name: "首页", route: "/" },
         // { name: "新首页", route: "/new_home" },
         { name: "信息标准", route: "/info_standard" },
-        { name: "数据目录", route: "/data_catalogue" },
+        { name: "数据目录", route: "/data_catalog" },
         { name: "API 目录", route: "/x" },
-        { name: "数据维护服务", route: "/xx" },
+        { name: "数据管理", route: "/xx" },
         { name: "数据质量", route: "/xxx" },
         { name: "数据监控与统计", route: "/xxxx" },
         { name: "数据地图", route: "/data_map" }

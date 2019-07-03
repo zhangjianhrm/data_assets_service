@@ -10,25 +10,23 @@
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </p>
-      <div @mouseleave="closeCollapse">
-        <el-collapse v-model="collapseActiveName" accordion @change="changeLibrary">
-          <el-collapse-item
-            v-for="(item,index) in documentLibrary"
-            :key="index"
-            :title="item.title"
-            :name="item.name"
-          >
-            <template slot="title">
-              <p style="width:100%;" @mouseenter="openCollapse(item.name)">{{item.title}}</p>
-            </template>
-            <el-scrollbar wrap-class="management-norms__left_item">
-              <el-checkbox-group v-model="checkList">
-                <el-checkbox v-for="(item,index) in item.document" :key="index" :label="item.name"></el-checkbox>
-              </el-checkbox-group>
-            </el-scrollbar>
-          </el-collapse-item>
-        </el-collapse>
-      </div>
+      <el-collapse v-model="collapseActiveName" accordion @change="changeLibrary">
+        <el-collapse-item
+          v-for="(item,index) in documentLibrary"
+          :key="index"
+          :title="item.title"
+          :name="item.name"
+        >
+          <template slot="title">
+            <p style="width:100%;" @mouseenter="openCollapse(item.name)">{{item.title}}</p>
+          </template>
+          <el-scrollbar wrap-class="management-norms__left_item">
+            <el-checkbox-group v-model="checkList">
+              <el-checkbox v-for="(item,index) in item.document" :key="index" :label="item.name"></el-checkbox>
+            </el-checkbox-group>
+          </el-scrollbar>
+        </el-collapse-item>
+      </el-collapse>
       <div class="management-norms__left_op">
         <el-button type="primary" size="medium">收藏</el-button>
         <el-button type="primary" size="medium">下载</el-button>
@@ -57,7 +55,7 @@
         <el-carousel-item>
           <el-checkbox-group v-model="checkList">
             <el-checkbox v-for="(item,index) in item.document" :key="index" :label="item.name">
-              <div class="color-books">
+              <div class="color-books" @click.native="test">
                 <svg-icon icon-class="cube" />
                 <svg-icon icon-class="collected" v-show="item.collected" />
                 <div></div>
@@ -81,7 +79,7 @@ export default {
     return {
       input4: "",
       collapseActiveName: 0,
-      collapseTempName: 0,
+      // collapseTempName: 0,
       checkList: ["复选框 A"],
       documentLibrary: [
         {
@@ -226,17 +224,22 @@ export default {
     changeLibrary(li) {
       if (isNumber(li)) {
         this.currentLibrary = this.documentLibrary[li].document;
-        this.collapseTempName = li;
+        // this.collapseTempName = li;
       }
     },
     // 鼠标经过打开
     openCollapse(name) {
-      console.log(name);
+      // console.log(name);
       this.collapseActiveName = name;
     },
-    closeCollapse() {
-      this.collapseActiveName = this.collapseTempName;
-      console.log(11111);
+    // 鼠标划走回到之前状态
+    // closeCollapse() {
+    //   this.collapseActiveName = this.collapseTempName;
+    //   console.log(11111);
+    // }
+    //
+    test() {
+      console.log(1);
     }
   }
 };

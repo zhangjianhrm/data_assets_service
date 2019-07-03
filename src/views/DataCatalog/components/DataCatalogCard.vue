@@ -1,13 +1,13 @@
 <template>
-  <div class="data-catalogue">
-    <div class="data-catalogue__title">
+  <div class="data-catalog-card">
+    <div class="data-catalog-card__title">
       <h3>数据目录</h3>
     </div>
-    <div class="data-catalogue__op">
+    <div class="data-catalog-card__op">
       <el-input placeholder="代码 / 代码名称" v-model="input3" size="small">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
-      <el-button-group class="data-catalogue__op_sort">
+      <el-button-group class="data-catalog-card__op_sort">
         <el-button
           size="small"
           v-for="(item,index) in sortMethods"
@@ -16,7 +16,7 @@
           @click="cardSort(item.name)"
         >
           <span>{{item.title}}</span>
-          <span class="data-catalogue__op_sort_icon">
+          <span class="data-catalog-card__op_sort_icon">
             <i
               class="el-icon-caret-top"
               :style="currentSort==item.name && descending ? 'color:#fff;' : ''"
@@ -29,12 +29,12 @@
         </el-button>
       </el-button-group>
     </div>
-    <div class="data-catalogue__card">
+    <div class="data-catalog-card__card">
       <card v-for="(item,index) in cardData" :key="index" :cardData="item" :checkbox="false"></card>
     </div>
     <el-pagination
       background
-      class="data-catalogue__pagination"
+      class="data-catalog-card__pagination"
       layout="slot, prev, pager, next, sizes, jumper"
       :page-size="pageSize"
       :page-sizes="[15, 30]"
@@ -43,7 +43,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
-      <span class="data-catalogue__pagination_total">
+      <span class="data-catalog-card__pagination_total">
         共
         <b>{{cardData.length}}</b> 条数据
       </span>
@@ -54,7 +54,7 @@
 import axios from "axios";
 import url from "@/service.config";
 export default {
-  name: "DataCatalogue",
+  name: "DataCatalogCard",
   components: {
     Card: () => import("@/components/Card/Card.1")
   },
@@ -136,7 +136,7 @@ export default {
 </script>
 <style lang="scss">
 @import "~@/styles/variables.scss";
-.data-catalogue {
+.data-catalog-card {
   width: 100%;
   overflow: hidden;
   &__title {
