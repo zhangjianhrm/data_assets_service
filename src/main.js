@@ -17,6 +17,11 @@ import SwUI from "sw-ui";
 import "sw-ui/lib/theme-chalk/index.css";
 Vue.use(SwUI);
 
+// 可编辑表格
+import VueElementExtends from "vue-element-extends";
+import "vue-element-extends/lib/index.css";
+Vue.use(VueElementExtends);
+
 // 全局 css
 import "@/styles/index.scss";
 import "@/styles/reset.scss";

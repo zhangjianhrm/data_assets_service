@@ -1,8 +1,9 @@
 <template>
-  <div class="national-standard">
-    <h3 class="national-standard__title">信息标准三级页面</h3>
-    <hr>
-    <div class="national-standard__op">
+  <div class="sanjiyemian">
+    <h3 class="sanjiyemian__title">信息标准三级页面</h3>
+    <hr />
+    <div class="sanjiyemian__op">
+      <el-button size="small" icon="el-icon-back" @click="$router.go(-1)">返回</el-button>
       <el-input placeholder="请输入内容" v-model="input3" size="small">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
@@ -245,7 +246,7 @@ export default {
 </script>
 <style lang="scss">
 @import "~@/styles/variables.scss";
-.national-standard {
+.sanjiyemian {
   width: 1280px;
   margin: 0 auto;
   &__title {
@@ -261,6 +262,7 @@ export default {
   }
   &__op {
     margin-bottom: 35px;
+    overflow: hidden;
     > div {
       float: right;
     }

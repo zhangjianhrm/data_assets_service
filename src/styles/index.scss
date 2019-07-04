@@ -8,6 +8,13 @@
 body {
   font-family: PingFang SC, Helvetica Neue, Arial, sans-serif !important;
 }
+
+hr {
+  background-color: $color-header-10;
+  height: 1px;
+  border: none;
+}
+
 // element-ui
 // 搜索按钮
 .el-input-group__append {

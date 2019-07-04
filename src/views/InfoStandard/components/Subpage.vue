@@ -5,14 +5,15 @@
       <b>{{11}}</b>
       <span>个数据类</span>
     </p>
-    <hr>
+    <hr />
     <div class="national-standard__op">
+      <el-button size="small" icon="el-icon-back" @click="$router.go(-1)">返回</el-button>
       <el-button size="small" v-if="!selected.length">
-        <svg-icon icon-class="download.2" style="margin-right:3px;"/>
+        <svg-icon icon-class="download.2" style="margin-right:3px;" />
         <span>下载全部</span>
       </el-button>
       <el-button size="small" v-else>
-        <svg-icon icon-class="download.2" style="margin-right:3px;"/>
+        <svg-icon icon-class="download.2" style="margin-right:3px;" />
         <span>下载选中</span>
       </el-button>
       <!-- <el-button size="small" @click="selectAll">全选</el-button> -->
@@ -216,9 +217,6 @@ export default {
   }
   hr {
     margin-bottom: 42px - 8px;
-    background-color: $color-header-10;
-    height: 1px;
-    border: none;
   }
   &__op {
     margin-bottom: 35px;

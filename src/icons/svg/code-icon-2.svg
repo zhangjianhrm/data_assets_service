@@ -1,20 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
-    <title>编组 19</title>
-    <desc>Created with Sketch.</desc>
-    <g id="信息标准" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="信息标准v4" transform="translate(-531.000000, -577.000000)" stroke="#000000" stroke-width="3">
-            <g id="执行代码" transform="translate(0.000000, 300.000000)">
-                <g id="编组-5" transform="translate(372.000000, 277.000000)">
-                    <g id="编组-19" transform="translate(162.000000, 0.000000)">
-                        <path d="M30.1832816,5.36656315 L52.8291796,50.6583592 C53.5701474,52.1402947 52.9694743,53.9423138 51.4875388,54.6832816 C51.0709725,54.8915647 50.6116333,55 50.145898,55 L4.85410197,55 C3.19724772,55 1.85410197,53.6568542 1.85410197,52 C1.85410197,51.5342647 1.96253724,51.0749255 2.17082039,50.6583592 L24.8167184,5.36656315 C25.5576862,3.88462765 27.3597053,3.28395461 28.8416408,4.02492236 C29.422223,4.31521346 29.8929905,4.78598094 30.1832816,5.36656315 Z" id="三角形"></path>
-                        <path d="M27.5,6.5 L27.5,33.5" id="直线-6" stroke-linecap="square"></path>
-                        <path d="M27.5,32.5 L52.5,54" id="直线-7" stroke-linecap="square"></path>
-                        <path d="M27.5,32.5 L3.5,54" id="直线-8" stroke-linecap="square"></path>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+<path d="M59.5,52.8l-25-50.1l0,0c-0.5-1-1.3-1.7-2.2-2.2c-1.2-0.6-2.5-0.7-3.8-0.3c-1.3,0.4-2.3,1.3-2.9,2.5l-25,50.1
+	C0.2,53.5,0,54.3,0,55c0,2.7,2.2,5,5,5H55c0.8,0,1.5-0.2,2.2-0.5C59.7,58.2,60.7,55.3,59.5,52.8z M56.3,53.9L31.7,32.7V4.6
+	L56.3,53.9z M29.4,36.2h1.3l23.8,20.4H6.6L29.4,36.2z M3.5,54.3L28.3,4.6v28.2l-25,22.4c0,0,0-0.1,0-0.1C3.3,54.8,3.4,54.5,3.5,54.3
+	z"/>
 </svg>

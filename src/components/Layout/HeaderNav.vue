@@ -36,9 +36,9 @@ export default {
         { name: "首页", route: "/" },
         // { name: "新首页", route: "/new_home" },
         { name: "信息标准", route: "/info_standard" },
-        { name: "数据目录", route: "/data_catalog" },
+        { name: "数据目录", route: "/data_catalog_404" },
         { name: "API 目录", route: "/x" },
-        { name: "数据管理", route: "/xx" },
+        { name: "数据管理", route: "/data_management" },
         { name: "数据质量", route: "/xxx" },
         { name: "数据监控与统计", route: "/xxxx" },
         { name: "数据地图", route: "/data_map" }
