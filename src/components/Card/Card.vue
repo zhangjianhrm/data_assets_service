@@ -1,11 +1,6 @@
 <template>
   <div class="card">
-    <el-checkbox
-      v-if="checkbox"
-      v-model="cardData.checked"
-      class="card_checkbox"
-      @change="changeClick"
-    />
+    <el-checkbox v-if="checkbox" v-model="checked" class="card_checkbox" @change="changeCheck" />
     <p
       class="card_title"
       @click="$router.push('/info_standard/subpage/sanjiyemian')"
@@ -28,9 +23,9 @@
     <div class="card_operation">
       <span>更新时间：{{cardData.update | formatDate}}</span>
       <div>
-        <svg-icon icon-class="collects" @click="collects(cardData)" style="cursor:pointer;"/>
+        <svg-icon icon-class="collects" @click="collects(cardData)" style="cursor:pointer;" />
         <span>{{cardData.collects}}</span>
-        <svg-icon icon-class="download.2" @click="download(cardData)" style="cursor:pointer;"/>
+        <svg-icon icon-class="download.2" @click="download(cardData)" style="cursor:pointer;" />
         <span>{{cardData.downloads}}</span>
       </div>
     </div>
@@ -56,7 +51,7 @@ export default {
   },
   methods: {
     // 点击 checkbox
-    changeClick(bool) {
+    changeCheck(bool) {
       this.$emit("cardSelected", this.cardData, bool);
     },
     // 按钮触发事件

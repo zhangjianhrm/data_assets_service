@@ -48,15 +48,23 @@
         <elx-editable-column
           prop="region"
           label="地区"
-          width="200"
+          width="400"
           :edit-render="{name: 'ElCascader', props: {options: regionList}}"
         >
           <template v-slot="scope">
-            <div>{{ getCascaderLabel(scope.row.region, regionList) }}</div>
-            <div
-              v-if="!scope.row.region"
-              style="background:#FBE3D2;width:100%;height:100%;line-height:40px;"
-            >——</div>
+            <div v-if="scope.row.region">{{ getCascaderLabel(scope.row.region, regionList) }}</div>
+            <div v-else style="background:#FBE3D2;width:100%;height:100%;line-height:40px;">——</div>
+          </template>
+        </elx-editable-column>
+        <elx-editable-column
+          prop="date"
+          label="日期"
+          width="200"
+          :edit-render="{name: 'ElDatePicker', props: {type: 'datetime', format: 'yyyy-MM-dd'}}"
+        >
+          <template v-slot="scope">
+            <div v-if="scope.row.date">{{ getDatePicker(scope.row.date) }}</div>
+            <div v-else style="background:#FBE3D2;width:100%;height:100%;line-height:40px;">——</div>
           </template>
         </elx-editable-column>
         <elx-editable-column

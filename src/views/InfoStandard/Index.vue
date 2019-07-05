@@ -105,33 +105,5 @@ export default {
       color: $color-header;
     }
   }
-  .small {
-    width: 120px;
-    height: 32px;
-  }
-  .medium {
-    width: 150px;
-    height: 40px;
-  }
-  .button {
-    border: 1px solid $color-blue;
-    background: #fff;
-    color: $color-blue;
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-    &:hover {
-      background: $color-blue;
-      color: #fff;
-    }
-    i:nth-child(1),
-    svg:nth-child(1) {
-      margin-right: 8px;
-    }
-    i:nth-child(2),
-    svg:nth-child(2) {
-      margin-left: 8px;
-    }
-  }
 }
 </style>

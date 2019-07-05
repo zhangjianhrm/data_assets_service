@@ -1,6 +1,6 @@
 <template>
   <div class="national-standard">
-    <h3 class="national-standard__title">国家标准</h3>
+    <h3 class="national-standard__title">{{title}}</h3>
     <p class="national-standard__count">
       <b>{{11}}</b>
       <span>个数据类</span>
@@ -76,12 +76,13 @@
 import axios from "axios";
 import url from "@/service.config";
 export default {
-  name: "Subpage",
+  name: "SubClass",
   components: {
     Card: () => import("@/components/Card/Card.1")
   },
   data() {
     return {
+      title: this.$route.params.name,
       input3: "",
       // 排序方式
       sortMethods: [
@@ -111,16 +112,16 @@ export default {
     // 获取数据
     getCard() {
       axios({
-        url: url.getCard,
-        method: "get",
-        params: {
-          start: 0,
-          limit: this.pageSize
-        }
+        url: url.infoStandard.codeStandard.getSubClass,
+        method: "get"
+        // params: {
+        //   start: 0,
+        //   limit: this.pageSize
+        // }
       }).then(res => {
-        this.cardData = res.data.card;
-        this.cardSort("update");
-        this.initChecked();
+        this.cardData = res.data.data.items;
+        // this.cardSort("update");
+        // this.initChecked();
         console.log(res);
       });
     },

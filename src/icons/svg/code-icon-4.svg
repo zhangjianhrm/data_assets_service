@@ -1,14 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
-<g>
-	<path d="M54.4,0H5.6C3.2,0,1.3,2,1.3,4.4v51.3c0,2.4,2,4.4,4.4,4.4h48.8c2.4,0,4.4-2,4.4-4.4V4.4C58.8,2,56.8,0,54.4,0z M55,55.6
-		c0,0.3-0.3,0.6-0.6,0.6H5.6C5.3,56.3,5,56,5,55.6V4.4C5,4,5.3,3.8,5.6,3.8h48.8C54.7,3.8,55,4,55,4.4V55.6z"/>
-	<polygon points="18.2,37.5 21,37.5 21,15 29.8,15 29.8,12.5 9.3,12.5 9.3,15 18.2,15 	"/>
-	<rect x="33.8" y="12.5" width="18.1" height="3.8"/>
-	<rect x="33.8" y="23.8" width="18.1" height="3.8"/>
-	<rect x="33.8" y="33.8" width="18.1" height="3.8"/>
-	<rect x="8.1" y="46.3" width="43.8" height="3.8"/>
-</g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="51px" height="40px" viewBox="0 0 51 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>下载 (2)</title>
+    <desc>Created with Sketch.</desc>
+    <g id="信息标准" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="信息标准v4" transform="translate(-536.000000, -463.000000)" stroke="#000000">
+            <g id="执行代码" transform="translate(0.000000, 300.000000)">
+                <g id="编组-5" transform="translate(370.000000, 153.000000)">
+                    <g id="编组-48" transform="translate(166.000000, 12.016602)">
+                        <path d="M1.5,7.48339844 L1.5,35.9833984 C1.5,36.2595408 1.72385763,36.4833984 2,36.4833984 L39,36.4833984 C39.2761424,36.4833984 39.5,36.2595408 39.5,35.9833984 L39.5,7.48339844 L1.5,7.48339844 Z" id="矩形" stroke-width="3"></path>
+                        <path d="M1.5,13.9833984 L38,13.9833984" id="直线-20" stroke-width="3" stroke-linecap="square"></path>
+                        <path d="M21.8715755,22.5328661 L24.6617281,27.4931372 C24.9324919,27.9744951 24.7617716,28.5842102 24.2804138,28.854974 C24.1307321,28.9391699 23.9618894,28.9833984 23.7901525,28.9833984 L18.2098475,28.9833984 C17.6575627,28.9833984 17.2098475,28.5356832 17.2098475,27.9833984 C17.2098475,27.8116616 17.254076,27.6428188 17.3382719,27.4931372 L20.1284245,22.5328661 C20.3991883,22.0515082 21.0089034,21.880788 21.4902612,22.1515518 C21.6498857,22.2413405 21.7817868,22.3732416 21.8715755,22.5328661 Z" id="三角形" fill="#000000" transform="translate(21.000000, 24.983398) scale(1, -1) rotate(90.000000) translate(-21.000000, -24.983398) "></path>
+                        <path d="M11.3496094,4.01660156 L11.3496094,0 L48.7177734,0 L48.7177734,27.4833984 C48.7177734,28.5879679 47.8223429,29.4833984 46.7177734,29.4833984 L42.7060547,29.4833984" id="路径-8" stroke-width="3"></path>
+                        <path d="M44,7.48339844 L48,7.48339844" id="直线-21" stroke-width="3" stroke-linecap="square"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
 </svg>

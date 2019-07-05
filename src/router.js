@@ -43,7 +43,7 @@ const router = new Router({
         },
         // 二级页面
         {
-          path: "subpage",
+          path: "codeSubclass",
           component: {
             render(h) {
               return h("router-view");
@@ -53,12 +53,11 @@ const router = new Router({
           children: [
             // 二级页面内容
             {
-              name: "Subpage",
-              path: "/",
-              component: () =>
-                import("./views/InfoStandard/components/Subpage"),
+              name: "CodeSubclass",
+              path: "id=:id&name=:name",
+              component: () => import("./views/InfoStandard/components/SubClass"),
               meta: {
-                title: "信息标准二级"
+                title: "代码子类"
               }
             },
             // 三级页面
@@ -75,8 +74,7 @@ const router = new Router({
                 {
                   name: "sanjiyemian",
                   path: "/",
-                  component: () =>
-                    import("./views/InfoStandard/components/sanjiyemian"),
+                  component: () => import("./views/InfoStandard/components/sanjiyemian"),
                   meta: {
                     title: "信息标准三级"
                   }
@@ -85,8 +83,7 @@ const router = new Router({
                 {
                   name: "sijiyemian",
                   path: "sijiyemian",
-                  component: () =>
-                    import("./views/InfoStandard/components/sijiyemian"),
+                  component: () => import("./views/InfoStandard/components/sijiyemian"),
                   meta: {
                     title: "信息标准四级"
                   }
@@ -134,8 +131,7 @@ const router = new Router({
             {
               name: "Catalog",
               path: "/",
-              component: () =>
-                import("./views/DataCatalog/components/DataCatalogCard"),
+              component: () => import("./views/DataCatalog/components/DataCatalogCard"),
               meta: {
                 title: "信息标准二级"
               }
@@ -203,8 +199,7 @@ const router = new Router({
             {
               name: "Subpage",
               path: "/",
-              component: () =>
-                import("./views/DataManagement/components/Subpage"),
+              component: () => import("./views/DataManagement/components/Subpage"),
               meta: {
                 title: "学生基本信息子类"
               }

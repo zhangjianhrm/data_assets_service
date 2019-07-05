@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="50px" height="40px" viewBox="0 0 50 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
+<svg width="58px" height="42px" viewBox="0 0 58 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
     <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
-    <title>下载 (2)</title>
+    <title>下载 (5)</title>
     <desc>Created with Sketch.</desc>
     <g id="信息标准" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="信息标准v4" transform="translate(-536.000000, -463.000000)">
+        <g id="信息标准v4" transform="translate(-1011.000000, -462.000000)" stroke="#000000" stroke-width="3">
             <g id="执行代码" transform="translate(0.000000, 300.000000)">
                 <g id="编组-5" transform="translate(370.000000, 153.000000)">
-                    <image id="下载-(2)" x="161" y="0" width="60" height="60" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGN5fIAKQAABMhJREFUeAHtnD1rFUEUho2IhagIFlrYWekfEDQ2ErARK8uAiGARGxvLJJaKIBYGm/gLrARBbSTgF4JoVDTgD/CrUhBBUeN7MCuXvQyZvXPuzpkz78LJ7p07H+d9n517Z+8umTh67tgGbn4d2OhXGpWJAwTs/DwgYAJ27oBzeZzBBOzcAefyOIMJ2LkDzuVxBhOwcwecy+MMJmDnDjiXxxlMwM4dcC6PM5iAnTvgXB5nMAE7d8C5PM5g54A35dJ37+rt1VxjexgXz9JNxOjgDI5xqeA6BFwwvJjUCTjGpYLrEHDB8GJSJ+AYlwquk20VHfIsdnUYau+tPPVqgzPY2xnR0kPALUO8vSRgb0Rbegi4ZYi3lwTsjWhLT7ZVNFfLLRJjeskZPCZjrXRLwFZIjCkPAh6TsVa6jf4OTv1FxYrgXHm01xx9+ckZnIt4T+MScE9G5xqGgHM539O4BNyT0bmGIeBczvc0bvQqOpRPe3UYqldLeezqONa32P5C/nIGh5xxUk7ATkCGZBBwyBkn5QTsBGRIBgGHnHFSTsBOQIZkEHDIGSflydfBqddpTnw0K4Mz2CwancQIWMdHs70QsFk0OokRsI6PZnshYLNodBJLXkXH3hXRSdd+L9auKjiD7Z8zSRkScJJ99hsTsH1GSRkScJJ99hsTsH1GSRkScJJ99hsTsH1GSRkmXwcnjT5CY1xnbkGzU4hnuAZ/OkIXVTUpcQbfBaFriCeAvYjYURWxjmJLBDy5plH+2+ppxAogn+iou5rqJQJu/xvd3aB1E5BvIfZUQy5SaImAQ9KO4423gDyDaJ8EoTbuyz0BFljbEAuIh4C8Xwpq37wBbngexMELQL6A2NwU1rj3ClhYCth5xDIgH5KCGjfPgBue+3DwAJAXENubwlr2NQAWlrLomkE8B+SdUlDLVgvghudeHBxpXtSwrw3wO0C9UwPYRmMtgH9DsFw+HcDv198a8TXsi7vZMAKUx2hzFmCXR2hbfBPPM/gz6JxCTNYKV85OjzNYPo6vI2YB9ouILHXDin9XIPdfgfKhYm+AH0GhfBy/HFJqqADg5JNTTsRRt/exDb18RH+C4JOIw9bhxoJZp97SOu//f7vEGfwd2ctTHbI1q+M5gP36r8j93x9QeDFWZYmAZyFuDiGP65wH2FexYp3Um4fmlVgtxQGGuCsQJ1Hb9hOC5ebJ5S7CiwPcRZyDuvIV9BGxhLiEk/s19p02Au5kl05lgPqDnnp56sTLKlrHeYe9ELBDqIOSCHjQDYfHBOwQ6qAkAh50w+ExATuEOiiJgAfdcHjc5TpYnoTY2vYAd0ZW22V8PeRAtqdIuszgN0NpsyDWgWzedQF8I1YN6w05kM27LoAXkfb9odRZsJ4D4pl4l2WLBozfT+W7dhpByPGoxKvpNe/iWynWjAYsYyLRD9hNIc4g5H5stsUDxra6iSfijXg0teZZtlwnkEC2wTnw+B3oNIPHnw5H0HaAgLUdNdYfARsDop0OAWs7aqw/AjYGRDsdAtZ21Fh/BGwMiHY6BKztqLH+CNgYEO10CFjbUWP9EbAxINrpELC2o8b6I2BjQLTTIWBtR431R8DGgGinQ8Dajhrrj4CNAdFOh4C1HTXWHwEbA6Kdzl+91aG7MGp1NgAAAABJRU5ErkJggg=="></image>
+                    <g id="编组-43" transform="translate(643.000000, 11.000000)">
+                        <path d="M1,18.8007812 L1,2 C1,0.8954305 1.8954305,2.02906125e-16 3,0 L52.9570312,0" id="路径-4"></path>
+                        <path d="M2,37.8515625 L2,21.0507812 C2,19.9462118 2.8954305,19.0507812 4,19.0507812 L52.9570312,19.0507812" id="路径-4" transform="translate(27.478516, 28.451172) scale(-1, -1) translate(-27.478516, -28.451172) "></path>
+                        <g id="编组-42" transform="translate(0.000000, 20.000000)">
+                            <circle id="椭圆形" cx="4" cy="9" r="4"></circle>
+                            <path d="M13.6568542,0 L8,5.65685425" id="直线-13" stroke-linecap="square"></path>
+                        </g>
+                        <g id="编组-42" transform="translate(35.000000, 15.500000) scale(1, -1) translate(-35.000000, -15.500000) translate(16.000000, 7.000000)">
+                            <circle id="椭圆形" cx="4" cy="9" r="4"></circle>
+                            <circle id="椭圆形" cx="34" cy="13" r="4"></circle>
+                            <path d="M13.6568542,0 L8,5.65685425" id="直线-13" stroke-linecap="square"></path>
+                        </g>
+                        <g id="编组-42" transform="translate(30.000000, 17.000000)">
+                            <circle id="椭圆形" cx="4" cy="9" r="4"></circle>
+                            <path d="M13.6568542,-3.99680289e-15 L8,5.65685425" id="直线-13" stroke-linecap="square"></path>
+                        </g>
+                    </g>
                 </g>
             </g>
         </g>
