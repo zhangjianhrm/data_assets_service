@@ -16,15 +16,24 @@ const URL = {
   infoStandard: {
     // 代码标准
     codeStandard: {
-      // getExecutionCode: SERVERURL + "/api/service/code/refer/class/list",
+      // 学校执行代码
+      getExecutionCode: SERVERURL + "/api/service/code/execute/class/list", // 学校执行代码列表
+      getExecutionCodeCount: SERVERURL + "/api/service/code/execute/manage/count", // 国家标准代码数量
+      downloadExecutionCode: SERVERURL + "/api/service/code/execute/class/export?type=word", // 下载国家标准代码
+      getExecutionCodeSubClass: SERVERURL + "/api/service/code/execute/subclass/page?", // 获取代码子类
+      downloadExecutionCodeSubClass: SERVERURL + "/api/service/code/execute/subclass/export?type=word", // 下载代码子类
+
+      // 国家标准代码
       getNationalStandardCode: SERVERURL + "/api/service/code/refer/class/list", // 国家标准代码列表
       getNationalStandardCodeCount: SERVERURL + "/api/service/code/refer/manage/count", // 国家标准代码数量
       downloadNationalStandardCode: SERVERURL + "/api/service/code/refer/class/export?type=word", // 下载国家标准代码
-      // getSubClass: SERVERURL + "/api/service/code/refer/subclass/page?id=111&orderByType=update_time&orderByWay=desc&pageIndex=0&pageSize=15&queryCriteria=11" // 获取代码子类
-      getSubClass: SERVERURL + "/api/service/code/refer/subclass/page?id=b5a9b6f0995111e9780b57374dba8ba3" // 获取代码子类
+      getNationalStandardCodeSubClass: SERVERURL + "/api/service/code/refer/subclass/page?", // 获取代码子类 b5a9b6f0995111e9780b57374dba8ba3
+      downloadSubClass: SERVERURL + "/api/service/code/refer/subclass/export?type=word" // 下载代码子类 b5a9b6f0995111e9780b57374dba8ba3
     },
     // 模型标准
-    modelStandard: {}
+    modelStandard: {},
+    // 信息标准管理规范
+    managementNorms: {}
   },
 
   // 采标率

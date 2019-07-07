@@ -9,8 +9,13 @@
             <b>20</b>个代码子类，
             <b>200</b>条代码。
           </span>
-          <span>可访问：4个代码类，360个代码子类，10823条代码。</span>
-          <el-button type="primary" size="small" plain>
+          <span>可访问：{{executionCodeCount.CLASS_COUNT}}个代码类，{{executionCodeCount.SUBCLASS_COUNT}}个代码子类，{{executionCodeCount.CODE_COUNT}}条代码。</span>
+          <el-button
+            plain
+            type="primary"
+            size="small"
+            @click="downloadCode('downloadExecutionCode')"
+          >
             <svg-icon icon-class="download" />
             <span>下载学校执行代码</span>
           </el-button>
@@ -19,10 +24,11 @@
           <div
             v-for="(item,index) in executionCode"
             :key="index"
-            @click="$router.push('/info_standard/subpage')"
+            @click="goSubClass('executionCode',item.ID,item.NAME)"
           >
-            <svg-icon :icon-class="item.icon" />
-            <p :style="item.emphasize?'color:#2C62FF':''">{{item.name}}</p>
+            <svg-icon :icon-class="'code-icon-' + index" />
+            <!-- <p :style="item.emphasize?'color:#2C62FF':''">{{item.NAME}}</p> -->
+            <p>{{item.NAME}}</p>
           </div>
         </div>
         <el-button
@@ -40,10 +46,10 @@
         <p class="code-standard_count">
           <span>可访问：{{nationalStandardCodeCount.CLASS_COUNT}}个代码类，{{nationalStandardCodeCount.SUBCLASS_COUNT}}个代码子类，{{nationalStandardCodeCount.CODE_COUNT}}条代码。</span>
           <el-button
+            plain
             type="primary"
             size="small"
-            plain
-            @click="downloadCode('nationalStandardCode')"
+            @click="downloadCode('downloadNationalStandardCode')"
           >
             <svg-icon icon-class="download" />
             <span>下载国家标准代码</span>
@@ -53,10 +59,9 @@
           <div
             v-for="(item,index) in nationalStandardCode"
             :key="index"
-            @click="goSubpage(item.ID,item.NAME)"
+            @click="goSubClass('nationalStandardCode',item.ID,item.NAME)"
           >
             <svg-icon :icon-class="'code-icon-' + index" />
-            <!-- <p :style="item.emphasize?'color:#2C62FF':''">{{item.NAME}}</p> -->
             <p>{{item.NAME}}</p>
           </div>
         </div>
@@ -88,35 +93,41 @@ export default {
     return {
       activeName2: "executionCode",
       executionCodeToggle: true,
-      executionCode: [
-        { icon: "code-icon-1", name: "办公与档案管理", emphasize: true },
-        { icon: "code-icon-2", name: "教职工管理", emphasize: true },
-        { icon: "code-icon-3", name: "教学管理", emphasize: false },
-        { icon: "code-icon-4", name: "科研管理", emphasize: false },
-        { icon: "code-icon-5", name: "通用人员管理", emphasize: false },
-        { icon: "code-icon-6", name: "学生管理", emphasize: false },
-        { icon: "code-icon-7", name: "学校管理", emphasize: false },
-        { icon: "code-icon-8", name: "一卡通管理", emphasize: false },
-        { icon: "code-icon-2", name: "一卡通管理", emphasize: false },
-        { icon: "code-icon-1", name: "一卡通管理", emphasize: false },
-        { icon: "code-icon-7", name: "资产管理", emphasize: false },
-        { icon: "code-icon-0", name: "资产管理", emphasize: false },
-        { icon: "code-icon-1", name: "资产管理", emphasize: false },
-        { icon: "code-icon-7", name: "资产管理", emphasize: false },
-        { icon: "code-icon-3", name: "资产管理", emphasize: false },
-        { icon: "code-icon-5", name: "资产管理", emphasize: false },
-        { icon: "code-icon-8", name: "资产管理", emphasize: false },
-        { icon: "code-icon-2", name: "资产管理", emphasize: false }
-      ],
-      nationalStandardCodeCount: {},
-      nationalStandardCode: []
+      executionCodeCount: {},
+      executionCode: [],
+      nationalStandardCodeCount: {}, // 国家标准代码数量
+      nationalStandardCode: [] // 国家标准代码
     };
   },
   created() {
+    this.getExecutionCodeCount();
+    this.getExecutionCode();
     this.getNationalStandardCodeCount();
     this.getNationalStandardCode();
   },
   methods: {
+    // 获取学校执行代码数量
+    getExecutionCodeCount() {
+      axios({
+        url: url.infoStandard.codeStandard.getExecutionCodeCount
+      }).then(res => {
+        if (res.data.status == 200) {
+          this.executionCodeCount = res.data.data;
+          console.log(res.data.data);
+        }
+      });
+    },
+    // 获取学校执行代码
+    getExecutionCode() {
+      axios({
+        url: url.infoStandard.codeStandard.getExecutionCode
+      }).then(res => {
+        if (res.data.status == 200) {
+          this.executionCode = res.data.data;
+          console.log(res);
+        }
+      });
+    },
     // 获取国家标准代码数量
     getNationalStandardCodeCount() {
       axios({
@@ -132,14 +143,16 @@ export default {
       axios({
         url: url.infoStandard.codeStandard.getNationalStandardCode
       }).then(res => {
-        this.nationalStandardCode = res.data.data;
-        // console.log(res);
+        if (res.data.status == 200) {
+          this.nationalStandardCode = res.data.data;
+          // console.log(res);
+        }
       });
     },
     // 下载代码
     downloadCode(type) {
       axios({
-        url: url.infoStandard.codeStandard.downloadNationalStandardCode
+        url: url.infoStandard.codeStandard[type]
       }).then(res => {
         if (res.data.status == 200) {
           // console.log(res.data.data);
@@ -168,12 +181,12 @@ export default {
       }
     },
     //
-    goSubpage(id, name) {
-      // $router.push('/info_standard/subpage')
+    goSubClass(type, id, name) {
       console.log(id, name);
       this.$router.push({
         name: "CodeSubclass",
         params: {
+          type: type,
           id: id,
           name: name
         }
@@ -255,6 +268,9 @@ export default {
         font-size: 16px;
         line-height: 40px;
         color: $color-header;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       &:hover {
         svg {

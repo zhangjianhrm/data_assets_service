@@ -8,30 +8,40 @@
     />
     <p
       class="card_title"
-      @click="$router.push('/info_standard/subpage/sanjiyemian')"
-    >{{cardData.title}}</p>
+      @click="$router.push('/info_standard/code_subclass/sanjiyemian')"
+    >{{cardData.NAME}}</p>
     <div class="card_format" v-if="cardData.format">
       <b v-for="(item,index) in cardData.format" :key="index">{{item}}</b>
     </div>
-    <div class="card_details" @click="$router.push('/info_standard/subpage/sanjiyemian')">
-      <p>
+    <div class="card_details" @click="$router.push('/info_standard/code_subclass/sanjiyemian')">
+      <p v-if="cardData.REFER_CODE_COUNT">
         <span>数据量</span>
         <span>：</span>
-        <span>{{cardData.count}}</span>
+        <span>{{cardData.REFER_CODE_COUNT}}</span>
       </p>
-      <p v-for="(item,index) in cardData.details" :key="index">
+      <p v-if="cardData.ORIGIN">
+        <span>数据子类</span>
+        <span>：</span>
+        <span>{{cardData.NUM}}</span>
+      </p>
+      <p v-if="cardData.ORIGIN">
+        <span>来源</span>
+        <span>：</span>
+        <span>{{cardData.ORIGIN}}</span>
+      </p>
+      <!-- <p v-for="(item,index) in cardData.details" :key="index">
         <span>{{index | translator}}</span>
         <span>：</span>
         <span>{{item}}</span>
-      </p>
+      </p>-->
     </div>
     <div class="card_operation">
-      <span>更新时间：{{cardData.update | formatDate}}</span>
+      <span>更新时间：{{cardData.UPDATE_TIME}}</span>
       <div>
-        <svg-icon icon-class="collects" @click="collects(cardData)" style="cursor:pointer;"/>
-        <span>{{cardData.collects}}</span>
-        <svg-icon icon-class="download.2" @click="download(cardData)" style="cursor:pointer;"/>
-        <span>{{cardData.downloads}}</span>
+        <svg-icon icon-class="collects" @click="collects(cardData)" style="cursor:pointer;" />
+        <span>{{cardData.COLLECT_NUM}}</span>
+        <svg-icon icon-class="download.2" @click="download(cardData)" style="cursor:pointer;" />
+        <span>{{cardData.DOWNLOAD_NUM}}</span>
       </div>
     </div>
   </div>
@@ -63,7 +73,7 @@ export default {
     goDetails() {
       this.$emit("goDetails", this.cardData);
     },
-    // 点赞
+    // 收藏
     collects(data) {
       this.$message({
         message: "收藏 " + JSON.stringify(data),
@@ -114,7 +124,7 @@ export default {
   }
   &:hover {
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.28);
-    transform: scale(1.1, 1.1);
+    transform: scale(1.02, 1.02);
     z-index: 2;
   }
   &_checkbox {

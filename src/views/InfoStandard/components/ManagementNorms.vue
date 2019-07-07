@@ -3,7 +3,7 @@
     <div class="management-norms__left">
       <h3>
         <span>标准规范管理文档</span>
-        <span>已收藏</span>
+        <el-button type="warning" size="small" @click="showCollect">已收藏</el-button>
       </h3>
       <p class="management-norms__left_search">
         <el-input placeholder="输入关键词" v-model="input4" size="small">
@@ -60,7 +60,7 @@
           <el-checkbox-group v-model="checkList">
             <el-checkbox v-for="(item,index) in item" :key="index" :label="item.name">
               <el-tooltip class="item" effect="dark" content="点击阅览" placement="top">
-                <div class="color-books" @click.prevent="test">
+                <div class="color-books" @click.prevent="read">
                   <svg-icon icon-class="cube" />
                   <svg-icon icon-class="collected" v-show="item.collected" />
                   <div></div>
@@ -84,7 +84,7 @@ export default {
     return {
       input4: "",
       collapseActiveName: 0,
-      checkList: ["复选框 A"],
+      checkList: ["复选框 0-1", "复选框 A"],
       documentLibrary: [
         {
           name: 0,
@@ -114,7 +114,7 @@ export default {
               {
                 name: "复选框 0-5",
                 id: "0-5",
-                collected: false
+                collected: true
               },
               {
                 name: "复选框 0-6",
@@ -274,10 +274,10 @@ export default {
   methods: {
     // 折叠面板
     changeLibrary(li) {
-      if (isNumber(li)) {
-        this.currentLibrary = this.documentLibrary[li].document;
-        // this.collapseTempName = li;
-      }
+      // if (isNumber(li)) {
+      //   this.currentLibrary = this.documentLibrary[li].document;
+      //   // this.collapseTempName = li;
+      // }
     },
     // 鼠标经过打开
     openCollapse(name) {
@@ -290,9 +290,10 @@ export default {
     //   console.log(11111);
     // }
     //
-    test() {
+    read() {
       console.log(1);
-    }
+    },
+    showCollect() {}
   }
 };
 </script>
@@ -304,26 +305,20 @@ export default {
   padding: 50px 0;
   overflow: hidden;
   &__left {
-    width: 375px;
     float: left;
+    width: 375px;
+    margin-top: 15px;
     h3 {
       font-size: 32px;
       height: 32px;
       margin-bottom: 28px;
-      span:nth-child(1) {
+      > span:nth-child(1) {
         color: $color-header;
         float: left;
         line-height: 32px;
       }
-      span:nth-child(2) {
+      > button:nth-child(2) {
         float: right;
-        width: 80px;
-        height: 32px;
-        background: rgba(255, 129, 19, 1);
-        border-radius: 2px;
-        font-size: 14px;
-        text-align: center;
-        line-height: 32px;
         color: #fff;
       }
     }
@@ -349,9 +344,15 @@ export default {
           margin-right: 0;
           margin-bottom: 5px;
           margin-left: 20px;
+          // visibility: hidden;
+          display: none;
           &:nth-last-child(1) {
             margin-bottom: 12px;
           }
+        }
+        .el-checkbox.is-checked {
+          // visibility: visible;
+          display: inline-block;
         }
       }
     }
@@ -378,13 +379,13 @@ export default {
         right: 0;
         margin: auto;
         &:nth-child(1) {
-          top: 110px;
+          top: 125px;
         }
         &:nth-child(3) {
-          top: 310px;
+          top: 325px;
         }
         &:nth-child(5) {
-          top: 510px;
+          top: 525px;
         }
         &:before {
           content: "";
@@ -436,13 +437,13 @@ export default {
         right: 0;
         margin: auto;
         &:nth-child(2) {
-          top: 120px;
+          top: 135px;
         }
         &:nth-child(4) {
-          top: 320px;
+          top: 335px;
         }
         &:nth-child(6) {
-          top: 520px;
+          top: 535px;
         }
       }
       svg {
@@ -454,15 +455,15 @@ export default {
     .el-checkbox-group {
       width: 609px;
       margin: 0 auto;
-      overflow: hidden;
+      // overflow: hidden;
     }
     .el-checkbox {
       float: left;
-      overflow: hidden;
       width: 203px;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
       margin-right: 0px;
       position: relative;
+      margin-top: 15px;
       &__input {
         position: absolute;
         bottom: 21px;
@@ -480,7 +481,7 @@ export default {
           margin-bottom: 20px;
           position: relative;
           transition: all 0.2s;
-          transform-origin: top;
+          // transform-origin: top;
           &:hover {
             transform: scale(1.1, 1.1);
           }
@@ -493,13 +494,11 @@ export default {
           }
           > svg:nth-child(2) {
             position: absolute;
-            right: 3px;
-            top: -5px;
+            right: -13px;
+            top: -10px;
             width: 50px;
             height: 50px;
-            -webkit-transform: rotate(20deg);
-            transform: rotate(20deg);
-            opacity: 0.9;
+            transform: rotate(36deg);
           }
           > div:nth-child(3) {
             width: 55px;

@@ -43,7 +43,7 @@ const router = new Router({
         },
         // 二级页面
         {
-          path: "codeSubclass",
+          path: "code_subclass",
           component: {
             render(h) {
               return h("router-view");
@@ -54,7 +54,7 @@ const router = new Router({
             // 二级页面内容
             {
               name: "CodeSubclass",
-              path: "id=:id&name=:name",
+              path: "type=:type&id=:id&name=:name",
               component: () => import("./views/InfoStandard/components/SubClass"),
               meta: {
                 title: "代码子类"
