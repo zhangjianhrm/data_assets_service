@@ -1,11 +1,12 @@
+const SERVER = "http://60.174.249.83:8057";
+
 const MOCKURL = "https://easy-mock.com/mock/5cece354191d1b55805a1434/data_assets_service/";
 
-const SERVERURL = "http://60.174.249.83:8057";
-// const SERVERURL = "http://60.174.249.83:8057/api/code/downloadFile?fileName=1562224241959.xls&clientFileName=1562224241959.xls;
+const SERVERURL = "https://bird.ioliu.cn/v2?url=" + SERVER;
 
 const URL = {
   //
-  server: SERVERURL,
+  server: SERVER,
   // Home
   getNews: MOCKURL + "home_news", // 实时消息
 
@@ -22,13 +23,15 @@ const URL = {
       downloadExecutionCode: SERVERURL + "/api/service/code/execute/class/export?type=word", // 下载国家标准代码
       getExecutionCodeSubClass: SERVERURL + "/api/service/code/execute/subclass/page?", // 获取代码子类
       downloadExecutionCodeSubClass: SERVERURL + "/api/service/code/execute/subclass/export?type=word", // 下载代码子类
+      getExecutionCodeSubClassDetails: SERVERURL + "/api/service/code/execute/code/page?", // 国家标准代码标准子类详情
 
       // 国家标准代码
       getNationalStandardCode: SERVERURL + "/api/service/code/refer/class/list", // 国家标准代码列表
       getNationalStandardCodeCount: SERVERURL + "/api/service/code/refer/manage/count", // 国家标准代码数量
       downloadNationalStandardCode: SERVERURL + "/api/service/code/refer/class/export?type=word", // 下载国家标准代码
-      getNationalStandardCodeSubClass: SERVERURL + "/api/service/code/refer/subclass/page?", // 获取代码子类 b5a9b6f0995111e9780b57374dba8ba3
-      downloadSubClass: SERVERURL + "/api/service/code/refer/subclass/export?type=word" // 下载代码子类 b5a9b6f0995111e9780b57374dba8ba3
+      getNationalStandardCodeSubClass: SERVERURL + "/api/service/code/refer/subclass/page?", // 获取代码子类
+      downloadNationalStandardCodeSubClass: SERVERURL + "/api/service/code/refer/subclass/export?type=word", // 下载代码子类
+      getNationalStandardCodeSubClassDetails: SERVERURL + "/api/service/code/refer/code/page?" // 国家标准代码标准子类详情
     },
     // 模型标准
     modelStandard: {},

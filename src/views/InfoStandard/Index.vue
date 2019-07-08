@@ -18,7 +18,7 @@
           <svg-icon icon-class="model-standard" />
           <b>模型标准</b>
         </span>
-        <div class="info-standard__model"></div>
+        <model-standard></model-standard>
       </el-tab-pane>
       <el-tab-pane name="management-norms">
         <span slot="label">
@@ -35,6 +35,8 @@ export default {
   name: "InfoStandard",
   components: {
     CodeStandard: () => import("@/views/InfoStandard/components/CodeStandard"),
+    ModelStandard: () =>
+      import("@/views/InfoStandard/components/ModelStandard"),
     ManagementNorms: () =>
       import("@/views/InfoStandard/components/ManagementNorms")
   },

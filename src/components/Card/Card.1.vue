@@ -4,22 +4,20 @@
       v-if="checkbox"
       v-model="cardData.checked"
       class="card_checkbox"
+      @click.native.stop
       @change="changeClick"
     />
-    <p
-      class="card_title"
-      @click="$router.push('/info_standard/code_subclass/sanjiyemian')"
-    >{{cardData.NAME}}</p>
+    <p class="card_title">{{cardData.NAME}}</p>
     <div class="card_format" v-if="cardData.format">
       <b v-for="(item,index) in cardData.format" :key="index">{{item}}</b>
     </div>
-    <div class="card_details" @click="$router.push('/info_standard/code_subclass/sanjiyemian')">
+    <div class="card_details">
       <p v-if="cardData.REFER_CODE_COUNT">
         <span>数据量</span>
         <span>：</span>
         <span>{{cardData.REFER_CODE_COUNT}}</span>
       </p>
-      <p v-if="cardData.ORIGIN">
+      <p v-if="cardData.NUM">
         <span>数据子类</span>
         <span>：</span>
         <span>{{cardData.NUM}}</span>
@@ -38,9 +36,9 @@
     <div class="card_operation">
       <span>更新时间：{{cardData.UPDATE_TIME}}</span>
       <div>
-        <svg-icon icon-class="collects" @click="collects(cardData)" style="cursor:pointer;" />
+        <svg-icon icon-class="collects" @click.stop="collects(cardData)" />
         <span>{{cardData.COLLECT_NUM}}</span>
-        <svg-icon icon-class="download.2" @click="download(cardData)" style="cursor:pointer;" />
+        <svg-icon icon-class="download.2" @click.stop="download(cardData)" />
         <span>{{cardData.DOWNLOAD_NUM}}</span>
       </div>
     </div>
@@ -209,6 +207,7 @@ export default {
       float: right;
       svg {
         margin-right: 7px;
+        cursor: pointer;
       }
       svg:nth-child(1) {
         &:hover {

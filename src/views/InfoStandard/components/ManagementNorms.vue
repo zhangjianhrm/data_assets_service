@@ -50,9 +50,9 @@
         indicator-position="none"
         height="580px"
         arrow="always"
-        v-for="(item,index) in documentLibrary"
-        v-show="index == collapseActiveName"
-        :key="index"
+        v-for="(item,outerIndex) in documentLibrary"
+        v-show="outerIndex == collapseActiveName"
+        :key="outerIndex"
         :autoplay="false"
         :loop="false"
       >
@@ -61,9 +61,8 @@
             <el-checkbox v-for="(item,index) in item" :key="index" :label="item.name">
               <el-tooltip class="item" effect="dark" content="点击阅览" placement="top">
                 <div class="color-books" @click.prevent="read">
-                  <svg-icon icon-class="cube" />
+                  <svg-icon :icon-class="'document'+ outerIndex" />
                   <svg-icon icon-class="collected" v-show="item.collected" />
-                  <div></div>
                 </div>
               </el-tooltip>
               <section>
@@ -333,9 +332,12 @@ export default {
       font-weight: 900;
     }
     &_item {
-      height: 96px;
+      // max-height: 96px;
       overflow-x: hidden;
       .el-checkbox-group {
+        &:nth-last-child(1) {
+          padding-bottom: 25px;
+        }
         .el-checkbox {
           width: 320px;
           overflow: hidden;
@@ -346,9 +348,9 @@ export default {
           margin-left: 20px;
           // visibility: hidden;
           display: none;
-          &:nth-last-child(1) {
-            margin-bottom: 12px;
-          }
+          // &:nth-last-child(1) {
+          //   margin-bottom: 12px;
+          // }
         }
         .el-checkbox.is-checked {
           // visibility: visible;
@@ -467,7 +469,7 @@ export default {
       &__input {
         position: absolute;
         bottom: 21px;
-        left: 0px;
+        left: 6px;
       }
       &__label {
         display: block;
@@ -477,7 +479,7 @@ export default {
           width: 90px;
           height: 110px;
           margin: 0 auto;
-          background: rgb(80, 127, 223);
+          // background: rgb(80, 127, 223);
           margin-bottom: 20px;
           position: relative;
           transition: all 0.2s;
@@ -487,28 +489,18 @@ export default {
           }
           > svg:nth-child(1) {
             position: absolute;
-            right: 12px;
-            bottom: 8px;
-            width: 50px;
-            height: 50px;
+            right: 7px;
+            bottom: 0px;
+            width: 100px;
+            height: 110px;
           }
           > svg:nth-child(2) {
             position: absolute;
-            right: -13px;
+            right: -7px;
             top: -10px;
             width: 50px;
             height: 50px;
             transform: rotate(36deg);
-          }
-          > div:nth-child(3) {
-            width: 55px;
-            height: 5px;
-            background: rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 14px;
-            right: 0;
-            left: 0;
-            margin: auto;
           }
         }
         > section {
@@ -516,7 +508,7 @@ export default {
           p {
             width: 80%;
             margin: 0 auto;
-            text-align: left;
+            text-align: center;
             font-size: 14px;
             line-height: 20px;
             overflow: hidden;
@@ -526,31 +518,31 @@ export default {
         }
       }
     }
-    div.el-carousel:nth-child(2) {
-      .color-books {
-        background: rgb(80, 127, 223);
-      }
-    }
-    div.el-carousel:nth-child(3) {
-      .color-books {
-        background: #8c67d3;
-      }
-    }
-    div.el-carousel:nth-child(4) {
-      .color-books {
-        background: rgb(161, 179, 237);
-      }
-    }
-    div.el-carousel:nth-child(5) {
-      .color-books {
-        background: #ffb75c;
-      }
-    }
-    div.el-carousel:nth-child(6) {
-      .color-books {
-        background: #5960ee;
-      }
-    }
+    // div.el-carousel:nth-child(2) {
+    //   .color-books {
+    //     background: rgb(80, 127, 223);
+    //   }
+    // }
+    // div.el-carousel:nth-child(3) {
+    //   .color-books {
+    //     background: #8c67d3;
+    //   }
+    // }
+    // div.el-carousel:nth-child(4) {
+    //   .color-books {
+    //     background: rgb(161, 179, 237);
+    //   }
+    // }
+    // div.el-carousel:nth-child(5) {
+    //   .color-books {
+    //     background: #ffb75c;
+    //   }
+    // }
+    // div.el-carousel:nth-child(6) {
+    //   .color-books {
+    //     background: #5960ee;
+    //   }
+    // }
   }
 }
 </style>

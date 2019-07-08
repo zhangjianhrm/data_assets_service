@@ -1,8 +1,8 @@
 <template>
-  <div class="sanjiyemian">
-    <h3 class="sanjiyemian__title">信息标准三级页面</h3>
+  <div class="subclass-details">
+    <h3 class="subclass-details__title">{{title}}</h3>
     <hr />
-    <div class="sanjiyemian__op">
+    <div class="subclass-details__op">
       <el-button size="small" icon="el-icon-back" @click="$router.go(-1)">返回</el-button>
       <el-input placeholder="请输入内容" v-model="input3" size="small">
         <el-button slot="append" icon="el-icon-search"></el-button>
@@ -12,16 +12,14 @@
       style="margin-bottom:60px;"
       :hasOperation="false"
       :paginationShow="true"
-      :pageSizes="[30]"
-      :totalCount="32"
       :pageSize="30"
+      :pageSizes="[30]"
+      :totalCount="totalCount"
       :tableName="tableName"
       :tableTitle="tableTitle"
       :tableData="tableData"
-      :tableOperation="tableOperation"
       :showSelection="true"
       :showIndex="false"
-      :conflictOperation="conflictOperation"
       @selection-change="selectionChange"
       @change-page="changePage"
       @next-page="changePage"
@@ -30,16 +28,23 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import Qs from "qs";
+import url from "@/service.config";
 export default {
-  name: "sanjiyemian",
+  name: "subclass-details",
   components: {},
   data() {
     return {
+      type: this.$route.params.type,
+      id: this.$route.params.id,
+      title: this.$route.params.name,
+      subClassDetailsUrl: "",
       input3: "",
-      //
+      // 表格数据
+      totalCount: 0,
       tableName: "tableName",
-      tableData: [],
-      tableData1: [
+      tableData: [
         {
           date: "2016-05-02",
           name: "王小虎",
@@ -189,51 +194,56 @@ export default {
           date: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄"
-        }
-      ],
-      tableData2: [
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
         }
       ],
       tableTitle: [
-        { prop: "date", label: "时间", width: "120", sortable: true },
-        { prop: "name", label: "名称", width: "120", sortable: true },
-        { prop: "address", label: "地址", width: "120", sortable: false }
+        { prop: "NUM", label: "代码", ortable: true },
+        { prop: "NAME", label: "代码名称", width: "120", sortable: true },
+        { prop: "PARENT_CODE", label: "上级代码", sortable: false },
+        { prop: "CODE_LEVEL", label: "所属层级", sortable: false },
+        { prop: "SHORT_NAME", label: "简称", sortable: false }
       ],
-      tableOperation: [
-        { name: "详情", icon: "el-icon-document", operation: "detail" },
-        { name: "编辑", icon: "el-icon-edit", operation: "edit" },
-        { name: "删除", icon: "el-icon-delete", operation: "delete" },
-        { name: "冻结", operation: "freeze" },
-        { name: "注销", operation: "writeOff" },
-        { name: "解冻", operation: "unfreeze" },
-        { name: "激活", operation: "activate" },
-        { name: "标签", operation: "label" },
-        { name: "重置密码", operation: "resetPassword" },
-        { name: "修改有效期", operation: "resetExpiry" }
-      ],
-      conflictOperation: {
-        freeze: { prop: "state", value: ["FREEZE", "WRITTENOFF"] },
-        writeOff: { prop: "state", value: ["WRITTENOFF", "FREEZE"] },
-        unfreeze: { prop: "state", value: ["NORMAL", "WRITTENOFF"] }
-      },
       // 当前页
-      currentPage: 1
+      pageIndex: 1,
+      // 每页数量
+      pageSize: 15,
+      // 搜索关键词
+      queryCriteria: ""
     };
   },
-  created() {},
-  mounted() {
-    this.tableData = this.tableData1;
+  created() {
+    this.getSubClassDetails();
   },
+  mounted() {},
   methods: {
+    // 获取数据
+    getSubClassDetails() {
+      if (this.type == "executionCode") {
+        this.subClassDetailsUrl =
+          url.infoStandard.codeStandard.getExecutionCodeSubClassDetails;
+      } else if (this.type == "nationalStandardCode") {
+        this.subClassDetailsUrl =
+          url.infoStandard.codeStandard.getNationalStandardCodeSubClassDetails;
+      }
+      axios({
+        url: this.subClassDetailsUrl,
+        method: "get",
+        params: {
+          id: this.id, // pageIndex=0&pageSize=20&queryCriteria=1
+          pageIndex: this.pageIndex - 1,
+          pageSize: this.pageSize,
+          queryCriteria: this.queryCriteria
+        },
+        paramsSerializer: params => {
+          return Qs.stringify(params, { arrayFormat: "repeat" });
+        }
+      }).then(res => {
+        if (res.data.status == 200) {
+          console.log(res.data);
+          this.tableData = res.data.data.items;
+        }
+      });
+    },
     // table 的方法
     selectionChange(val) {
       this.$confirm(val);
@@ -246,7 +256,7 @@ export default {
 </script>
 <style lang="scss">
 @import "~@/styles/variables.scss";
-.sanjiyemian {
+.subclass-details {
   width: 1280px;
   margin: 0 auto;
   &__title {

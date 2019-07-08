@@ -1,8 +1,8 @@
 <template>
-  <div class="code-standard">
+  <div class="model-standard">
     <el-tabs v-model="activeName2">
-      <el-tab-pane name="executionCode" label="学校执行代码">
-        <p class="code-standard_count">
+      <el-tab-pane name="executionCode" label="学校执行模型">
+        <p class="model-standard_count">
           <span>
             相关：
             <b>2</b>个代码类，
@@ -20,7 +20,7 @@
             <span>下载学校执行代码</span>
           </el-button>
         </p>
-        <div class="code-standard_code">
+        <div class="model-standard_code">
           <div
             v-for="(item,index) in executionCode"
             :key="index"
@@ -42,8 +42,8 @@
           <i class="el-icon-arrow-down"></i>
         </el-button>
       </el-tab-pane>
-      <el-tab-pane name="standardCode" label="国家标准代码">
-        <p class="code-standard_count">
+      <el-tab-pane name="standardCode" label="国家标准模型">
+        <p class="model-standard_count">
           <span>可访问：{{nationalStandardCodeCount.CLASS_COUNT}}个代码类，{{nationalStandardCodeCount.SUBCLASS_COUNT}}个代码子类，{{nationalStandardCodeCount.CODE_COUNT}}条代码。</span>
           <el-button
             plain
@@ -55,7 +55,7 @@
             <span>下载国家标准代码</span>
           </el-button>
         </p>
-        <div class="code-standard_code">
+        <div class="model-standard_code">
           <div
             v-for="(item,index) in nationalStandardCode"
             :key="index"
@@ -78,14 +78,14 @@
       </el-tab-pane>
     </el-tabs>
     <!-- 执行代码采标率 -->
-    <rate-bar-graph title="执行代码采标率"></rate-bar-graph>
+    <rate-bar-graph title="执行模型采标率"></rate-bar-graph>
   </div>
 </template>
 <script>
 import axios from "axios";
 import url from "@/service.config";
 export default {
-  name: "CodeStandard",
+  name: "ModelStandard",
   components: {
     RateBarGraph: () => import("@/views/InfoStandard/components/RateBarGraph")
   },
@@ -169,12 +169,14 @@ export default {
     // 展开全部代码
     expandAll() {
       if (this.executionCodeToggle) {
-        document.querySelector(".code-standard_code").style.maxHeight = "unset";
+        document.querySelector(".model-standard_code").style.maxHeight =
+          "unset";
         this.executionCodeToggle = false;
         document.querySelector("#expand-all-excution-code").innerHTML =
           '<span>收起</span><i class="el-icon-arrow-up"></i>';
       } else {
-        document.querySelector(".code-standard_code").style.maxHeight = "248px";
+        document.querySelector(".model-standard_code").style.maxHeight =
+          "248px";
         this.executionCodeToggle = true;
         document.querySelector("#expand-all-excution-code").innerHTML =
           '<span>展开全部代码</span><i class="el-icon-arrow-down"></i>';
@@ -197,7 +199,7 @@ export default {
 </script>
 <style lang="scss">
 @import "~@/styles/variables.scss";
-.code-standard {
+.model-standard {
   margin-top: 20px;
   .el-tabs {
     &__header {

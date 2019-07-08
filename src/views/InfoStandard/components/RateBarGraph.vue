@@ -1,7 +1,7 @@
 <template>
-  <div class="info-standard__standard-proportion">
-    <p class="info-standard__standard-proportion_title">执行代码采标率</p>
-    <el-carousel class="info-standard__standard-proportion_overview" arrow="never" height="100%">
+  <div class="rate-bar-graph">
+    <p class="rate-bar-graph__title">{{title}}</p>
+    <el-carousel class="rate-bar-graph_overview" arrow="never" height="100%">
       <el-carousel-item v-for="(item,index) in system" :key="index">
         <h3>{{ item.name }}</h3>
         <h2>{{ parseInt(item.rate[0]*100)+'%' }}</h2>
@@ -11,7 +11,7 @@
         <p>采标率排名</p>
       </el-carousel-item>
     </el-carousel>
-    <div class="info-standard__standard-proportion_bar-graph">
+    <div class="rate-bar-graph__graph">
       <section>
         <span
           v-for="(item,index) in system"
@@ -29,9 +29,9 @@
           ></el-option>
         </el-select>
       </section>
-      <div id="standard-proportion_rate"></div>
-      <div id="standard-proportion_rank"></div>
-      <div id="standard-proportion_temp"></div>
+      <div id="rate-bar-graph__rate"></div>
+      <div id="rate-bar-graph__rank"></div>
+      <div id="rate-bar-graph__temp"></div>
     </div>
   </div>
 </template>
@@ -41,7 +41,14 @@ import axios from "axios";
 import url from "@/service.config";
 export default {
   name: "RateBarGraph",
-  props: {},
+  props: {
+    title: {
+      type: String,
+      default: () => {
+        return "采标率";
+      }
+    }
+  },
   data() {
     return {
       // 年份
@@ -260,7 +267,7 @@ export default {
     createBarGraph() {
       // eslint-disable-next-line
       let systemRate = echarts.init(
-        document.querySelector("#standard-proportion_rate")
+        document.querySelector("#rate-bar-graph__rate")
       );
       // 采标率跳转
       systemRate.on("click", params => {
@@ -276,7 +283,7 @@ export default {
       });
       // eslint-disable-next-line
       let systemRank = echarts.init(
-        document.querySelector("#standard-proportion_rank")
+        document.querySelector("#rate-bar-graph__rank")
       );
       // 上图表配置 Rate
       systemRate.setOption(
@@ -481,7 +488,7 @@ export default {
     createTempBarGraph(item) {
       // eslint-disable-next-line
       let systemTemp = echarts.init(
-        document.querySelector("#standard-proportion_temp")
+        document.querySelector("#rate-bar-graph__temp")
       );
       if (item == "rate") {
         // 下图表配置 Rank
@@ -711,7 +718,7 @@ export default {
     },
     // 采标率、采标率排名开关
     barGraphToggle(item, eve) {
-      let tempEle = document.querySelector("#standard-proportion_temp");
+      let tempEle = document.querySelector("#rate-bar-graph__temp");
       if (eve.target.style.opacity == "1") {
         if (this.leng > 1) {
           tempEle.style.visibility = "visible";
@@ -738,13 +745,13 @@ export default {
 </script>
 <style lang="scss">
 @import "~@/styles/variables.scss";
-.info-standard__standard-proportion {
+.rate-bar-graph {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   background: rgb(245, 245, 245);
   padding: 37px 0 129px;
-  &_title {
+  &__title {
     width: 100%;
     text-align: center;
     font-size: 30px;
@@ -795,7 +802,7 @@ export default {
       border-radius: 50%;
     }
   }
-  &_bar-graph {
+  &__graph {
     position: relative;
     width: 1040px;
     > section {
@@ -873,17 +880,17 @@ export default {
       width: 100%;
       position: absolute;
       overflow: hidden;
-      &#standard-proportion_rate {
+      &#rate-bar-graph__rate {
         top: 36px;
         z-index: 1;
         height: 200px;
       }
-      &#standard-proportion_rank {
+      &#rate-bar-graph__rank {
         bottom: 0;
         z-index: 1;
         height: 200px;
       }
-      &#standard-proportion_temp {
+      &#rate-bar-graph__temp {
         top: 36px;
         z-index: 2;
         height: 400px;

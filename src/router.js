@@ -62,7 +62,7 @@ const router = new Router({
             },
             // 三级页面
             {
-              path: "sanjiyemian",
+              path: "subclass_details",
               component: {
                 render(h) {
                   return h("router-view");
@@ -72,9 +72,9 @@ const router = new Router({
               children: [
                 // 三级页面内容
                 {
-                  name: "sanjiyemian",
-                  path: "/",
-                  component: () => import("./views/InfoStandard/components/sanjiyemian"),
+                  name: "SubclassDetails",
+                  path: "type=:type&id=:id&name=:name",
+                  component: () => import("./views/InfoStandard/components/SubClassDetails"),
                   meta: {
                     title: "信息标准三级"
                   }

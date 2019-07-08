@@ -49,6 +49,7 @@
         :key="index"
         :cardData="item"
         @cardSelected="cardSelected"
+        @click.native="goDetails(item.ID,item.NAME)"
       ></card>
     </div>
     <el-pagination
@@ -85,6 +86,8 @@ export default {
       id: this.$route.params.id,
       title: this.$route.params.name,
       subClassUrl: url.infoStandard.codeStandard.getExecutionCodeSubClass,
+      downloadSubClassUrl:
+        url.infoStandard.codeStandard.downloadExecutionCodeSubClass,
       input3: "",
       // 需要给 Card 组件传递的 props
       cardData: [],
@@ -136,6 +139,7 @@ export default {
         }
       }).then(res => {
         this.cardData = res.data.data.items;
+        console.log(this.cardData);
       });
     },
     // 卡片排序
@@ -172,8 +176,15 @@ export default {
     },
     // 下载
     downloadSubClass() {
+      if (this.type == "executionCode") {
+        this.downloadSubClassUrl =
+          url.infoStandard.codeStandard.downloadExecutionCodeSubClass;
+      } else if (this.type == "nationalStandardCode") {
+        this.downloadSubClassUrl =
+          url.infoStandard.codeStandard.downloadNationalStandardCodeSubClass;
+      }
       axios({
-        url: url.infoStandard.codeStandard.downloadSubClass,
+        url: this.downloadSubClassUrl,
         method: "get",
         params: {
           parentId: this.id,
@@ -191,6 +202,19 @@ export default {
             fileName +
             "&clientFileName=" +
             fileName;
+        }
+      });
+    },
+    //
+    goDetails(id, name) {
+      console.log(id, name);
+      // this.$router.push("/info_standard/code_subclass/subclass_details");
+      this.$router.push({
+        name: "SubclassDetails",
+        params: {
+          type: this.type,
+          id: id,
+          name: name
         }
       });
     },
