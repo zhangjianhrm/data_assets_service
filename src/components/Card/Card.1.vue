@@ -101,7 +101,7 @@ export default {
   mounted() {}
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~@/styles/variables.scss";
 .card {
   float: left;
@@ -137,7 +137,7 @@ export default {
     line-height: 22px;
     font-weight: bold;
     color: $color-header;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -145,19 +145,20 @@ export default {
   }
   &_format {
     width: 100%;
-    height: 22px;
-    margin-bottom: 4px;
+    height: 24px;
+    margin-bottom: 10px;
     b {
       float: left;
       width: 47px;
-      height: 22px;
-      margin-right: 4px;
+      height: 100%;
+      // margin-right: 4px;
       color: #fff;
       text-align: center;
       font-size: 12px;
-      line-height: 22px;
+      line-height: 24px;
       &:nth-child(1) {
         background: #39259e;
+        border-radius: 4px 0 0 4px;
       }
       &:nth-child(2) {
         background: #444f84;
@@ -167,6 +168,9 @@ export default {
       }
       &:nth-child(4) {
         background: #ffa32b;
+      }
+      &:nth-last-child(1) {
+        border-radius: 0 4px 4px 0;
       }
     }
   }

@@ -129,45 +129,43 @@ const router = new Router({
           children: [
             // 二级页面内容
             {
-              name: "Catalog",
-              path: "/",
+              name: "DataCatalogCard",
+              path: "",
               component: () => import("./views/DataCatalog/components/DataCatalogCard"),
               meta: {
-                title: "信息标准二级"
+                title: "数据目录详情"
               }
-            }
+            },
             // 三级页面
-            // {
-            //   path: "sanjiyemian",
-            //   component: {
-            //     render(h) {
-            //       return h("router-view");
-            //     }
-            //   },
-            //   // redirect: '/sanjiyemian',
-            //   children: [
-            //     // 三级页面内容
-            //     {
-            //       name: "sanjiyemian",
-            //       path: "/",
-            //       component: () =>
-            //         import("./views/InfoStandard/components/sanjiyemian"),
-            //       meta: {
-            //         title: "信息标准三级"
-            //       }
-            //     },
-            //     // 四级页面内容
-            //     {
-            //       name: "sijiyemian",
-            //       path: "sijiyemian",
-            //       component: () =>
-            //         import("./views/InfoStandard/components/sijiyemian"),
-            //       meta: {
-            //         title: "信息标准四级"
-            //       }
-            //     }
-            //   ]
-            // }
+            {
+              path: "details",
+              component: {
+                render(h) {
+                  return h("router-view");
+                }
+              },
+              // redirect: '/sanjiyemian',
+              children: [
+                // 三级页面内容
+                {
+                  name: "DataCatalogDetails",
+                  path: "id=:id&name=:name",
+                  component: () => import("./views/DataCatalog/components/DataCatalogDetails"),
+                  meta: {
+                    title: "信息标准三级"
+                  }
+                },
+                // 四级页面内容
+                {
+                  name: "None",
+                  path: "sijiyemian",
+                  component: () => import("./views/InfoStandard/components/sijiyemian"),
+                  meta: {
+                    title: "信息标准四级"
+                  }
+                }
+              ]
+            }
           ]
         }
       ]

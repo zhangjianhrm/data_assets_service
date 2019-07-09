@@ -18,8 +18,8 @@
         v-show="selected.length"
         style="font-size:14px;margin-left:10px;"
       >已选择 {{selected.length}} 个</span>
-      <el-input placeholder="代码 / 代码名称" v-model="input3" size="small">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+      <el-input placeholder="代码 / 代码名称" v-model="queryCriteria" size="small">
+        <el-button slot="append" icon="el-icon-search" @click="searchSubClass"></el-button>
       </el-input>
       <el-button-group class="national-standard__op_sort">
         <el-button
@@ -88,7 +88,7 @@ export default {
       subClassUrl: url.infoStandard.codeStandard.getExecutionCodeSubClass,
       downloadSubClassUrl:
         url.infoStandard.codeStandard.downloadExecutionCodeSubClass,
-      input3: "",
+      queryCriteria: "",
       // 需要给 Card 组件传递的 props
       cardData: [],
       // 当前选中的 Card
@@ -132,7 +132,7 @@ export default {
           orderByWay: this.orderByWay,
           pageIndex: this.pageIndex - 1,
           pageSize: this.pageSize,
-          queryCriteria: ""
+          queryCriteria: this.queryCriteria
         },
         paramsSerializer: params => {
           return Qs.stringify(params, { arrayFormat: "repeat" });
@@ -205,7 +205,7 @@ export default {
         }
       });
     },
-    //
+    // 查看详情
     goDetails(id, name) {
       console.log(id, name);
       // this.$router.push("/info_standard/code_subclass/subclass_details");
@@ -218,6 +218,11 @@ export default {
         }
       });
     },
+    // 搜索
+    searchSubClass() {
+      this.getCard();
+    },
+
     // 全选
     // selectAll(eve) {
     //   if (this.selected.length == this.cardData.length) {

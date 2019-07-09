@@ -6,21 +6,21 @@
     </div>
     <!-- 代码标准、模型标准、信息标准管理规范 -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane name="code-standard">
+      <el-tab-pane name="code-standard" :lazy="true">
         <span slot="label">
           <svg-icon icon-class="info-standard" />
           <b>代码标准</b>
         </span>
-        <code-standard></code-standard>
+        <code-standard v-if="activeName == 'code-standard'"></code-standard>
       </el-tab-pane>
-      <el-tab-pane name="model-standard">
+      <el-tab-pane name="model-standard" :lazy="true">
         <span slot="label">
           <svg-icon icon-class="model-standard" />
           <b>模型标准</b>
         </span>
-        <model-standard></model-standard>
+        <model-standard  v-if="activeName == 'model-standard'"></model-standard>
       </el-tab-pane>
-      <el-tab-pane name="management-norms">
+      <el-tab-pane name="management-norms" :lazy="true">
         <span slot="label">
           <svg-icon icon-class="info-standard-management-specification" />
           <b>信息标准管理规范</b>

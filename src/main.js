@@ -8,9 +8,9 @@ import store from "./store";
 import "./icons";
 
 // element
-// import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css';
-// Vue.use(ElementUI);
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 
 // 树维 UI
 import SwUI from "sw-ui";

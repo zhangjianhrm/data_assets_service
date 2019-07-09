@@ -46,7 +46,7 @@
         :key="index"
         :cardData="item"
         @cardSelected="cardSelected"
-        @click.native="$router.push('/info_standard/code_subclass/subclass_details')"
+        @click.native="goDetails(item.ID,item.NAME)"
       ></card>
     </div>
     <el-pagination
@@ -73,7 +73,7 @@ import Qs from "qs";
 import url from "@/service.config";
 import { close } from "fs";
 export default {
-  name: "SubClass",
+  name: "DataCatalogCard",
   components: {
     Card: () => import("@/components/Card/Card.1")
   },
@@ -136,7 +136,7 @@ export default {
       }).then(res => {
         // this.cardData = res.data.data.items;
         this.cardData = res.data.card;
-        console.log(res.data);
+        console.log(res.data.card);
       });
     },
     // 卡片排序
@@ -201,6 +201,16 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+    },
+    goDetails(id, name) {
+      console.log(id, name);
+      this.$router.push({
+        name: "DataCatalogDetails",
+        params: {
+          id: id,
+          name: name
+        }
+      });
     }
   }
 };

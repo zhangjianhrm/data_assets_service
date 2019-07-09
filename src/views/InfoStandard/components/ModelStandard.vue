@@ -1,15 +1,15 @@
 <template>
   <div class="model-standard">
-    <el-tabs v-model="activeName2">
-      <el-tab-pane name="executionCode" label="学校执行模型">
+    <el-tabs v-model="activeNameModelStandard">
+      <el-tab-pane name="executionModel" label="学校执行模型">
         <p class="model-standard_count">
           <span>
             相关：
-            <b>2</b>个代码类，
-            <b>20</b>个代码子类，
-            <b>200</b>条代码。
+            <b>2</b>个模型类，
+            <b>20</b>个模型子类，
+            <b>200</b>条模型。
           </span>
-          <span>可访问：{{executionCodeCount.CLASS_COUNT}}个代码类，{{executionCodeCount.SUBCLASS_COUNT}}个代码子类，{{executionCodeCount.CODE_COUNT}}条代码。</span>
+          <span>可访问：{{executionModelCount.CLASS_COUNT}}个模型类，{{executionModelCount.SUBCLASS_COUNT}}个模型子类，{{executionModelCount.CODE_COUNT}}条模型。</span>
           <el-button
             plain
             type="primary"
@@ -17,14 +17,14 @@
             @click="downloadCode('downloadExecutionCode')"
           >
             <svg-icon icon-class="download" />
-            <span>下载学校执行代码</span>
+            <span>下载学校执行模型</span>
           </el-button>
         </p>
         <div class="model-standard_code">
           <div
-            v-for="(item,index) in executionCode"
+            v-for="(item,index) in executionModel"
             :key="index"
-            @click="goSubClass('executionCode',item.ID,item.NAME)"
+            @click="goSubClass('executionModel',item.ID,item.NAME)"
           >
             <svg-icon :icon-class="'code-icon-' + index" />
             <!-- <p :style="item.emphasize?'color:#2C62FF':''">{{item.NAME}}</p> -->
@@ -34,17 +34,17 @@
         <el-button
           plain
           type="primary"
-          v-if="executionCode.length > 16"
+          v-if="executionModel.length > 16"
           id="expand-all-excution-code"
           @click="expandAll"
         >
-          <span>展开全部代码</span>
+          <span>展开全部模型</span>
           <i class="el-icon-arrow-down"></i>
         </el-button>
       </el-tab-pane>
-      <el-tab-pane name="standardCode" label="国家标准模型">
+      <el-tab-pane name="standardModel" label="国家标准模型">
         <p class="model-standard_count">
-          <span>可访问：{{nationalStandardCodeCount.CLASS_COUNT}}个代码类，{{nationalStandardCodeCount.SUBCLASS_COUNT}}个代码子类，{{nationalStandardCodeCount.CODE_COUNT}}条代码。</span>
+          <span>可访问：{{nationalStandardCodeCount.CLASS_COUNT}}个模型类，{{nationalStandardCodeCount.SUBCLASS_COUNT}}个模型子类，{{nationalStandardCodeCount.CODE_COUNT}}条模型。</span>
           <el-button
             plain
             type="primary"
@@ -52,7 +52,7 @@
             @click="downloadCode('downloadNationalStandardCode')"
           >
             <svg-icon icon-class="download" />
-            <span>下载国家标准代码</span>
+            <span>下载国家标准模型</span>
           </el-button>
         </p>
         <div class="model-standard_code">
@@ -72,12 +72,12 @@
           id="expand-all-excution-code"
           @click="expandAll"
         >
-          <span>展开全部代码</span>
+          <span>展开全部模型</span>
           <i class="el-icon-arrow-down"></i>
         </el-button>
       </el-tab-pane>
     </el-tabs>
-    <!-- 执行代码采标率 -->
+    <!-- 执行模型采标率 -->
     <rate-bar-graph title="执行模型采标率"></rate-bar-graph>
   </div>
 </template>
@@ -91,12 +91,12 @@ export default {
   },
   data() {
     return {
-      activeName2: "executionCode",
-      executionCodeToggle: true,
-      executionCodeCount: {},
-      executionCode: [],
-      nationalStandardCodeCount: {}, // 国家标准代码数量
-      nationalStandardCode: [] // 国家标准代码
+      activeNameModelStandard: "executionModel",
+      executionModelToggle: true,
+      executionModelCount: {},
+      executionModel: [],
+      nationalStandardCodeCount: {}, // 国家标准模型数量
+      nationalStandardCode: [] // 国家标准模型
     };
   },
   created() {
@@ -106,29 +106,29 @@ export default {
     this.getNationalStandardCode();
   },
   methods: {
-    // 获取学校执行代码数量
+    // 获取学校执行模型数量
     getExecutionCodeCount() {
       axios({
         url: url.infoStandard.codeStandard.getExecutionCodeCount
       }).then(res => {
         if (res.data.status == 200) {
-          this.executionCodeCount = res.data.data;
+          this.executionModelCount = res.data.data;
           console.log(res.data.data);
         }
       });
     },
-    // 获取学校执行代码
+    // 获取学校执行模型
     getExecutionCode() {
       axios({
         url: url.infoStandard.codeStandard.getExecutionCode
       }).then(res => {
         if (res.data.status == 200) {
-          this.executionCode = res.data.data;
+          this.executionModel = res.data.data;
           console.log(res);
         }
       });
     },
-    // 获取国家标准代码数量
+    // 获取国家标准模型数量
     getNationalStandardCodeCount() {
       axios({
         url: url.infoStandard.codeStandard.getNationalStandardCodeCount
@@ -138,7 +138,7 @@ export default {
         }
       });
     },
-    // 获取国家标准代码
+    // 获取国家标准模型
     getNationalStandardCode() {
       axios({
         url: url.infoStandard.codeStandard.getNationalStandardCode
@@ -149,7 +149,7 @@ export default {
         }
       });
     },
-    // 下载代码
+    // 下载模型
     downloadCode(type) {
       axios({
         url: url.infoStandard.codeStandard[type]
@@ -166,20 +166,20 @@ export default {
         }
       });
     },
-    // 展开全部代码
+    // 展开全部模型
     expandAll() {
-      if (this.executionCodeToggle) {
+      if (this.executionModelToggle) {
         document.querySelector(".model-standard_code").style.maxHeight =
           "unset";
-        this.executionCodeToggle = false;
+        this.executionModelToggle = false;
         document.querySelector("#expand-all-excution-code").innerHTML =
           '<span>收起</span><i class="el-icon-arrow-up"></i>';
       } else {
         document.querySelector(".model-standard_code").style.maxHeight =
           "248px";
-        this.executionCodeToggle = true;
+        this.executionModelToggle = true;
         document.querySelector("#expand-all-excution-code").innerHTML =
-          '<span>展开全部代码</span><i class="el-icon-arrow-down"></i>';
+          '<span>展开全部模型</span><i class="el-icon-arrow-down"></i>';
       }
     },
     //

@@ -19,7 +19,7 @@ function formatDate(value) {
   let s = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
   return Y + "." + M + "." + D + " " + h + ":" + m + ":" + s;
 }
-//
+// 数值
 function formatNum(num) {
   num = (num || 0).toString();
   let result = "";

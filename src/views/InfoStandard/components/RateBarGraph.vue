@@ -29,9 +29,9 @@
           ></el-option>
         </el-select>
       </section>
-      <div id="rate-bar-graph__rate"></div>
-      <div id="rate-bar-graph__rank"></div>
-      <div id="rate-bar-graph__temp"></div>
+      <div class="rate-bar-graph__rate"></div>
+      <div class="rate-bar-graph__rank"></div>
+      <div class="rate-bar-graph__temp"></div>
     </div>
   </div>
 </template>
@@ -267,7 +267,7 @@ export default {
     createBarGraph() {
       // eslint-disable-next-line
       let systemRate = echarts.init(
-        document.querySelector("#rate-bar-graph__rate")
+        document.querySelector(".rate-bar-graph__rate")
       );
       // 采标率跳转
       systemRate.on("click", params => {
@@ -283,7 +283,7 @@ export default {
       });
       // eslint-disable-next-line
       let systemRank = echarts.init(
-        document.querySelector("#rate-bar-graph__rank")
+        document.querySelector(".rate-bar-graph__rank")
       );
       // 上图表配置 Rate
       systemRate.setOption(
@@ -488,7 +488,7 @@ export default {
     createTempBarGraph(item) {
       // eslint-disable-next-line
       let systemTemp = echarts.init(
-        document.querySelector("#rate-bar-graph__temp")
+        document.querySelector(".rate-bar-graph__temp")
       );
       if (item == "rate") {
         // 下图表配置 Rank
@@ -718,7 +718,7 @@ export default {
     },
     // 采标率、采标率排名开关
     barGraphToggle(item, eve) {
-      let tempEle = document.querySelector("#rate-bar-graph__temp");
+      let tempEle = document.querySelector(".rate-bar-graph__temp");
       if (eve.target.style.opacity == "1") {
         if (this.leng > 1) {
           tempEle.style.visibility = "visible";
@@ -880,17 +880,17 @@ export default {
       width: 100%;
       position: absolute;
       overflow: hidden;
-      &#rate-bar-graph__rate {
+      &.rate-bar-graph__rate {
         top: 36px;
         z-index: 1;
         height: 200px;
       }
-      &#rate-bar-graph__rank {
+      &.rate-bar-graph__rank {
         bottom: 0;
         z-index: 1;
         height: 200px;
       }
-      &#rate-bar-graph__temp {
+      &.rate-bar-graph__temp {
         top: 36px;
         z-index: 2;
         height: 400px;

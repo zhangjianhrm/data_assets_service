@@ -1,6 +1,6 @@
 <template>
   <div class="code-standard">
-    <el-tabs v-model="activeName2">
+    <el-tabs v-model="activeNameCodeStandard">
       <el-tab-pane name="executionCode" label="学校执行代码">
         <p class="code-standard_count">
           <span>
@@ -91,7 +91,7 @@ export default {
   },
   data() {
     return {
-      activeName2: "executionCode",
+      activeNameCodeStandard: "executionCode",
       executionCodeToggle: true,
       executionCodeCount: {},
       executionCode: [],
