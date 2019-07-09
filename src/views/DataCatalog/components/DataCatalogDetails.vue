@@ -109,7 +109,7 @@
           <el-input
             type="textarea"
             placeholder="请输入内容"
-            v-model="textarea"
+            v-model="textarea1"
             maxlength="240"
             show-word-limit
           ></el-input>
@@ -120,8 +120,8 @@
     <el-tabs
       v-show="evaluationToggle"
       v-model="activeName"
-      @tab-click="handleClick"
       class="data-catalog-details__evaluation"
+      @tab-click="handleClick"
     >
       <el-tab-pane :label="'全部('+evaluation.length+')'" name="first">
         <div
@@ -138,12 +138,22 @@
           <p>
             <span>{{item.time}}</span>
             <span>
-              <svg-icon icon-class="reply" @click="replyEvaluation()" />
+              <svg-icon icon-class="reply" @click="replyEvaluation(item)" />
               <span>({{item.reply.length}})</span>
               <svg-icon icon-class="likes" @click="likesEvaluation()" />
               <span>({{item.like}})</span>
             </span>
           </p>
+          <div class="data-catalog-details__evaluation_item_reply" v-if="item.showReplyInput">
+            <el-input
+              show-word-limit
+              type="textarea"
+              placeholder="请输入内容"
+              v-model="textarea2"
+              maxlength="240"
+            ></el-input>
+            <el-button type="primary" size="small">发布</el-button>
+          </div>
           <div
             class="data-catalog-details__evaluation_item_child"
             v-for="(child,childIndex) in item.reply"
@@ -193,7 +203,8 @@ export default {
       rate3: 5,
       rate4: 5,
       rate5: 5,
-      textarea: "",
+      textarea1: "",
+      textarea2: "",
       evaluationToggle: true,
       activeName: "first",
       evaluation: [
@@ -293,7 +304,14 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    replyEvaluation() {},
+    replyEvaluation(item) {
+      console.log(item);
+      if (item.showReplyInput) {
+        this.$set(item, "showReplyInput", false);
+      } else {
+        this.$set(item, "showReplyInput", true);
+      }
+    },
     likesEvaluation() {}
   },
   filters: {
@@ -561,6 +579,21 @@ export default {
           > span:nth-child(2) {
             margin-right: 30px;
           }
+        }
+      }
+      &_reply {
+        float: right;
+        width: 1220px;
+        .el-textarea {
+          margin-bottom: 8px;
+          textarea {
+            max-height: 114px !important;
+            min-height: 114px !important;
+          }
+        }
+        button {
+          float: right;
+          margin-bottom: 24px;
         }
       }
       &_child {
