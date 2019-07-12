@@ -2,7 +2,7 @@
   <div class="data-catalog-details">
     <div class="data-catalog-details__title">
       <h2>{{title}}</h2>
-      <el-rate disabled v-model="currentRate" :max="5" :colors="colors"></el-rate>
+      <el-rate disabled v-model="currentRate" :max="5" :colors="rateColors"></el-rate>
       <b>{{currentRate | addZero}}</b>
     </div>
     <div class="data-catalog-details__count">
@@ -28,12 +28,12 @@
         <el-radio-button label="数据详情"></el-radio-button>
         <el-radio-button label="文件下载"></el-radio-button>
         <el-radio-button label="API 服务"></el-radio-button>
-        <el-radio-button label="数据纠错"></el-radio-button>
+        <el-radio-button label="数据质量反馈"></el-radio-button>
       </el-radio-group>
     </div>
-    <div class="data-catalog-details__form">
+    <div class="data-catalog-details__basic" v-show="radio == '基本信息'">
       <h3>基本信息</h3>
-      <div class="data-catalog-details__form_content">
+      <div class="data-catalog-details__basic_content">
         <el-row>
           <el-col :span="3">数据目录名称</el-col>
           <el-col :span="9">数据目录名称</el-col>
@@ -58,14 +58,14 @@
         </el-row>
       </div>
       <h3>内容简介</h3>
-      <div class="data-catalog-details__form_content">
+      <div class="data-catalog-details__basic_content">
         <el-row>
           <el-col :span="3">简介</el-col>
           <el-col :span="21">数据目录名称</el-col>
         </el-row>
       </div>
       <h3>使用情况</h3>
-      <div class="data-catalog-details__form_content">
+      <div class="data-catalog-details__basic_content">
         <el-row>
           <el-col :span="3">数据目录名称</el-col>
           <el-col :span="5">数据目录名称</el-col>
@@ -76,6 +76,142 @@
         </el-row>
       </div>
     </div>
+    <div class="data-catalog-details__dataitem" v-show="radio == '数据项'">
+      <el-table :data="dataItemData" size="mini">
+        <el-table-column
+          sortable
+          v-for="(item,index) in dataItemTitle"
+          :key="index"
+          :prop="item.prop"
+          :label="item.label"
+          :width="item.width"
+        >
+          <template slot-scope="scope">
+            <span v-if="scope.row[item.prop]">
+              <span v-if="item.prop == 'quote'">
+                <el-link type="primary">{{ scope.row[item.prop] }}</el-link>
+              </span>
+              <span v-else>{{ scope.row[item.prop] }}</span>
+            </span>
+            <span v-else>—</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        background
+        layout="total, prev, pager, next, sizes, jumper"
+        :page-size="pageSize"
+        :page-sizes="[15, 30]"
+        :total="dataItemData.length"
+        :current-page="pageIndex"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      ></el-pagination>
+    </div>
+    <div class="data-catalog-details__datadetails" v-show="radio == '数据详情'">
+      <el-button size="small" type="primary" @click="showFilter = !showFilter">
+        <span v-if="showFilter">收起</span>
+        <span v-else>添加查询条件</span>
+      </el-button>
+      <div class="data-catalog-details__datadetails_filter" v-show="showFilter">
+        <div
+          class="data-catalog-details__datadetails_filter_item"
+          v-for="(item,index) in filterCount"
+          :key="index"
+        >
+          <el-select v-model="value" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-select v-model="value" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-input v-model="input" placeholder="请输入内容" size="small"></el-input>
+          <i class="el-icon-circle-plus" @click="filterCount++"></i>
+          <i class="el-icon-remove" @click="filterCount--" v-show="index > 0"></i>
+        </div>
+        <el-button size="small" type="primary">立即查找</el-button>
+      </div>
+      <hr />
+      <div class="data-catalog-details__datadetails_count">
+        <span>全部数据共</span>
+        <b>{{dataItemData.length}}</b>
+        <span>条，可预览数据共</span>
+        <b>3</b>
+        <span>条。</span>
+      </div>
+      <el-table :data="dataItemData" size="mini">
+        <el-table-column
+          sortable
+          v-for="(item,index) in dataItemTitle"
+          :key="index"
+          :prop="item.prop"
+          :label="item.label"
+          :width="item.width"
+        >
+          <template slot-scope="scope">
+            <span v-if="scope.row[item.prop]">
+              <span v-if="item.prop == 'quote'">
+                <el-link type="primary">{{ scope.row[item.prop] }}</el-link>
+              </span>
+              <span v-else>{{ scope.row[item.prop] }}</span>
+            </span>
+            <span v-else>—</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        background
+        layout="total, prev, pager, next, sizes, jumper"
+        :page-size="pageSize"
+        :page-sizes="[15, 30]"
+        :total="dataItemData.length"
+        :current-page="pageIndex"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      ></el-pagination>
+    </div>
+    <div class="data-catalog-details__download" v-show="radio == '文件下载'">
+      <el-table tooltip-effect="dark" size="small" :data="downloadData">
+        <el-table-column label="下载格式" width="100">
+          <template slot-scope="scope">
+            <svg-icon :icon-class="scope.row.format"></svg-icon>
+            {{ scope.row.format }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="size" label="文件大小"></el-table-column>
+        <el-table-column prop="time" label="生成时间" show-overflow-tooltip></el-table-column>
+        <el-table-column label="下载" width="100">
+          <template slot-scope="scope">
+            <el-link :underline="false">
+              <svg-icon icon-class="download.2" @click="downloadCatalog(scope.row)" />
+            </el-link>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <div class="data-catalog-details__feedback" v-show="radio == '数据质量反馈'">
+      <h3>数据质量反馈</h3>
+      <div class="data-catalog-details__feedback_text">
+        <el-input
+          show-word-limit
+          type="textarea"
+          placeholder="请输入内容"
+          v-model="textarea3"
+          maxlength="240"
+        ></el-input>
+        <el-button type="primary" size="small">发布</el-button>
+      </div>
+    </div>
     <div class="data-catalog-details__evaluate">
       <h3>用户评价</h3>
       <div class="data-catalog-details__evaluate_overview">
@@ -84,26 +220,21 @@
             <b>{{currentRate | addZero}}</b>
             <span>分</span>
           </p>
-          <el-rate
-            disabled
-            v-model="currentRate"
-            :max="5"
-            :colors="['rgba(255, 129, 19, 1)', 'rgba(255, 129, 19, 1)', 'rgba(255, 129, 19, 1)']"
-          ></el-rate>
+          <el-rate disabled v-model="currentRate" :max="5" :colors="rateColors"></el-rate>
           <p>综合评分</p>
           <p>5646466 人已评分</p>
         </div>
         <div class="data-catalog-details__evaluate_overview_rate">
           <span>完整性</span>
-          <el-rate v-model="rate1" :colors="colors"></el-rate>
+          <el-rate v-model="rate1" :colors="rateColors"></el-rate>
           <span>准确性</span>
-          <el-rate v-model="rate2" :colors="colors"></el-rate>
+          <el-rate v-model="rate2" :colors="rateColors"></el-rate>
           <span>及时性</span>
-          <el-rate v-model="rate3" :colors="colors"></el-rate>
+          <el-rate v-model="rate3" :colors="rateColors"></el-rate>
           <span>可用性</span>
-          <el-rate v-model="rate4" :colors="colors"></el-rate>
+          <el-rate v-model="rate4" :colors="rateColors"></el-rate>
           <span>满意度</span>
-          <el-rate v-model="rate5" :colors="colors"></el-rate>
+          <el-rate v-model="rate5" :colors="rateColors"></el-rate>
         </div>
         <div class="data-catalog-details__evaluate_overview_text">
           <el-input
@@ -119,8 +250,8 @@
     </div>
     <el-tabs
       v-show="evaluationToggle"
-      v-model="activeName"
       class="data-catalog-details__evaluation"
+      v-model="activeName"
       @tab-click="handleClick"
     >
       <el-tab-pane :label="'全部('+evaluation.length+')'" name="first">
@@ -132,7 +263,7 @@
           <el-avatar :src="item.avatar"></el-avatar>
           <p>
             <span>{{item.username}}</span>
-            <el-rate disabled v-model="item.rate" :colors="colors"></el-rate>
+            <el-rate disabled v-model="item.rate" :colors="rateColors"></el-rate>
           </p>
           <p>{{item.content}}</p>
           <p>
@@ -163,7 +294,7 @@
             <el-avatar :src="child.avatar"></el-avatar>
             <p>
               <span>{{child.username}}</span>
-              <el-rate disabled v-model="child.rate" :colors="colors"></el-rate>
+              <el-rate disabled v-model="child.rate" :colors="rateColors"></el-rate>
             </p>
             <p>{{child.content}}</p>
             <p>{{child.time}}</p>
@@ -193,7 +324,7 @@ export default {
       currentRate: 4.5,
       format: ["XLS", "XML", "JSON", "CSV"],
       radio: "基本信息",
-      colors: [
+      rateColors: [
         "rgba(255, 129, 19, 1)",
         "rgba(255, 129, 19, 1)",
         "rgba(255, 129, 19, 1)"
@@ -205,7 +336,109 @@ export default {
       rate5: 5,
       textarea1: "",
       textarea2: "",
+      textarea3: "",
+      // 数据项表格数据
+      dataItemData: [
+        {
+          date: "2016-05-02",
+          name: "WangXiaohu",
+          cname: "王小虎",
+          type: "TYPE",
+          length: "TYPE",
+          limit: "TYPE",
+          quote: "本科专业",
+          source: "TYPE"
+        },
+        {
+          date: "2016-05-02",
+          name: "WangXiaohu",
+          cname: "王小虎",
+          type: "TYPE",
+          length: "",
+          limit: "TYPE",
+          quote: "",
+          source: "TYPE"
+        },
+        {
+          date: "2016-05-02",
+          name: "WangXiaohu",
+          cname: "王小虎",
+          type: "TYPE",
+          length: "TYPE",
+          limit: "TYPE",
+          quote: "中华人民共和国",
+          source: "TYPE"
+        }
+      ],
+      dataItemTitle: [
+        { prop: "date", label: "数据项", width: "180" },
+        { prop: "name", label: "数据项名", width: "180" },
+        { prop: "cname", label: "中文名称", width: "" },
+        { prop: "type", label: "类型", width: "" },
+        { prop: "length", label: "长度", width: "" },
+        { prop: "limit", label: "约束", width: "" },
+        { prop: "quote", label: "引用", width: "" },
+        { prop: "source", label: "来源", width: "" }
+      ],
+      // 当前页
+      pageIndex: 1,
+      // 每页数量
+      pageSize: 15,
+      // 数据详情
+      showFilter: true,
+      // 数据详情查询选项
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕"
+        },
+        {
+          value: "选项2",
+          label: "双皮奶"
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎"
+        },
+        {
+          value: "选项4",
+          label: "龙须面"
+        },
+        {
+          value: "选项5",
+          label: "北京烤鸭"
+        }
+      ],
+      value: "",
+      input: "",
+
+      filterCount: 1,
+      // 文件下载
+      downloadData: [
+        {
+          format: "json",
+          size: "5 MB",
+          time: "2019年7月10日"
+        },
+        {
+          format: "xls",
+          size: "5 MB",
+          time: "2019年7月10日"
+        },
+        {
+          format: "xml",
+          size: "5 MB",
+          time: "2019年7月10日"
+        },
+        {
+          format: "csv",
+          size: "5 MB",
+          time: "2019年7月10日"
+        }
+      ],
+      // 评论开关
       evaluationToggle: true,
+      // 全部 好评 中评 差评
       activeName: "first",
       evaluation: [
         {
@@ -301,9 +534,18 @@ export default {
     };
   },
   methods: {
+    // 分页
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    // 评论切换
     handleClick(tab, event) {
       console.log(tab, event);
     },
+    // 回复评论
     replyEvaluation(item) {
       console.log(item);
       if (item.showReplyInput) {
@@ -312,7 +554,10 @@ export default {
         this.$set(item, "showReplyInput", true);
       }
     },
-    likesEvaluation() {}
+    // 点赞评论
+    likesEvaluation() {},
+    // 文件下载
+    downloadCatalog() {}
   },
   filters: {
     addZero(value) {
@@ -422,7 +667,7 @@ export default {
       float: left;
     }
   }
-  &__form {
+  &__basic {
     width: 1280px;
     h3 {
       font-size: 18px;
@@ -452,6 +697,112 @@ export default {
             border-left: 1px solid $color-header-10;
           }
         }
+      }
+    }
+  }
+  &__dataitem {
+    width: 1280px;
+    .el-table {
+      width: 100%;
+      margin-bottom: 24px;
+      .el-link {
+        font-size: 12px;
+      }
+    }
+    .el-pagination {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+  }
+  &__datadetails {
+    width: 1280px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    > button {
+      float: left;
+      margin-right: 50px;
+      margin-bottom: 24px;
+    }
+    &_filter {
+      float: left;
+      &_item {
+        height: 32px;
+        margin-bottom: 12px;
+        .el-select {
+          float: left;
+        }
+        .el-input {
+          float: left;
+          width: 215px;
+          margin-right: 20px;
+        }
+        .el-icon-circle-plus {
+          font-size: 20px;
+          line-height: 32px;
+          margin-right: 20px;
+          color: $color-blue;
+          cursor: pointer;
+        }
+        .el-icon-remove {
+          font-size: 20px;
+          line-height: 32px;
+          margin-right: 20px;
+          color: rgba(230, 0, 18, 1);
+          cursor: pointer;
+        }
+      }
+      > .el-button {
+        margin-bottom: 24px;
+      }
+    }
+    &_count {
+      font-size: 14px;
+      margin-bottom: 12px;
+      b {
+        font-size: 20px;
+        color: $color-blue;
+        margin: 0 4px;
+      }
+    }
+    .el-table {
+      width: 100%;
+      margin-bottom: 24px;
+      .el-link {
+        font-size: 12px;
+      }
+    }
+    .el-pagination {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+  }
+  &__download {
+    width: 1280px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    .cell {
+      text-align: center;
+    }
+  }
+  &__feedback {
+    width: 1280px;
+    h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    &_text {
+      .el-textarea {
+        margin-bottom: 8px;
+        textarea {
+          max-height: 114px !important;
+          min-height: 114px !important;
+        }
+      }
+      button {
+        float: right;
+        margin-bottom: 24px;
       }
     }
   }

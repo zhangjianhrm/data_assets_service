@@ -14,7 +14,7 @@
     </el-menu-item>
     <el-menu-item v-for="(item,index) in navItem" :key="index" :index="item.route">{{item.name}}</el-menu-item>
     <el-menu-item index="/" class="header__avatar">
-      <img src="https://xue-static.uiiiuiii.com/basic_course_timg_waiting.jpg" />
+      <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
     </el-menu-item>
   </el-menu>
 </template>
@@ -36,11 +36,11 @@ export default {
         { name: "首页", route: "/" },
         // { name: "新首页", route: "/new_home" },
         { name: "信息标准", route: "/info_standard" },
-        { name: "数据目录", route: "/data_catalog/catalog" },
+        { name: "数据目录", route: "/data_catalog" },
         { name: "API 目录", route: "/x" },
         { name: "数据管理", route: "/data_management" },
-        { name: "数据质量", route: "/xxx" },
-        { name: "数据监控与统计", route: "/xxxx" },
+        { name: "数据质量", route: "/data_quality" },
+        { name: "数据监控与统计", route: "/data_monitor" },
         { name: "数据地图", route: "/data_map" }
       ],
       activeIndex: this.$route.path.match(/\/\w*/)[0]
@@ -50,8 +50,11 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       // eslint-disable-next-line
-      console.log(key, keyPath);
-      // console.log(this.$route.path.match(/\/\w*/)[0]);
+      this.$nextTick(() => {
+        // console.log(key, keyPath);
+        // console.log(this.$route.path.match(/\/\w*/)[0]);
+        // console.log(window.location.href);
+      });
     }
   }
 };

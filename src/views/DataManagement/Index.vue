@@ -11,6 +11,7 @@ export default {
 <style lang="scss">
 .data-management {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

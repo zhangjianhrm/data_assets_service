@@ -6599,7 +6599,7 @@
         .pos2,
         .planet,
         &.orbit {
-          animation-duration: 9s;
+          animation-duration: 12s;
         }
         .pos {
           top: -1%;
@@ -6640,7 +6640,7 @@
         .pos,
         .planet,
         &.orbit {
-          animation-duration: 7.38237s;
+          animation-duration: 15s;
         }
       }
       // 地球

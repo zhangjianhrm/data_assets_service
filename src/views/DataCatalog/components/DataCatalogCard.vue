@@ -15,7 +15,7 @@
         v-show="selected.length"
         style="font-size:14px;margin-left:10px;"
       >已选择 {{selected.length}} 个</span>
-      <el-input placeholder="代码 / 代码名称" v-model="input3" size="small">
+      <el-input placeholder="数据目录" v-model="input3" size="small">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
       <el-button-group class="data-catalog-card__op_sort">
@@ -52,7 +52,7 @@
     <el-pagination
       background
       class="data-catalog-card__pagination"
-      layout="slot, prev, pager, next, sizes, jumper"
+      layout="total, prev, pager, next, sizes, jumper"
       :page-size="pageSize"
       :page-sizes="[15, 30]"
       :total="cardData.length"
@@ -60,10 +60,10 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
-      <span class="data-catalog-card__pagination_total">
+      <!-- <span class="data-catalog-card__pagination_total">
         共
         <b>{{cardData.length}}</b> 条数据
-      </span>
+      </span> -->
     </el-pagination>
   </div>
 </template>
@@ -202,6 +202,7 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
+    // 查看详情
     goDetails(id, name) {
       console.log(id, name);
       this.$router.push({
@@ -272,51 +273,51 @@ export default {
     margin-bottom: 48px;
     display: flex;
     justify-content: center;
-    &_total {
-      margin-right: 15px;
-      color: rgba(66, 78, 103, 1);
-      line-height: 36px !important;
-      b {
-        color: $color-blue;
-      }
-    }
-    .btn-prev,
-    .btn-next {
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(232, 232, 232, 1);
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 1) !important;
-    }
-    ul {
-      li {
-        box-sizing: border-box;
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 1) !important;
-        border: 1px solid rgba(232, 232, 232, 1) !important;
-        border-radius: 3px !important;
-        line-height: 38px;
-        &.active {
-          background: $color-blue !important;
-          & + li {
-            border: 1px solid rgba(232, 232, 232, 1);
-          }
-        }
-      }
-    }
-    .el-input__inner {
-      height: 40px !important;
-      border: 1px solid rgba(232, 232, 232, 1) !important;
-    }
-    .el-pagination__jump {
-      color: rgba(66, 78, 103, 1);
-    }
-    .el-pager li.btn-quicknext,
-    .el-pager li.btn-quickprev {
-      line-height: 38px;
-      color: rgba(66, 78, 103, 1);
-    }
+    // &_total {
+    //   margin-right: 15px;
+    //   color: rgba(66, 78, 103, 1);
+    //   line-height: 36px !important;
+    //   b {
+    //     color: $color-blue;
+    //   }
+    // }
+    // .btn-prev,
+    // .btn-next {
+    //   width: 40px;
+    //   height: 40px;
+    //   border: 1px solid rgba(232, 232, 232, 1);
+    //   border-radius: 3px;
+    //   background: rgba(255, 255, 255, 1) !important;
+    // }
+    // ul {
+    //   li {
+    //     box-sizing: border-box;
+    //     width: 40px;
+    //     height: 40px;
+    //     background: rgba(255, 255, 255, 1) !important;
+    //     border: 1px solid rgba(232, 232, 232, 1) !important;
+    //     border-radius: 3px !important;
+    //     line-height: 38px;
+    //     &.active {
+    //       background: $color-blue !important;
+    //       & + li {
+    //         border: 1px solid rgba(232, 232, 232, 1);
+    //       }
+    //     }
+    //   }
+    // }
+    // .el-input__inner {
+    //   height: 40px !important;
+    //   border: 1px solid rgba(232, 232, 232, 1) !important;
+    // }
+    // .el-pagination__jump {
+    //   color: rgba(66, 78, 103, 1);
+    // }
+    // .el-pager li.btn-quicknext,
+    // .el-pager li.btn-quickprev {
+    //   line-height: 38px;
+    //   color: rgba(66, 78, 103, 1);
+    // }
   }
 }
 </style>

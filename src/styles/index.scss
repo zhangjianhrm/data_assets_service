@@ -24,3 +24,20 @@ hr {
   border: 1px solid $color-blue !important;
   padding: 0 9px !important;
 }
+// 表格
+.el-table {
+  thead {
+    tr {
+      th {
+        // height: 40px;
+        background: rgba(12, 0, 53, 0.08);
+        color: $color-header;
+      }
+    }
+  }
+  tbody {
+    tr:nth-child(2n) {
+      background: rgba(250, 250, 251, 1);
+    }
+  }
+}

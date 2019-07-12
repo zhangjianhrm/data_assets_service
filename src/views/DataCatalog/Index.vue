@@ -3,9 +3,11 @@
     <div class="data-catalog__title">
       <h3>数据目录首页</h3>
     </div>
-    <RateBarGraph></RateBarGraph>
+
+    <el-button @click="$router.push('/data_catalog/catalog')" style="margin:100px auto;">数据目录</el-button>
+    <!-- <RateBarGraph></RateBarGraph>
     <DownloadRank></DownloadRank>
-    <DataCatalogCategory></DataCatalogCategory>
+    <DataCatalogCategory></DataCatalogCategory>-->
   </div>
 </template>
 <script>
@@ -14,14 +16,17 @@ export default {
   components: {
     RateBarGraph: () => import("@/views/DataCatalog/components/StatBarGraph"),
     DownloadRank: () => import("@/views/DataCatalog/components/DownloadRank"),
-    DataCatalogCategory: () => import("@/views/DataCatalog/components/DataCatalogCategory"),
+    DataCatalogCategory: () =>
+      import("@/views/DataCatalog/components/DataCatalogCategory")
   }
 };
 </script>
 <style lang="scss">
 @import "~@/styles/variables.scss";
 .data-catalog {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &__title {
     width: 100%;
     height: 160px;

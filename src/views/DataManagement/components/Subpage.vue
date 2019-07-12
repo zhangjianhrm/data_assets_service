@@ -806,6 +806,32 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /*滚动条整体部分*/
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: transparent;
+  }
+  /*滚动条中可以拖动的那部分*/
+  ::-webkit-scrollbar-thumb {
+    background-color: $sw-scrollbar;
+    border-radius: 4px;
+    &:hover {
+      background-color: $sw-scrollbar-hover;
+    }
+  }
+  /*滚动条两端的箭头*/
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  /*滚动条轨道*/
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+  .el-table__fixed-right {
+    height: 100% !important;
+  }
   &__title {
     width: 1280px;
     height: 32px;
