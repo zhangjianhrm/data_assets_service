@@ -1,8 +1,13 @@
-import Layout from "@/components/Layout/Index";
+// import Layout from "@/components/Layout/Index";
 
 const ModulesRouter = {
   path: "/data_monitor",
-  component: Layout,
+  // component: Layout,
+  component: {
+    render(h) {
+      return h("router-view");
+    }
+  },
   children: [
     // 数据管理首页
     {

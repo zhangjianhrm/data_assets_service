@@ -1,52 +1,56 @@
 <template>
-  <div class="map">
-    <div class="map-wrap" id="data-map-v3"></div>
+  <div class="data-map">
+    <div class="data-map__content"></div>
+    <div class="data-map__center">
+      <svg-icon icon-class="glow" class="data-map__center_glow"></svg-icon>
+      <svg-icon icon-class="ball" class="data-map__center_ball"></svg-icon>
+      <div class="data-map__center_orbit">
+        <div class="data-map__center_orbit_1"></div>
+        <div class="data-map__center_orbit_2"></div>
+      </div>
+      <svg-icon icon-class="orbit-max" class="data-map__center_orbit-max"></svg-icon>
+      <svg-icon icon-class="orbit-top" class="data-map__center_orbit-top"></svg-icon>
+    </div>
   </div>
 </template>
 <script>
 import load from "@/utils/load.js"; // 加载 Js
 
 export default {
-  name: "DataMapV3",
+  name: "DataMap",
   props: {},
   data() {
     return {
       // 地图数据
       pointData: [
         { name: "全量库", coord: [105, 40] }, // 中心点放在最前面
-        { name: "财务系统", coord: [80, 50, { in: 10, out: 9 }] },
-        { name: "教务系统", coord: [105, 30, { in: 10, out: 9 }] },
-        { name: "其他", coord: [105, 50, { in: 10, out: 9 }] },
-        { name: "离校系统", coord: [80, 40, { in: 10, out: 0 }] },
-        { name: "人事系统", coord: [130, 45, { in: 10, out: 9 }] },
-        { name: "图书馆系统", coord: [80, 35, { in: 10, out: 9 }] },
-        { name: "宿管系统", coord: [130, 50, { in: 10, out: 0 }] },
-        { name: "学工系统", coord: [130, 30, { in: 10, out: 9 }] },
-        { name: "一卡通系统", coord: [80, 30, { in: 10, out: 9 }] },
-        { name: "迎新系统", coord: [130, 35, { in: 10, out: 9 }] },
-        { name: "招生系统", coord: [80, 45, { in: 10, out: 9 }] },
-        { name: "资产系统", coord: [130, 40, { in: 1, out: 1 }] }
+        { name: "财务系统", coord: [96, 43, { in: 10, out: 9 }] },
+        { name: "图书馆系统", coord: [92, 40, { in: 10, out: 0 }] },
+        { name: "宿管系统", coord: [96, 36, { in: 10, out: 9 }] },
+        { name: "一卡通系统", coord: [105, 35, { in: 10, out: 9 }] },
+        { name: "资产系统", coord: [114, 36, { in: 10, out: 9 }] },
+        { name: "人事系统", coord: [118, 40, { in: 10, out: 9 }] },
+        { name: "教务系统", coord: [114, 43, { in: 10, out: 0 }] }
       ],
-      planePath: "arrow", // 箭头样式，包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+      planePath: "rect", // 箭头样式，包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
       lineColor: ["#71D197", "#1877DF"], // 线条颜色
-      lineWidth: 1, // 线条宽度
-      lineCurveness: 0.2, // 线条曲率
+      lineWidth: 0.5, // 线条宽度
+      lineCurveness: 0.1, // 线条曲率
       lineOpacity: 0.4, // 线条透明度
-      dataCenter: require("@/assets/icon/datamap/全量库.png"),
-      dataItem: require("@/assets/icon/03.png")
+      dataCenter: require("@/assets/icon/datamap/全量库.png")
     };
   },
   async created() {
-    await load(
-      "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
-    );
-    await load(
-      "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
-    );
-    this.createMap();
+    // await load(
+    //   "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
+    // );
+    // await load(
+    //   "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
+    // );
+    // this.createMap();
   },
   mounted() {
-    // this.computedPos();
+    this.createMap();
   },
   methods: {
     // 自动圆形排列
@@ -81,7 +85,7 @@ export default {
         name: data[0].name,
         value: data[0].coord,
         symbol: "image://" + this.dataCenter,
-        symbolSize: 230
+        symbolSize: 0
       });
       return pointCoord;
     },
@@ -120,7 +124,7 @@ export default {
     // 创建地图
     createMap() {
       // eslint-disable-next-line
-      let myChart = echarts.init(document.querySelector("#data-map-v3"));
+      let myChart = echarts.init(document.querySelector(".data-map__content"));
       // 图表配置
       myChart.setOption(
         {
@@ -128,7 +132,8 @@ export default {
           geo: {
             map: "china",
             center: this.pointData[0].coord, // 地图中心
-            roam: true, // 是否可拖动
+            roam: false, // 是否可拖动
+            zoom: 2,
             silent: true, // 是否禁用选中
             aspectScale: 1, // 长宽比
             itemStyle: {
@@ -149,7 +154,7 @@ export default {
                 period: 6, // 特效动画的时间，单位为 s
                 trailLength: 0.1,
                 symbol: this.planePath,
-                symbolSize: 8,
+                symbolSize: 2,
                 color: this.lineColor[0]
               },
               // 标签
@@ -186,7 +191,7 @@ export default {
                 trailLength: 0.1,
                 color: this.lineColor[1],
                 symbol: this.planePath,
-                symbolSize: 8
+                symbolSize: 2
               },
               // 标签
               label: {
@@ -225,7 +230,7 @@ export default {
                 fontFamily: "PingFang SC",
                 fontWeight: "lighter",
                 distance: 14,
-                position: "bottom",
+                position: "top",
                 formatter: "{b}"
               },
               zlevel: 2
@@ -268,11 +273,97 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.map {
-  &-wrap {
-    height: calc(100vh - 80px);
-    background-image: url(../../assets/bg.jpg);
+<style lang="scss">
+.data-map {
+  width: 100%;
+  // height: calc(100vh - 80px);
+  height: 100vh;
+  position: relative;
+  background: #000;
+  // background-image: url(../../assets/bg.jpg);
+  &__content {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: -200px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+  &__center {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    > svg,
+    &_orbit {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    &_glow {
+      top: 54px;
+      width: 365px !important;
+      height: 232px !important;
+    }
+    &_ball {
+      top: 85px;
+      width: 95px !important;
+      height: 95px !important;
+    }
+    &_orbit {
+      width: 500px;
+      height: 500px;
+      transform-style: preserve-3d;
+      transform: rotateX(71deg);
+      > * {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+      }
+      &_1 {
+        width: 350px;
+        height: 350px;
+        top: -90px;
+        border-radius: 50%;
+        border: 3px dashed #1375dc;
+        animation: rotate 50s linear infinite;
+      }
+      &_2 {
+        width: 470px;
+        height: 470px;
+        border-radius: 50%;
+        border: 1px dashed #29f4ee;
+        animation: rotate 50s linear infinite;
+      }
+    }
+    &_orbit-max {
+      width: 500px !important;
+      height: 182px !important;
+      top: 168px;
+    }
+    &_orbit-top {
+      width: 280px !important;
+      height: 56px !important;
+      top: 112px;
+    }
+    @keyframes rotate {
+      0% {
+        transform: rotate(360deg);
+      }
+      100% {
+        transform: rotate(0);
+      }
+    }
   }
 }
 </style>

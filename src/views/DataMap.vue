@@ -1,13 +1,13 @@
 <template>
   <div>
-    <data-map-v1 :pointData="pointData"></data-map-v1>
-    <data-map-v2></data-map-v2>
-    <data-map-v3></data-map-v3>
+    <!-- <data-map-v1 :pointData="pointData"></data-map-v1>
+    <data-map-v2></data-map-v2> -->
+    <!-- <data-map-v3></data-map-v3> -->
   </div>
 </template>
 <script>
 export default {
-  name: "DataMap",
+  name: "DataMapTest",
   components: {
     DataMapV1: () => import("@/components/DataMap/DataMapV1"),
     DataMapV2: () => import("@/components/DataMap/DataMapV2"),
