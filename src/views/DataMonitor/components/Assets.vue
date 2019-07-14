@@ -28,6 +28,7 @@
   </div>
 </template>
 <script>
+import load from "@/utils/load.js"; // 加载 Js
 export default {
   name: "DataMonitorAssets",
   data() {
@@ -40,9 +41,16 @@ export default {
       radio: "本周"
     };
   },
-  mounted() {
+  async created() {
+    await load(
+      "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
+    );
+    await load(
+      "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
+    );
     this.createGraph();
   },
+  mounted() {},
   methods: {
     createGraph() {
       var dom = document.querySelector(".data-monitor__assets_graph_content");
@@ -83,27 +91,26 @@ export default {
             return [pt[0], 130];
           }
         },
+        // 图例组件。
+        legend: {
+          // data: this.systemName,
+          show: true
+        },
+        grid: {
+          top: 15,
+          right: 0,
+          left: 0,
+          bottom: 0,
+          // height: 160,
+          containLabel: true
+        },
         xAxis: {
           type: "time",
-          // boundaryGap: [0, 0],
-          axisPointer: {
-            value: "2016-10-7",
-            snap: true,
+          // 坐标轴轴线相关设置。
+          axisLine: {
+            show: false,
             lineStyle: {
-              color: "#004E52",
-              opacity: 0.5,
-              width: 2
-            },
-            label: {
-              show: true,
-              formatter: function(params) {
-                return echarts.format.formatTime("yyyy-MM-dd", params.value);
-              },
-              backgroundColor: "#004E52"
-            },
-            handle: {
-              show: true,
-              color: "#004E52"
+              color: "rgba(255, 255, 255, 0.3)"
             }
           },
           splitLine: {
@@ -113,27 +120,29 @@ export default {
         yAxis: {
           type: "value",
           axisTick: {
-            inside: true
-          },
-          splitLine: {
             show: false
           },
+          // 坐标轴轴线相关设置。
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: "rgba(255, 255, 255, 0.3)"
+            }
+          },
+          // 坐标轴在 grid 区域中的分隔线。
+          splitLine: {
+            show: true,
+            lineStyle: { color: "rgba(255, 255, 255, 0.1)" }
+          },
           axisLabel: {
-            inside: true,
+            inside: false,
             formatter: "{value}\n"
           },
           z: 10
         },
-        grid: {
-          top: 20,
-          left: 0,
-          right: 0,
-          bottom: 0
-          // height: 160
-        },
         series: [
           {
-            name: "模拟数据",
+            name: "模拟数据1",
             type: "line",
             smooth: true,
             symbol: "circle",
@@ -141,7 +150,7 @@ export default {
             sampling: "average",
             itemStyle: {
               normal: {
-                color: "#8ec6ad"
+                color: "rgba(98, 202, 255, 1)"
               }
             },
             stack: "a",
@@ -150,11 +159,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#8ec6ad"
+                    color: "rgba(22, 115, 217, 0.5)"
                   },
                   {
                     offset: 1,
-                    color: "#ffe"
+                    color: "rgba(22, 115, 217, 0.1)"
                   }
                 ])
               }
@@ -162,7 +171,7 @@ export default {
             data: data
           },
           {
-            name: "模拟数据",
+            name: "模拟数据2",
             type: "line",
             smooth: true,
             stack: "a",
@@ -171,7 +180,7 @@ export default {
             sampling: "average",
             itemStyle: {
               normal: {
-                color: "#d68262"
+                color: "rgba(98, 202, 255, 1)"
               }
             },
             areaStyle: {
@@ -179,11 +188,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#d68262"
+                    color: "rgba(31, 153, 120, 0.5)"
                   },
                   {
                     offset: 1,
-                    color: "#ffe"
+                    color: "rgba(31, 153, 120, 0.1)"
                   }
                 ])
               }

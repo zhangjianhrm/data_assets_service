@@ -41,17 +41,15 @@ export default {
     };
   },
   async created() {
-    // await load(
-    //   "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
-    // );
-    // await load(
-    //   "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
-    // );
-    // this.createMap();
-  },
-  mounted() {
+    await load(
+      "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
+    );
+    await load(
+      "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
+    );
     this.createMap();
   },
+  mounted() {},
   methods: {
     // 自动圆形排列
     computedPos() {
@@ -279,7 +277,6 @@ export default {
   // height: calc(100vh - 80px);
   height: 100vh;
   position: relative;
-  background: #000;
   // background-image: url(../../assets/bg.jpg);
   &__content {
     position: absolute;

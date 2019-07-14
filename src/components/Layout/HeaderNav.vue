@@ -41,7 +41,7 @@ export default {
         { name: "数据管理", route: "/data_management" },
         { name: "数据质量", route: "/data_quality" },
         { name: "数据监控与统计", route: "/data_monitor" },
-        { name: "数据地图", route: "/data_map" }
+        // { name: "数据地图", route: "/data_map" }
       ],
       activeIndex: this.$route.path.match(/\/\w*/)[0]
     };
