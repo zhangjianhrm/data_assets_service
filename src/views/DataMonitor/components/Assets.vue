@@ -45,9 +45,6 @@ export default {
     await load(
       "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
     );
-    await load(
-      "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
-    );
     this.createGraph();
   },
   mounted() {},
@@ -93,16 +90,21 @@ export default {
         },
         // 图例组件。
         legend: {
+          itemWidth: 8,
+          itemHeight: 8,
+          textStyle: {
+            color: "#fff",
+            fontSize: "10"
+          },
           // data: this.systemName,
           show: true
         },
         grid: {
-          top: 15,
-          right: 0,
+          containLabel: true,
+          top: 20,
+          right: 20,
           left: 0,
-          bottom: 0,
-          // height: 160,
-          containLabel: true
+          bottom: 0
         },
         xAxis: {
           type: "time",
@@ -119,6 +121,7 @@ export default {
         },
         yAxis: {
           type: "value",
+          // 坐标轴刻度
           axisTick: {
             show: false
           },
@@ -215,11 +218,14 @@ export default {
   width: 350px;
   height: 290px;
   border: 2px solid rgba(32, 82, 160, 1);
-  background: linear-gradient(rgba(11, 1, 52, 1), rgba(23, 41, 77, 1));
+  background: linear-gradient(rgba(11, 1, 52, 0), rgba(23, 41, 77, 1));
   color: #fff;
   box-sizing: border-box;
   padding: 14px;
+  margin-bottom: 20px;
   > h5 {
+    height: 12px;
+    line-height: 1;
     font-size: 12px;
     margin-bottom: 10px;
     svg {
@@ -261,19 +267,12 @@ export default {
   }
   &_graph {
     &_title {
+      margin-bottom: 10px;
       b {
         font-size: 14px;
       }
       .el-radio-group {
         float: right;
-      }
-      .el-radio-button__inner {
-        background: transparent;
-        border: 1px solid $color-blue;
-        padding: 4px 10px;
-      }
-      .el-radio-button:first-child .el-radio-button__inner {
-        border-left: 1px solid $color-blue;
       }
     }
     &_content {

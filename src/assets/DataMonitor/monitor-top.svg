@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1920 150" style="enable-background:new 0 0 1920 150;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:none;stroke:#2052A0;stroke-width:1.1856;stroke-miterlimit:10;}
+</style>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="960" y1="-69.2534" x2="960" y2="-175.0534" gradientTransform="matrix(1 0 0 1 0 218.1534)">
+	<stop  offset="0" style="stop-color:#17294C"/>
+	<stop  offset="1" style="stop-color:#0B0134;stop-opacity:0"/>
+</linearGradient>
+<polygon class="st0" points="0,43.1 0,112.4 730.2,132.9 748.8,148.9 1151.5,148.9 1170.5,134.1 1920,111.9 1920,43.1 "/>
+<g>
+	
+		<image style="overflow:visible;opacity:0.4;enable-background:new    ;" width="8067" height="225" xlink:href="592CACA3.png"  transform="matrix(0.2399 0 0 0.2357 -7.3534 103.8833)">
+	</image>
+	<g>
+		<polyline class="st1" points="0,112.4 730.2,132.9 748.8,148.9 1151.5,148.9 1170.5,134.1 1920,111.9 		"/>
+	</g>
+</g>
+</svg>
