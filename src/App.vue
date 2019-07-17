@@ -4,7 +4,6 @@
       <router-view name="header-nav"></router-view>
       <router-view></router-view>
       <el-backtop target=".app-scrollbar"></el-backtop>
-      <!-- <back-to-top /> -->
     </el-scrollbar>
   </div>
 </template>
@@ -12,9 +11,7 @@
 <script>
 export default {
   name: "DataAssetsService",
-  components: {
-    BackToTop: () => import("@/components/BackToTop")
-  },
+  components: {},
   data() {
     return {};
   }
@@ -24,8 +21,6 @@ export default {
 #app {
   // background: rgb(250, 250, 250);
   .app-scrollbar {
-    // height: 100vh;
-    // height: 100%;
     overflow-x: hidden !important;
   }
 }

@@ -3,7 +3,7 @@
     <div class="data-monitor__top_num">
       <div class="data-monitor__top_num_item" v-for="(item,index) in countDisplay" :key="index">
         <p>{{item.name}}</p>
-        <DigitRoll :rollDigits="item.total" />
+        <digit-roll :rollDigits="item.total" />
       </div>
     </div>
     <div class="data-monitor__top_logo">

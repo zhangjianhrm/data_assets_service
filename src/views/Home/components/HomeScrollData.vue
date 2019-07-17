@@ -1,41 +1,31 @@
 <template>
   <div class="home__scroll_data">
     <span>数据总量</span>
-    <b>
+    <div>
       <i>{{time | formatDate}}</i>
-      <count-to :startVal="startVal" :endVal="endVal" :duration="duration" separator=","></count-to>
-    </b>
+      <digit-roll :rollDigits="endVal" />
+    </div>
     <span>条</span>
   </div>
 </template>
 <script>
-import countTo from "vue-count-to";
 export default {
   name: "HomeScrollData",
-  components: { countTo },
+  components: { DigitRoll: () => import("@huoyu/vue-digitroll") },
   data() {
     return {
-      // 需要滚动的时间
-      duration: 1000,
-      // 初始值
-      startVal: 0,
       // 最终值
-      endVal: 1546234582581,
+      endVal: 1546231234,
       time: Date.parse(new Date())
     };
   },
   created() {
-    this.getData();
     this.getTime();
   },
   destroyed() {
     clearTimeout(this.timer);
   },
   methods: {
-    // 这是获取数据的函数
-    getData() {
-      this.endVal += 75;
-    },
     getTime() {
       this.time += 1000;
     },
@@ -53,9 +43,6 @@ export default {
     }
   },
   watch: {
-    // endVal() {
-    //   this.timerData();
-    // },
     time() {
       this.timerTime();
     }
@@ -66,24 +53,58 @@ export default {
 @import "~@/styles/variables.scss";
 .home__scroll_data {
   width: 1210px;
-  height: 60px;
-  text-align: center;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   > span {
     font-size: 18px;
+    line-height: 30px;
     color: rgba(159, 184, 255, 1);
-    font-weight: bolder;
+    font-weight: 600;
   }
-  > b {
+  > div {
     color: #fff;
     font-size: 56px;
     position: relative;
+    margin: 0 10px;
+    .d-roll-wrapper {
+      margin: 0;
+      .d-roll-item {
+        // height: 56px !important;
+        position: relative;
+        overflow: unset;
+      }
+      .d-roll-item > .d-roll-bar > div {
+        line-height: 56px !important;
+      }
+      .d-roll-list {
+        li:nth-last-child(3n) {
+          margin-left: 30px;
+          &::before {
+            content: ",";
+            display: block;
+            width: 30px;
+            line-height: 56px;
+            position: absolute;
+            left: -36px;
+          }
+        }
+        li:nth-child(1) {
+          margin-left: 0;
+          &::before {
+            content: unset;
+          }
+        }
+      }
+    }
     > i {
       position: absolute;
-      top: -14px;
-      right: 20px;
+      top: -16px;
+      right: 0px;
       font-size: 16px;
+      line-height: 1;
       font-style: normal;
-      font-weight: normal;
     }
   }
 }
