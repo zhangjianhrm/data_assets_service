@@ -1,14 +1,15 @@
 <template>
   <div class="data-monitor__top">
-    <div class="data-monitor__top_num">
-      <div class="data-monitor__top_num_item" v-for="(item,index) in countDisplay" :key="index">
+    <div class="data-monitor__top_left">
+      <div class="data-monitor__top_left_item" v-for="(item,index) in countDisplay" :key="index">
         <p>{{item.name}}</p>
         <digit-roll :rollDigits="item.total" />
       </div>
     </div>
     <div class="data-monitor__top_logo">
       <svg-icon icon-class="swlogo"></svg-icon>
-      <p>数据资产监控中心大屏</p>
+      <svg-icon icon-class="data-monitor-title-1"></svg-icon>
+      <svg-icon icon-class="data-monitor-title-2"></svg-icon>
     </div>
     <div class="data-monitor__top_grade">
       <div>
@@ -35,8 +36,8 @@
         <p>问题数据上升率</p>
       </div>
     </div>
-    <div class="data-monitor__top_people">
-      <div class="data-monitor__top_people_item" v-for="item in 3" :key="item">
+    <div class="data-monitor__top_right">
+      <div class="data-monitor__top_right_item" v-for="item in 3" :key="item">
         <el-rate
           disabled
           v-model="value"
@@ -100,7 +101,7 @@ export default {
   background-size: cover;
   color: #fff;
   box-sizing: border-box;
-  &_num {
+  &_left {
     // width: 450px;
     float: left;
     &_item {
@@ -147,25 +148,46 @@ export default {
     position: absolute;
     right: 0;
     left: 0;
-    top: 7px;
+    top: 0;
+    bottom: 0;
     margin: auto;
-    width: 168px;
-    svg {
-      width: 20px !important;
-      height: 20px !important;
+    width: 100px;
+    height: 100px;
+    svg:nth-child(1) {
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0.1;
     }
-    p {
-      float: right;
-      font-size: 14px;
+    svg:nth-child(2) {
+      position: absolute;
+      left: -211px;
+      top: -20px;
+      bottom: 0;
+      margin: auto;
+      width: 100px !important;
+      height: 16px !important;
+      color: rgba(159, 184, 255, 1);
+    }
+    svg:nth-child(3) {
+      position: absolute;
+      right: -211px;
+      top: -20px;
+      bottom: 0;
+      margin: auto;
+      width: 100px !important;
+      height: 16px !important;
+      color: rgba(159, 184, 255, 1);
     }
   }
   &_grade {
     position: absolute;
-    top: 32px;
+    top: 0;
     right: 0;
+    bottom: 0;
     left: 0;
     margin: auto;
     width: 300px;
+    height: 80px;
     display: flex;
     justify-content: space-between;
     > div {
@@ -188,41 +210,41 @@ export default {
     }
     > div:nth-child(1) {
       svg {
-        width: 50px !important;
-        height: 50px !important;
+        width: 60px !important;
+        height: 60px !important;
       }
       p:nth-child(2) {
-        line-height: 50px;
+        line-height: 60px;
         color: rgba(153, 46, 46, 1);
       }
     }
     > div:nth-child(2) {
       svg {
-        width: 70px !important;
-        height: 70px !important;
+        width: 80px !important;
+        height: 80px !important;
       }
       p:nth-child(2) {
         color: rgba(179, 108, 54, 1);
-        margin-top: 10px;
+        margin-top: 15px;
       }
     }
     > div:nth-child(3) {
       svg {
-        width: 50px !important;
-        height: 50px !important;
+        width: 60px !important;
+        height: 60px !important;
       }
       p:nth-child(2) {
-        line-height: 50px;
+        line-height: 60px;
         color: rgba(63, 100, 209, 1);
       }
     }
   }
-  &_people {
+  &_right {
     float: right;
     &_item {
       width: 130px;
       float: left;
-      margin-left: 30px;
+      margin-left: 12px;
       .el-rate {
         height: 16px;
         text-align: right;
@@ -280,12 +302,6 @@ export default {
   @media only screen and (min-width: 1920px) {
     padding: 20px;
     height: 140px;
-    &_logo {
-      top: 10px;
-    }
-    &_grade {
-      top: 50px;
-    }
   }
 }
 </style>

@@ -30,29 +30,25 @@
     </div>
     <div class="data-monitor__bottom_exchange" v-show="radio == '数据交换'">
       <h6>
-        <span>系统质量检测得分排名</span>
+        <span>异常作业列表</span>
         <span>
           <i>查看更多</i>
           <i class="el-icon-d-arrow-right"></i>
         </span>
       </h6>
       <el-row>
-        <el-col :span="7">系统名称</el-col>
-        <el-col :span="3">得分</el-col>
-        <el-col :span="5">数据总量</el-col>
-        <el-col :span="5">问题数据量</el-col>
-        <el-col :span="4">环比</el-col>
+        <el-col :span="5">作业名</el-col>
+        <el-col :span="5">源-目标系统</el-col>
+        <el-col :span="5">上次执行时间</el-col>
+        <el-col :span="5">计划下次执行时间</el-col>
+        <el-col :span="4">运行摘要信息</el-col>
       </el-row>
       <el-row v-for="(item,index) in exchangeTable" :key="index">
-        <el-col :span="7">{{index+1}}.{{item.name}}</el-col>
-        <el-col :span="3">{{item.grade}}</el-col>
+        <el-col :span="5">{{index+1}}.{{item.name}}</el-col>
+        <el-col :span="5">{{item.grade}}</el-col>
         <el-col :span="5">{{item.total}}</el-col>
         <el-col :span="5">{{item.untreated}}</el-col>
-        <el-col :span="4">
-          <span>{{item.rate}}</span>
-          <i v-if="item.rate>0" class="el-icon-top"></i>
-          <i v-else class="el-icon-bottom"></i>
-        </el-col>
+        <el-col :span="4">{{item.rate}}</el-col>
       </el-row>
     </div>
     <div class="data-monitor__bottom_service" v-show="radio == '数据服务'">
@@ -117,25 +113,25 @@ export default {
       // 数据交换
       exchangeTable: [
         {
-          name: "人事系统",
-          grade: 8.7,
-          total: 12344,
-          untreated: 12,
-          rate: 0.04
+          name: "字段处理测试",
+          grade: "共享库-宿舍系统",
+          total: "2019-7-18 09:24",
+          untreated: "2019-7-18 09:24",
+          rate: "运行失败"
         },
         {
-          name: "一卡通系统",
-          grade: 6.1,
-          total: 12344,
-          untreated: 12,
-          rate: -0.01
+          name: "字段处理测试",
+          grade: "共享库-宿舍系统",
+          total: "2019-7-18 09:24",
+          untreated: "2019-7-18 09:24",
+          rate: "运行失败"
         },
         {
-          name: "科研系统",
-          grade: 5.9,
-          total: 12344,
-          untreated: 12,
-          rate: 0.04
+          name: "字段处理测试",
+          grade: "共享库-宿舍系统",
+          total: "2019-7-18 09:24",
+          untreated: "2019-7-18 09:24",
+          rate: "运行失败"
         }
       ]
     };
@@ -1114,6 +1110,7 @@ export default {
     .el-row {
       line-height: 26px;
       font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
       .el-col {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1131,13 +1128,7 @@ export default {
       background: rgba(0, 114, 201, 0.1);
     }
     .el-row:nth-child(2) {
-      color: rgba(216, 64, 64, 1);
-    }
-    .el-row:nth-child(3) {
-      color: rgba(204, 112, 41, 1);
-    }
-    .el-row:nth-child(4) {
-      color: rgba(179, 156, 54, 1);
+      color: rgba(255, 255, 255, 1);
     }
   }
   &_service {

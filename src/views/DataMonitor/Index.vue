@@ -158,5 +158,11 @@ export default {
   .el-radio-button:first-child .el-radio-button__inner {
     border-left: 1px solid $color-blue;
   }
+  // .el-carousel
+  .el-carousel__button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
 }
 </style>

@@ -15,8 +15,8 @@
       >
         <el-carousel-item v-for="itemChild in 3" :key="itemChild">
           <el-row>
-            <el-col :span="12">{{item.event}}</el-col>
-            <el-col :span="12">{{item.time}}</el-col>
+            <el-col :span="14">{{item.event}}</el-col>
+            <el-col :span="10">{{item.time}}</el-col>
           </el-row>
         </el-carousel-item>
       </el-carousel>
@@ -30,16 +30,16 @@ export default {
     return {
       table: [
         {
-          event: "用户陈肖下载了数据目录顶顶顶顶顶",
-          time: "2019年7月15日 17点14分"
+          event: "用户陈肖下载了数据目录",
+          time: "2019-7-15 17:14"
         },
         {
-          event: "用户李瑞秋下载了数据目录",
-          time: "2019年7月15日 17点14分"
+          event: "用户李瑞秋下载了很多的数据目录",
+          time: "2019-7-15 17:14"
         },
         {
           event: "用户朱阳亭下载了数据目录",
-          time: "2019年7月15日 17点14分"
+          time: "2019-7-15 17:14"
         }
       ]
     };
@@ -87,6 +87,10 @@ export default {
       }
       .el-col:nth-child(1) {
         padding-left: 10px;
+      }
+      .el-col:nth-child(2) {
+        padding-right: 10px;
+        text-align: right;
       }
     }
     .el-carousel:nth-child(1) {

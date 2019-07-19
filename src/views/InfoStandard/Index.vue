@@ -18,7 +18,7 @@
           <svg-icon icon-class="model-standard" />
           <b>模型标准</b>
         </span>
-        <model-standard  v-if="activeName == 'model-standard'"></model-standard>
+        <model-standard v-if="activeName == 'model-standard'"></model-standard>
       </el-tab-pane>
       <el-tab-pane name="management-norms" :lazy="true">
         <span slot="label">

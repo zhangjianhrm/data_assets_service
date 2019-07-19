@@ -68,7 +68,7 @@ const ModulesRouter = {
     // 采标率
     {
       name: "RatePage",
-      path: "rate/:name/:month/:year",
+      path: "rate/name=:name&year=:year&month=:month",
       component: () => import("@/views/InfoStandard/components/Rate"),
       meta: {
         title: "采标率"

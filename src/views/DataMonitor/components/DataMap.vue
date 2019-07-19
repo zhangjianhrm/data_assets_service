@@ -45,7 +45,7 @@ export default {
         { name: "人事系统", coord: [118, 40, { in: 10, out: 9 }] },
         { name: "教务系统", coord: [114, 43, { in: 10, out: 0 }] }
       ],
-      planePath: "rect", // 箭头样式，包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+      planePath: "diamond", // 箭头样式，包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
       lineColor: ["#71D197", "#1877DF"], // 线条颜色
       lineWidth: 0.5, // 线条宽度
       lineCurveness: 0.1, // 线条曲率
@@ -175,12 +175,15 @@ export default {
           // 图例
           legend: {
             show: true,
+            itemWidth: 20,
+            itemHeight: 2,
             data: ["流入", "流出"],
-            top: 80,
+            bottom: 148,
             textStyle: {
-              color: "#fff"
+              color: "rgba(255,255,255,0.1)"
             },
-            selectedMode: "multiple"
+            selectedMode: "multiple",
+            zlevel: 2
           },
           // 系列列表
           series: [
@@ -196,8 +199,8 @@ export default {
                 period: 6, // 特效动画的时间，单位为 s
                 trailLength: 0.1,
                 symbol: this.planePath,
-                symbolSize: 2,
-                color: this.lineColor[0]
+                symbolSize: 2
+                // color: this.lineColor[0]
               },
               // 标签
               label: {
@@ -213,7 +216,23 @@ export default {
               },
               // 线条的颜色
               lineStyle: {
-                color: this.lineColor[0],
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#7effff" // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#43bcd1" // 100% 处的颜色
+                    }
+                  ]
+                },
                 width: this.lineWidth,
                 opacity: this.lineOpacity,
                 curveness: this.lineCurveness
@@ -231,13 +250,14 @@ export default {
                 show: true,
                 period: 6,
                 trailLength: 0.1,
-                color: this.lineColor[1],
+                // color: this.lineColor[1],
                 symbol: this.planePath,
                 symbolSize: 2
               },
               // 标签
               label: {
                 show: true,
+                color: "#fff",
                 position: "middle",
                 formatter: function(params) {
                   let txt = "";
@@ -249,7 +269,23 @@ export default {
               },
               // 线条的颜色
               lineStyle: {
-                color: this.lineColor[1],
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#f9dc5c" // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#ed254e" // 100% 处的颜色
+                    }
+                  ]
+                },
                 width: this.lineWidth,
                 opacity: this.lineOpacity,
                 curveness: this.lineCurveness

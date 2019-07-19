@@ -285,6 +285,18 @@ export default {
       let systemRank = echarts.init(
         document.querySelector(".rate-bar-graph__rank")
       );
+      // 采标率跳转
+      systemRank.on("click", params => {
+        console.log(params);
+        this.$router.push({
+          name: "RatePage",
+          params: {
+            name: params.seriesName,
+            month: params.name,
+            year: this.currentYear
+          }
+        });
+      });
       // 上图表配置 Rate
       systemRate.setOption(
         {
@@ -490,6 +502,18 @@ export default {
       let systemTemp = echarts.init(
         document.querySelector(".rate-bar-graph__temp")
       );
+      // 采标率跳转
+      systemTemp.on("click", params => {
+        console.log(params);
+        this.$router.push({
+          name: "RatePage",
+          params: {
+            name: params.seriesName,
+            month: params.name,
+            year: this.currentYear
+          }
+        });
+      });
       if (item == "rate") {
         // 下图表配置 Rank
         systemTemp.setOption(

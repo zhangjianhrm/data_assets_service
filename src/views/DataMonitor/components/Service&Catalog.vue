@@ -229,9 +229,9 @@ export default {
           {
             type: "value",
             name: "增长率",
-            min: 0,
-            max: 25,
-            interval: 5,
+            // min: 0,
+            // max: 100,
+            // interval: 5,
             // 坐标轴刻度
             axisTick: {
               show: false
@@ -309,7 +309,7 @@ export default {
               4.5,
               6.3,
               10.2,
-              20.3,
+              -20.3,
               23.4,
               23.0,
               16.5,
@@ -337,6 +337,10 @@ export default {
   box-sizing: border-box;
   padding: 14px;
   margin-bottom: 20px;
+  
+  .el-carousel__indicator--horizontal {
+    padding: 4px 4px;
+  }
 }
 .data-monitor__catalog {
   > h5 {
@@ -474,5 +478,6 @@ export default {
       height: 160px;
     }
   }
+  
 }
 </style>

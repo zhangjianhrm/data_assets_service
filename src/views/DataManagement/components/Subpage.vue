@@ -919,51 +919,51 @@ export default {
     margin-bottom: 48px;
     display: flex;
     justify-content: center;
-    &_total {
-      margin-right: 15px;
-      color: rgba(66, 78, 103, 1);
-      line-height: 36px !important;
-      b {
-        color: $color-blue;
-      }
-    }
-    .btn-prev,
-    .btn-next {
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(232, 232, 232, 1);
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 1) !important;
-    }
-    ul {
-      li {
-        box-sizing: border-box;
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 1) !important;
-        border: 1px solid rgba(232, 232, 232, 1) !important;
-        border-radius: 3px !important;
-        line-height: 38px;
-        &.active {
-          background: $color-blue !important;
-          & + li {
-            border: 1px solid rgba(232, 232, 232, 1);
-          }
-        }
-      }
-    }
-    .el-input__inner {
-      height: 40px !important;
-      border: 1px solid rgba(232, 232, 232, 1) !important;
-    }
-    .el-pagination__jump {
-      color: rgba(66, 78, 103, 1);
-    }
-    .el-pager li.btn-quicknext,
-    .el-pager li.btn-quickprev {
-      line-height: 38px;
-      color: rgba(66, 78, 103, 1);
-    }
+    // &_total {
+    //   margin-right: 15px;
+    //   color: rgba(66, 78, 103, 1);
+    //   line-height: 36px !important;
+    //   b {
+    //     color: $color-blue;
+    //   }
+    // }
+    // .btn-prev,
+    // .btn-next {
+    //   width: 40px;
+    //   height: 40px;
+    //   border: 1px solid rgba(232, 232, 232, 1);
+    //   border-radius: 3px;
+    //   background: rgba(255, 255, 255, 1) !important;
+    // }
+    // ul {
+    //   li {
+    //     box-sizing: border-box;
+    //     width: 40px;
+    //     height: 40px;
+    //     background: rgba(255, 255, 255, 1) !important;
+    //     border: 1px solid rgba(232, 232, 232, 1) !important;
+    //     border-radius: 3px !important;
+    //     line-height: 38px;
+    //     &.active {
+    //       background: $color-blue !important;
+    //       & + li {
+    //         border: 1px solid rgba(232, 232, 232, 1);
+    //       }
+    //     }
+    //   }
+    // }
+    // .el-input__inner {
+    //   height: 40px !important;
+    //   border: 1px solid rgba(232, 232, 232, 1) !important;
+    // }
+    // .el-pagination__jump {
+    //   color: rgba(66, 78, 103, 1);
+    // }
+    // .el-pager li.btn-quicknext,
+    // .el-pager li.btn-quickprev {
+    //   line-height: 38px;
+    //   color: rgba(66, 78, 103, 1);
+    // }
   }
 }
 </style>

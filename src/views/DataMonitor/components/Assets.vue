@@ -52,62 +52,27 @@ export default {
     createGraph() {
       var dom = document.querySelector(".data-monitor__assets_graph_content");
       var myChart = echarts.init(dom);
-      var base = +new Date(2016, 9, 3);
-      var oneDay = 24 * 3600 * 1000;
-      var valueBase = Math.random() * 300;
-      var valueBase2 = Math.random() * 50;
-      var data = [];
-      var data2 = [];
-
-      for (var i = 1; i < 10; i++) {
-        var now = new Date((base += oneDay));
-        var dayStr = [
-          now.getFullYear(),
-          now.getMonth() + 1,
-          now.getDate()
-        ].join("-");
-
-        valueBase = Math.round((Math.random() - 0.5) * 20 + valueBase);
-        valueBase <= 0 && (valueBase = Math.random() * 300);
-        data.push([dayStr, valueBase]);
-
-        valueBase2 = Math.round((Math.random() - 0.5) * 20 + valueBase2);
-        valueBase2 <= 0 && (valueBase2 = Math.random() * 50);
-        data2.push([dayStr, valueBase2]);
-      }
 
       let option = {
-        animation: false,
         legend: {
-          top: "bottom",
-          data: ["意向"]
-        },
-        tooltip: {
-          triggerOn: "none",
-          position: function(pt) {
-            return [pt[0], 130];
-          }
-        },
-        // 图例组件。
-        legend: {
+          left: 0,
           itemWidth: 8,
           itemHeight: 8,
           textStyle: {
             color: "#fff",
             fontSize: "10"
           },
-          // data: this.systemName,
-          show: true
+          data: ["活跃率", "覆盖率", "变更频率"]
         },
         grid: {
           containLabel: true,
-          top: 20,
-          right: 20,
+          top: 35,
           left: 0,
+          right: 0,
           bottom: 0
         },
         xAxis: {
-          type: "time",
+          type: "category",
           // 坐标轴轴线相关设置。
           axisLine: {
             show: false,
@@ -117,15 +82,19 @@ export default {
           },
           splitLine: {
             show: false
-          }
+          },
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         },
         yAxis: {
           type: "value",
+          // name: "变更频率",
+          // min: 0,
+          // max: 25,
+          // interval: 5,
           // 坐标轴刻度
           axisTick: {
             show: false
           },
-          // 坐标轴轴线相关设置。
           axisLine: {
             show: false,
             lineStyle: {
@@ -138,69 +107,75 @@ export default {
             lineStyle: { color: "rgba(255, 255, 255, 0.1)" }
           },
           axisLabel: {
-            inside: false,
-            formatter: "{value}\n"
-          },
-          z: 10
+            formatter: "{value} %"
+          }
         },
         series: [
           {
-            name: "模拟数据1",
+            name: "活跃率",
+            data: [82, 32, 91, 34, 90, 30, 20],
             type: "line",
             smooth: true,
-            symbol: "circle",
-            symbolSize: 5,
-            sampling: "average",
             itemStyle: {
-              normal: {
-                color: "rgba(98, 202, 255, 1)"
-              }
+              color: "rgba(22, 115, 217, 1)"
             },
-            stack: "a",
             areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(22, 115, 217, 0.5)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(22, 115, 217, 0.1)"
-                  }
-                ])
-              }
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(22, 115, 217, 1)"
+                },
+                {
+                  offset: 1,
+                  color: "rgba(22, 115, 217, 0)"
+                }
+              ])
             },
-            data: data
+            symbol: "none"
           },
           {
-            name: "模拟数据2",
+            name: "覆盖率",
+            data: [45, 74, 34, 66, 23, 45, 94],
             type: "line",
             smooth: true,
-            stack: "a",
-            symbol: "circle",
-            symbolSize: 5,
-            sampling: "average",
             itemStyle: {
-              normal: {
-                color: "rgba(98, 202, 255, 1)"
-              }
+              color: "rgba(204, 112, 41, 1)"
             },
             areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(31, 153, 120, 0.5)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(31, 153, 120, 0.1)"
-                  }
-                ])
-              }
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(204, 112, 41, 1)"
+                },
+                {
+                  offset: 1,
+                  color: "rgba(204, 112, 41, 0)"
+                }
+              ])
             },
-            data: data2
+            symbol: "none"
+          },
+          {
+            name: "变更频率",
+            data: [55, 30, 24, 56, 22, 34, 34],
+            type: "line",
+            smooth: true,
+            itemStyle: {
+              color: "rgba(31, 153, 120, 1)"
+            },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(31, 153, 120, 1)"
+                },
+                {
+                  offset: 1,
+                  color: "rgba(31, 153, 120, 0)"
+                }
+              ])
+            },
+            symbol: "none"
           }
         ]
       };
