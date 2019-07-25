@@ -13,12 +13,12 @@
     </div>
     <div class="card_details">
       <p v-if="cardData.REFER_CODE_COUNT">
-        <span>数据量</span>
+        <span>代码量</span>
         <span>：</span>
         <span>{{cardData.REFER_CODE_COUNT}}</span>
       </p>
       <p v-if="cardData.NUM">
-        <span>数据子类</span>
+        <span>代码子类</span>
         <span>：</span>
         <span>{{cardData.NUM}}</span>
       </p>
@@ -90,7 +90,7 @@ export default {
     translator: value => {
       switch (value) {
         case "subclass":
-          return "数据子类";
+          return "代码子类";
         case "source":
           return "来源";
         default:

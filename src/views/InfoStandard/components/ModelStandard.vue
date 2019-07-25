@@ -9,12 +9,12 @@
             <b>20</b>个模型子类，
             <b>200</b>条模型。
           </span>
-          <span>可访问：{{executionModelCount.CLASS_COUNT}}个模型类，{{executionModelCount.SUBCLASS_COUNT}}个模型子类，{{executionModelCount.CODE_COUNT}}条模型。</span>
+          <span>可访问：{{executionModelCount.classAmount}}个类数量，{{executionModelCount.subsetAmount}}个子集数量，{{executionModelCount.subclassAmount}}个子类数量，{{executionModelCount.dataitemAmount}}数据项数量。</span>
           <el-button
             plain
             type="primary"
             size="small"
-            @click="downloadCode('downloadExecutionCode')"
+            @click="downloadModel('downloadExecutionModel')"
           >
             <svg-icon icon-class="download" />
             <span>下载学校执行模型</span>
@@ -41,6 +41,8 @@
           <span>展开全部模型</span>
           <i class="el-icon-arrow-down"></i>
         </el-button>
+        <!-- 执行模型采标率 -->
+        <rate-bar-graph title="执行模型采标率"></rate-bar-graph>
       </el-tab-pane>
       <el-tab-pane name="standardModel" label="国家标准模型">
         <p class="model-standard_count">
@@ -49,7 +51,7 @@
             plain
             type="primary"
             size="small"
-            @click="downloadCode('downloadNationalStandardCode')"
+            @click="downloadModel('downloadNationalStandardCode')"
           >
             <svg-icon icon-class="download" />
             <span>下载国家标准模型</span>
@@ -77,8 +79,6 @@
         </el-button>
       </el-tab-pane>
     </el-tabs>
-    <!-- 执行模型采标率 -->
-    <rate-bar-graph title="执行模型采标率"></rate-bar-graph>
   </div>
 </template>
 <script>
@@ -101,7 +101,7 @@ export default {
   },
   created() {
     this.getExecutionCodeCount();
-    this.getExecutionCode();
+    this.getExecutionModelList();
     this.getNationalStandardCodeCount();
     this.getNationalStandardCode();
   },
@@ -109,18 +109,18 @@ export default {
     // 获取学校执行模型数量
     getExecutionCodeCount() {
       axios({
-        url: url.infoStandard.codeStandard.getExecutionCodeCount
+        url: url.infoStandard.modelStandard.getExecutionModelCount
       }).then(res => {
         if (res.data.status == 200) {
           this.executionModelCount = res.data.data;
-          console.log(res.data.data);
+          console.log(this.executionModelCount);
         }
       });
     },
-    // 获取学校执行模型
-    getExecutionCode() {
+    // 获取学校执行模型列表
+    getExecutionModelList() {
       axios({
-        url: url.infoStandard.codeStandard.getExecutionCode
+        url: url.infoStandard.modelStandard.getExecutionModelList
       }).then(res => {
         if (res.data.status == 200) {
           this.executionModel = res.data.data;
@@ -150,16 +150,16 @@ export default {
       });
     },
     // 下载模型
-    downloadCode(type) {
+    downloadModel(type) {
       axios({
-        url: url.infoStandard.codeStandard[type]
+        url: url.infoStandard.modelStandard[type]
       }).then(res => {
         if (res.data.status == 200) {
           // console.log(res.data.data);
           let fileName = res.data.data;
           window.location.href =
             url.server +
-            "/api/code/downloadFile?fileName=" +
+            "/api/model/downloadFile?fileName=" +
             fileName +
             "&clientFileName=" +
             fileName;
@@ -231,7 +231,6 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-bottom: 45px;
       }
     }
   }

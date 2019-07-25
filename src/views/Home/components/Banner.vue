@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="home__banner_right">
-      <el-carousel height="600px" arrow="never">
+      <el-carousel height="600px" arrow="never" :interval="5000">
         <el-carousel-item v-for="(item,index) in carousel" :key="index">
           <img :src="item.img">
           <p>{{item.text}}</p>

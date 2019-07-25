@@ -19,7 +19,7 @@
       <div class="home__plus_files_content">
         <h4>
           <b>文件下载</b>
-          <span>
+          <span @click="goInfoStandard">
             <span>查看更多</span>
             <i class="el-icon-arrow-right"></i>
           </span>
@@ -95,6 +95,12 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    goInfoStandard() {
+      this.$router.push("/info_standard");
+      this.$store.commit("homeTurn", "management-norms");
+    }
   }
 };
 </script>

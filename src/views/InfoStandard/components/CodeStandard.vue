@@ -41,6 +41,8 @@
           <span>展开全部代码</span>
           <i class="el-icon-arrow-down"></i>
         </el-button>
+        <!-- 执行代码采标率 -->
+        <rate-bar-graph title="执行代码采标率"></rate-bar-graph>
       </el-tab-pane>
       <el-tab-pane name="standardCode" label="国家标准代码">
         <p class="code-standard_count">
@@ -77,8 +79,6 @@
         </el-button>
       </el-tab-pane>
     </el-tabs>
-    <!-- 执行代码采标率 -->
-    <rate-bar-graph title="执行代码采标率"></rate-bar-graph>
   </div>
 </template>
 <script>
@@ -229,7 +229,6 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-bottom: 45px;
       }
     }
   }

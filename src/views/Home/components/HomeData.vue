@@ -1,6 +1,11 @@
 <template>
   <div class="home__data">
-    <div v-for="(item,index) in data" :key="index" class="home__data_item">
+    <div
+      class="home__data_item"
+      v-for="(item,index) in data"
+      :key="index"
+      @click="$router.push(item.route)"
+    >
       <section>
         <h4>{{item.title}}</h4>
         <h5>{{item.update | formatNum}}</h5>
@@ -18,12 +23,42 @@ export default {
   data() {
     return {
       data: [
-        { title: "数据表总量", count: 132134214, unit: "条", update: 3137 },
-        { title: "集成系统", count: 16, unit: "个", update: 31 },
-        { title: "数据目录", count: 132134214, unit: "个", update: 31 },
-        { title: "数据接口", count: 1321, unit: "个", update: 31 },
-        { title: "调用次数", count: 132134214, unit: "次", update: 31 },
-        { title: "下载次数", count: 132134214, unit: "次", update: 313 }
+        {
+          title: "数据表总量",
+          count: 132134214,
+          unit: "条",
+          update: 3137,
+          route: ""
+        },
+        { title: "集成系统", count: 16, unit: "个", update: 31, route: "" },
+        {
+          title: "数据目录",
+          count: 132134214,
+          unit: "个",
+          update: 31,
+          route: "/data_catalog"
+        },
+        {
+          title: "数据接口",
+          count: 1321,
+          unit: "个",
+          update: 31,
+          route: "/x"
+        },
+        {
+          title: "调用次数",
+          count: 132134214,
+          unit: "次",
+          update: 31,
+          route: "/data_catalog"
+        },
+        {
+          title: "下载次数",
+          count: 132134214,
+          unit: "次",
+          update: 313,
+          route: ""
+        }
       ]
     };
   }

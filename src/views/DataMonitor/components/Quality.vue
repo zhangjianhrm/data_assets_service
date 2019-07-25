@@ -4,7 +4,28 @@
       <svg-icon icon-class="tit"></svg-icon>
       <span>数据质量</span>
     </h5>
-    <el-carousel height="167px" arrow="never" :autoplay="true">
+    <el-carousel height="167px" arrow="never" :autoplay="true" :interval="5000">
+      <el-carousel-item class="data-monitor__quality_3">
+        <h4>总体概况</h4>
+        <p>
+          <span>表</span>
+          <b>{{1234 | formatNum}}</b>
+          <span>数据项</span>
+          <b>{{1234 | formatNum}}</b>
+          <span>数据量</span>
+          <b>{{1234 | formatNum}}</b>
+        </p>
+        <h4>质量概况</h4>
+        <p>
+          <span>问题表</span>
+          <b>{{1234 | formatNum}}</b>
+          <span>问题数据项</span>
+          <b>{{123234234 | formatNum}}</b>
+          <br />
+          <span>问题数据量</span>
+          <b>{{12345634523 | formatNum}}</b>
+        </p>
+      </el-carousel-item>
       <el-carousel-item class="data-monitor__quality_1">
         <h6>
           <span>系统质量检测得分排名</span>
@@ -34,27 +55,6 @@
       </el-carousel-item>
       <el-carousel-item class="data-monitor__quality_2">
         <div class="data-monitor__quality_2_pie"></div>
-      </el-carousel-item>
-      <el-carousel-item class="data-monitor__quality_3">
-        <h4>总体概况</h4>
-        <p>
-          <span>表</span>
-          <b>{{1234 | formatNum}}</b>
-          <span>数据项</span>
-          <b>{{1234 | formatNum}}</b>
-          <span>数据量</span>
-          <b>{{1234 | formatNum}}</b>
-        </p>
-        <h4>质量概况</h4>
-        <p>
-          <span>问题表</span>
-          <b>{{1234 | formatNum}}</b>
-          <span>问题数据项</span>
-          <b>{{123234234 | formatNum}}</b>
-          <br />
-          <span>问题数据量</span>
-          <b>{{12345634523 | formatNum}}</b>
-        </p>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -101,6 +101,7 @@ export default {
       let myChart = echarts.init(dom);
       let option = {
         title: {
+          show: false,
           text: "严重程度",
           left: 10,
           textStyle: {
@@ -131,13 +132,13 @@ export default {
             name: "半径模式",
             type: "pie",
             radius: [0, 40],
-            center: ["50%", "50%"],
+            center: ["40%", "50%"],
             color: ["#992E2E", "#B36C36", "#122552"],
             roseType: "radius",
             label: {
               show: true,
               color: "#fff",
-              formatter: "{c}条"
+              formatter: "{c} 条"
             },
             lableLine: {
               normal: {
@@ -170,9 +171,9 @@ export default {
   box-sizing: border-box;
   padding: 14px;
   > h5 {
-    height: 12px;
+    height: 14px;
     line-height: 1;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 10px;
     svg {
       margin-right: 4px;

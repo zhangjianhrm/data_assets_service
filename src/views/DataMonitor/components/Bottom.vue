@@ -13,95 +13,103 @@
       <el-radio-button label="数据目录"></el-radio-button>
       <el-radio-button label="数据质量"></el-radio-button>
     </el-radio-group>
-    <div class="data-monitor__bottom_base" v-show="radio == '基础监控'">
-      <el-carousel height="120px" arrow="never" :autoplay="true" indicator-position="outside">
-        <el-carousel-item class="data-monitor__bottom_base_1">
-          <div class="data-monitor__bottom_base_1_gauge"></div>
-          <div class="data-monitor__bottom_base_1_gauge-data">
-            <p>数据连接数1524/54356</p>
-            <p>数据连接数1524/54356</p>
-            <p>数据连接数1524/54356</p>
+    <el-carousel
+      ref="carousel"
+      height="130px"
+      style="width:550px;"
+      arrow="never"
+      indicator-position="none"
+      :interval="5000"
+      @change="carouselChange"
+    >
+      <el-carousel-item>
+        <div class="data-monitor__bottom_base" v-show="radio == '基础监控'">
+          <div class="data-monitor__bottom_base_1"></div>
+          <!-- <div class="data-monitor__bottom_base_1-data">
+        <p>数据连接数1524/54356</p>
+        <p>数据连接数1524/54356</p>
+        <p>数据连接数1524/54356</p>
+          </div>-->
+          <div class="data-monitor__bottom_base_2"></div>
+        </div>
+      </el-carousel-item>
+      <el-carousel-item>
+        <div class="data-monitor__bottom_exchange">
+          <h6>
+            <span>异常作业列表</span>
+            <span>
+              <i>查看更多</i>
+              <i class="el-icon-d-arrow-right"></i>
+            </span>
+          </h6>
+          <el-row>
+            <el-col :span="5">作业名</el-col>
+            <el-col :span="5">源-目标系统</el-col>
+            <el-col :span="5">上次执行时间</el-col>
+            <el-col :span="5">计划下次执行时间</el-col>
+            <el-col :span="4">运行摘要信息</el-col>
+          </el-row>
+          <el-row v-for="(item,index) in exchangeTable" :key="index">
+            <el-col :span="5">{{index+1}}.{{item.name}}</el-col>
+            <el-col :span="5">{{item.grade}}</el-col>
+            <el-col :span="5">{{item.total}}</el-col>
+            <el-col :span="5">{{item.untreated}}</el-col>
+            <el-col :span="4">{{item.rate}}</el-col>
+          </el-row>
+        </div>
+      </el-carousel-item>
+      <el-carousel-item>
+        <div class="data-monitor__bottom_service">
+          <div class="data-monitor__bottom_service_overview">
+            <p>
+              <span>调用失败</span>
+              <b>15</b>
+            </p>
+            <p>
+              <span>调用失败</span>
+              <b>15</b>
+            </p>
+            <p>
+              <span>调用失败</span>
+              <b>15</b>
+            </p>
+            <p>
+              <span>纠错</span>
+              <b>15</b>
+            </p>
           </div>
-        </el-carousel-item>
-        <el-carousel-item class="data-monitor__bottom_base_2">
-          <div class="data-monitor__bottom_base_2_gauge" style="margin-top:10px;"></div>
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-    <div class="data-monitor__bottom_exchange" v-show="radio == '数据交换'">
-      <h6>
-        <span>异常作业列表</span>
-        <span>
-          <i>查看更多</i>
-          <i class="el-icon-d-arrow-right"></i>
-        </span>
-      </h6>
-      <el-row>
-        <el-col :span="5">作业名</el-col>
-        <el-col :span="5">源-目标系统</el-col>
-        <el-col :span="5">上次执行时间</el-col>
-        <el-col :span="5">计划下次执行时间</el-col>
-        <el-col :span="4">运行摘要信息</el-col>
-      </el-row>
-      <el-row v-for="(item,index) in exchangeTable" :key="index">
-        <el-col :span="5">{{index+1}}.{{item.name}}</el-col>
-        <el-col :span="5">{{item.grade}}</el-col>
-        <el-col :span="5">{{item.total}}</el-col>
-        <el-col :span="5">{{item.untreated}}</el-col>
-        <el-col :span="4">{{item.rate}}</el-col>
-      </el-row>
-    </div>
-    <div class="data-monitor__bottom_service" v-show="radio == '数据服务'">
-      <div class="data-monitor__bottom_service_overview">
-        <p>
-          <span>调用失败</span>
-          <b>15</b>
-        </p>
-        <p>
-          <span>调用失败</span>
-          <b>15</b>
-        </p>
-        <p>
-          <span>调用失败</span>
-          <b>15</b>
-        </p>
-        <p>
-          <span>纠错</span>
-          <b>15</b>
-        </p>
-      </div>
-      <div class="data-monitor__bottom_service_graph"></div>
-    </div>
-    <div class="data-monitor__bottom_catalog" v-show="radio == '数据目录'">
-      <div class="data-monitor__bottom_catalog_overview">
-        <p>
-          <span>新增个数</span>
-          <b>15</b>
-        </p>
-        <p>
-          <span>申请</span>
-          <b>15</b>
-        </p>
-        <p>
-          <span>下载</span>
-          <b>15</b>
-        </p>
-        <p>
-          <span>纠错</span>
-          <b>15</b>
-        </p>
-      </div>
-      <div class="data-monitor__bottom_catalog_graph"></div>
-    </div>
-    <div class="data-monitor__bottom_quality" v-show="radio == '数据质量'">
-      <div class="data-monitor__bottom_quality_overview">
-        <p>3</p>
-        <p>异常</p>
-        <p>5</p>
-        <p>告警</p>
-      </div>
-      <div class="data-monitor__bottom_quality_graph"></div>
-    </div>
+          <div class="data-monitor__bottom_service_graph"></div>
+        </div>
+      </el-carousel-item>
+      <el-carousel-item>
+        <div class="data-monitor__bottom_catalog">
+          <div class="data-monitor__bottom_catalog_overview">
+            <p>3</p>
+            <p>新增</p>
+            <p>5</p>
+            <p>申请</p>
+          </div>
+          <div class="data-monitor__bottom_catalog_overview">
+            <p>3</p>
+            <p>下载</p>
+            <p>5</p>
+            <p>纠错</p>
+          </div>
+          <div class="data-monitor__bottom_catalog_graph"></div>
+        </div>
+      </el-carousel-item>
+      <el-carousel-item>
+        <div class="data-monitor__bottom_quality">
+          <div class="data-monitor__bottom_quality_overview">
+            <p>3</p>
+            <p>异常</p>
+            <p>5</p>
+            <p>告警</p>
+          </div>
+          <div class="data-monitor__bottom_quality_graph"></div>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 <script>
@@ -149,14 +157,14 @@ export default {
   mounted() {},
   methods: {
     createGauge1() {
-      let dom = document.querySelector(".data-monitor__bottom_base_1_gauge");
+      let dom = document.querySelector(".data-monitor__bottom_base_1");
       let myChart = echarts.init(dom);
       let option = {
         series: [
           // 中间
           {
             type: "gauge",
-            radius: "100%",
+            radius: "60%",
             startAngle: 200,
             endAngle: -20,
             // 仪表盘轴线
@@ -195,6 +203,7 @@ export default {
             // 显示数据
             detail: {
               formatter: "{value}%",
+              offsetCenter: [0, "60%"],
               textStyle: {
                 fontSize: 18,
                 color: "#fff"
@@ -203,12 +212,12 @@ export default {
             data: [
               {
                 value: 50,
-                name: "数据库表空间使用率"
+                name: "表空间使用率"
               }
             ],
             title: {
               show: true,
-              offsetCenter: [0, "75%"],
+              offsetCenter: [0, "100%"],
               color: "#fff",
               fontSize: 12
             },
@@ -220,7 +229,7 @@ export default {
           },
           {
             type: "gauge",
-            radius: "60%",
+            radius: "30%",
             startAngle: 200,
             endAngle: -20,
             axisLine: {
@@ -251,7 +260,7 @@ export default {
           // 左侧
           {
             type: "gauge",
-            radius: "100%",
+            radius: "60%",
             center: ["17%", "50%"],
             startAngle: 200,
             endAngle: -20,
@@ -291,6 +300,7 @@ export default {
             // 显示数据
             detail: {
               formatter: "{value}%",
+              offsetCenter: [0, "60%"],
               textStyle: {
                 fontSize: 18,
                 color: "#fff"
@@ -299,12 +309,12 @@ export default {
             data: [
               {
                 value: 30,
-                name: "数据库连接数占比"
+                name: "连接数占比"
               }
             ],
             title: {
               show: true,
-              offsetCenter: [0, "75%"],
+              offsetCenter: [0, "100%"],
               color: "#fff",
               fontSize: 12
             },
@@ -317,7 +327,7 @@ export default {
           {
             center: ["17%", "50%"],
             type: "gauge",
-            radius: "60%",
+            radius: "30%",
             startAngle: 200,
             endAngle: -20,
             axisLine: {
@@ -349,7 +359,7 @@ export default {
           {
             center: ["83%", "50%"],
             type: "gauge",
-            radius: "100%",
+            radius: "60%",
             startAngle: 200,
             endAngle: -20,
             // 仪表盘轴线
@@ -388,6 +398,7 @@ export default {
             // 显示数据
             detail: {
               formatter: "{value}%",
+              offsetCenter: [0, "60%"],
               textStyle: {
                 fontSize: 18,
                 color: "#fff"
@@ -396,12 +407,12 @@ export default {
             data: [
               {
                 value: 70,
-                name: "数据库死锁率"
+                name: "死锁率"
               }
             ],
             title: {
               show: true,
-              offsetCenter: [0, "75%"],
+              offsetCenter: [0, "100%"],
               color: "#fff",
               fontSize: 12
             },
@@ -414,7 +425,7 @@ export default {
           {
             center: ["83%", "50%"],
             type: "gauge",
-            radius: "60%",
+            radius: "30%",
             startAngle: 200,
             endAngle: -20,
             axisLine: {
@@ -447,14 +458,14 @@ export default {
       myChart.setOption(option, true);
     },
     createGauge2() {
-      let dom = document.querySelector(".data-monitor__bottom_base_2_gauge");
+      let dom = document.querySelector(".data-monitor__bottom_base_2");
       let myChart = echarts.init(dom);
       let option = {
         series: [
           // 中间
           {
             type: "gauge",
-            radius: "100%",
+            radius: "60%",
             startAngle: 200,
             endAngle: -20,
             // 仪表盘轴线
@@ -493,6 +504,7 @@ export default {
             // 显示数据
             detail: {
               formatter: "{value}%",
+              offsetCenter: [0, "60%"],
               textStyle: {
                 fontSize: 18,
                 color: "#fff"
@@ -506,7 +518,7 @@ export default {
             ],
             title: {
               show: true,
-              offsetCenter: [0, "75%"],
+              offsetCenter: [0, "100%"],
               color: "#fff",
               fontSize: 12
             },
@@ -518,7 +530,7 @@ export default {
           },
           {
             type: "gauge",
-            radius: "60%",
+            radius: "30%",
             startAngle: 200,
             endAngle: -20,
             axisLine: {
@@ -549,7 +561,7 @@ export default {
           // 左侧
           {
             type: "gauge",
-            radius: "100%",
+            radius: "60%",
             center: ["17%", "50%"],
             startAngle: 200,
             endAngle: -20,
@@ -589,6 +601,7 @@ export default {
             // 显示数据
             detail: {
               formatter: "{value}%",
+              offsetCenter: [0, "60%"],
               textStyle: {
                 fontSize: 18,
                 color: "#fff"
@@ -602,7 +615,7 @@ export default {
             ],
             title: {
               show: true,
-              offsetCenter: [0, "75%"],
+              offsetCenter: [0, "100%"],
               color: "#fff",
               fontSize: 12
             },
@@ -615,7 +628,7 @@ export default {
           {
             center: ["17%", "50%"],
             type: "gauge",
-            radius: "60%",
+            radius: "30%",
             startAngle: 200,
             endAngle: -20,
             axisLine: {
@@ -647,7 +660,7 @@ export default {
           {
             center: ["83%", "50%"],
             type: "gauge",
-            radius: "100%",
+            radius: "60%",
             startAngle: 200,
             endAngle: -20,
             // 仪表盘轴线
@@ -686,6 +699,7 @@ export default {
             // 显示数据
             detail: {
               formatter: "{value}%",
+              offsetCenter: [0, "60%"],
               textStyle: {
                 fontSize: 18,
                 color: "#fff"
@@ -699,7 +713,7 @@ export default {
             ],
             title: {
               show: true,
-              offsetCenter: [0, "75%"],
+              offsetCenter: [0, "100%"],
               color: "#fff",
               fontSize: 12
             },
@@ -712,7 +726,7 @@ export default {
           {
             center: ["83%", "50%"],
             type: "gauge",
-            radius: "60%",
+            radius: "30%",
             startAngle: 200,
             endAngle: -20,
             axisLine: {
@@ -1013,6 +1027,46 @@ export default {
       if (option && typeof option === "object") {
         myChart.setOption(option, true);
       }
+    },
+    carouselChange(a, b) {
+      switch (a) {
+        case 0:
+          this.radio = "基础监控";
+          break;
+        case 1:
+          this.radio = "数据交换";
+          break;
+        case 2:
+          this.radio = "数据服务";
+          break;
+        case 3:
+          this.radio = "数据目录";
+          break;
+        case 4:
+          this.radio = "数据质量";
+          break;
+      }
+    }
+  },
+  watch: {
+    radio(a, b) {
+      switch (a) {
+        case "基础监控":
+          this.$refs.carousel.setActiveItem(0);
+          break;
+        case "数据交换":
+          this.$refs.carousel.setActiveItem(1);
+          break;
+        case "数据服务":
+          this.$refs.carousel.setActiveItem(2);
+          break;
+        case "数据目录":
+          this.$refs.carousel.setActiveItem(3);
+          break;
+        case "数据质量":
+          this.$refs.carousel.setActiveItem(4);
+          break;
+      }
     }
   }
 };
@@ -1066,14 +1120,12 @@ export default {
   }
   &_base {
     width: 550px;
+    display: flex;
     &_1,
     &_2 {
-      width: 100%;
-      &_gauge {
-        width: 100%;
-        height: 100px;
-      }
-      &_gauge-data {
+      width: 50%;
+      height: 130px;
+      &-data {
         display: flex;
         p {
           flex: 1;
@@ -1170,30 +1222,45 @@ export default {
     width: 550px;
     overflow: hidden;
     &_overview {
-      width: 100px;
+      width: 40px;
       float: left;
       padding-top: 14px;
+      height: 130px;
+      background: rgba(9, 0, 41, 1);
+      padding: 0 10px;
+      // margin-right: 10px;
       p {
+        text-align: center;
         font-size: 12px;
         line-height: 1;
-        margin-bottom: 10px;
-        span {
-          margin-right: 10px;
-          color: #fff;
-          display: inline-block;
-          width: 50px;
-          text-align-last: justify;
-        }
-        b {
-          font-size: 18px;
-          color: rgba(41, 193, 204, 1);
-        }
+      }
+      p:nth-child(1) {
+        color: rgba(41, 193, 204, 1);
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+      p:nth-child(2) {
+        color: #fff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 10px;
+      }
+      p:nth-child(3) {
+        color: rgba(41, 193, 204, 1);
+        font-size: 20px;
+        font-weight: 600;
+        padding-top: 10px;
+        margin-bottom: 5px;
+      }
+      p:nth-child(4) {
+        color: #fff;
       }
     }
     &_graph {
-      width: 430px;
-      height: 130px;
       float: right;
+      width: 400px;
+      height: 130px;
     }
   }
   &_quality {

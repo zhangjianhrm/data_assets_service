@@ -1,6 +1,6 @@
 <template>
   <div class="data-monitor">
-    <!-- <scroll-demo></scroll-demo> -->
+    <data-monitor-nav></data-monitor-nav>
     <star class="data-monitor__star"></star>
     <div class="data-monitor__cover"></div>
     <data-map class="data-monitor__data-map"></data-map>
@@ -24,7 +24,7 @@
 export default {
   name: "DataMonitor",
   components: {
-    ScrollDemo: () => import("./components/ScrollDemo"),
+    DataMonitorNav: () => import("./components/Nav"),
     DataMap: () => import("./components/DataMap"),
     Top: () => import("./components/Top"),
     Assets: () => import("./components/Assets"),
@@ -32,7 +32,7 @@ export default {
     ServiceCatalog: () => import("./components/Service&Catalog"),
     Live: () => import("./components/Live"),
     Bottom: () => import("./components/Bottom"),
-    Star: () => import("@/components/Star/Star.vue")
+    Star: () => import("@/components/Star/Star")
   }
 };
 </script>
@@ -48,6 +48,14 @@ export default {
   overflow: hidden;
   background-color: $color-header;
   position: relative;
+  &__nav{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    z-index: 3;
+  }
   &__cover {
     width: 100%;
     height: 100%;

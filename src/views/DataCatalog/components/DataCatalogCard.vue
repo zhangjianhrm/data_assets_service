@@ -23,7 +23,7 @@
           size="small"
           v-for="(item,index) in sortMethods"
           :key="index"
-          :type="orderByType==item.name? 'primary':''"
+          :type="orderByType==item.name?'primary':''"
           @click="cardSort(item.name)"
         >
           <span>{{item.title}}</span>
@@ -60,10 +60,6 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
-      <!-- <span class="data-catalog-card__pagination_total">
-        共
-        <b>{{cardData.length}}</b> 条数据
-      </span> -->
     </el-pagination>
   </div>
 </template>
@@ -85,7 +81,9 @@ export default {
       subClassUrl: url.infoStandard.codeStandard.getExecutionCodeSubClass,
       input3: "",
       // 需要给 Card 组件传递的 props
-      cardData: [],
+      cardData: [
+
+      ],
       // 当前选中的 Card
       selected: [],
       // 排序方式

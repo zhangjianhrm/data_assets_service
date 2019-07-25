@@ -18,7 +18,7 @@
         v-show="selected.length"
         style="font-size:14px;margin-left:10px;"
       >已选择 {{selected.length}} 个</span>
-      <el-input placeholder="代码 / 代码名称" v-model="queryCriteria" size="small">
+      <el-input placeholder="代码 / 代码名称" v-model="keyword" size="small">
         <el-button slot="append" icon="el-icon-search" @click="searchSubClass"></el-button>
       </el-input>
       <el-button-group class="national-standard__op_sort">
@@ -88,7 +88,7 @@ export default {
       subClassUrl: url.infoStandard.codeStandard.getExecutionCodeSubClass,
       downloadSubClassUrl:
         url.infoStandard.codeStandard.downloadExecutionCodeSubClass,
-      queryCriteria: "",
+      keyword: "",
       // 需要给 Card 组件传递的 props
       cardData: [],
       // 当前选中的 Card
@@ -116,30 +116,37 @@ export default {
   methods: {
     // 获取数据
     getCard() {
-      if (this.type == "executionCode") {
-        this.subClassUrl =
-          url.infoStandard.codeStandard.getExecutionCodeSubClass;
-      } else if (this.type == "nationalStandardCode") {
-        this.subClassUrl =
-          url.infoStandard.codeStandard.getNationalStandardCodeSubClass;
+      switch (this.type) {
+        case "executionCode":
+          this.subClassUrl =
+            url.infoStandard.codeStandard.getExecutionCodeSubClass;
+          break;
+        case "nationalStandardCode":
+          this.subClassUrl =
+            url.infoStandard.codeStandard.getNationalStandardCodeSubClass;
+          break;
+        case "executionModel":
+          this.subClassUrl =
+            url.infoStandard.modelStandard.getExecutionModelSubclass;
+          break;
       }
       axios({
         url: this.subClassUrl,
         method: "get",
         params: {
           id: this.id,
-          orderByType: this.orderByType,
+          order: this.orderByType,
           orderByWay: this.orderByWay,
           pageIndex: this.pageIndex - 1,
           pageSize: this.pageSize,
-          queryCriteria: this.queryCriteria
+          keyword: this.keyword
         },
         paramsSerializer: params => {
           return Qs.stringify(params, { arrayFormat: "repeat" });
         }
       }).then(res => {
-        this.cardData = res.data.data.items;
-        console.log(this.cardData);
+        // this.cardData = res.data.data.items;
+        console.log(res);
       });
     },
     // 卡片排序

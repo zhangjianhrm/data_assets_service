@@ -20,7 +20,7 @@ const ModulesRouter = {
     },
     // 二级页面
     {
-      path: "subpage",
+      path: "data_map_details",
       component: {
         render(h) {
           return h("router-view");
@@ -31,7 +31,7 @@ const ModulesRouter = {
         {
           name: "DataMonitorSubpage",
           path: "/",
-          component: () => import("@/views/DataManagement/components/Subpage"),
+          component: () => import("@/views/DataMonitor/components/DataMapDetails"),
           meta: {
             title: "学生基本信息子类"
           }

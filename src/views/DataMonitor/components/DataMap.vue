@@ -1,5 +1,5 @@
 <template>
-  <div class="data-map">
+  <div class="data-map" @click="$router.push('/data_monitor/data_map_details')">
     <div class="data-map__content"></div>
     <div class="data-map__center">
       <svg-icon icon-class="center" class="data-map__center_center"></svg-icon>
@@ -178,7 +178,8 @@ export default {
             itemWidth: 20,
             itemHeight: 2,
             data: ["流入", "流出"],
-            bottom: 148,
+            bottom: 150,
+            right: 100,
             textStyle: {
               color: "rgba(255,255,255,0.1)"
             },
@@ -199,7 +200,7 @@ export default {
                 period: 6, // 特效动画的时间，单位为 s
                 trailLength: 0.1,
                 symbol: this.planePath,
-                symbolSize: 2
+                symbolSize: 4
                 // color: this.lineColor[0]
               },
               // 标签
@@ -252,7 +253,7 @@ export default {
                 trailLength: 0.1,
                 // color: this.lineColor[1],
                 symbol: this.planePath,
-                symbolSize: 2
+                symbolSize: 4
               },
               // 标签
               label: {
@@ -325,6 +326,7 @@ export default {
 .data-map {
   width: 910px;
   height: 650px;
+  cursor: pointer;
   &__content {
     position: absolute;
     width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div class="rate-bar-graph">
     <p class="rate-bar-graph__title">{{title}}</p>
-    <el-carousel class="rate-bar-graph_overview" arrow="never" height="100%">
+    <el-carousel class="rate-bar-graph_overview" arrow="never" height="100%" :interval="5000">
       <el-carousel-item v-for="(item,index) in system" :key="index">
         <h3>{{ item.name }}</h3>
         <h2>{{ parseInt(item.rate[0]*100)+'%' }}</h2>
@@ -162,8 +162,10 @@ export default {
       })
         .then(res => {
           this.system = res.data.system;
-          this.createBarGraph();
-          console.log(res);
+          this.$nextTick(() => {
+            this.createBarGraph();
+          });
+          // console.log(res);
         })
         .catch(err => {
           this.system = [
@@ -240,7 +242,9 @@ export default {
               rank: [20, 70, 40, 44, 20, 20, 10, 20, 20, 10, 20, 20]
             }
           ];
-          this.createBarGraph();
+          this.$nextTick(() => {
+            this.createBarGraph();
+          });
           this.$message.error("网络错误：" + err);
         });
     },
@@ -770,6 +774,7 @@ export default {
 <style lang="scss">
 @import "~@/styles/variables.scss";
 .rate-bar-graph {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

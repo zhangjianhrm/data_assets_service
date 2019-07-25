@@ -3,7 +3,7 @@
     <h5>
       <svg-icon icon-class="tit"></svg-icon>
       <span>数据资产</span>
-      <i>本次统计截止到：2019-07-10 10:33:26</i>
+      <i>本次统计截止到：2019-07-10</i>
     </h5>
     <div class="data-monitor__assets_rate">
       <div v-for="(item,index) in rate" :key="index">
@@ -199,9 +199,9 @@ export default {
   padding: 14px;
   margin-bottom: 20px;
   > h5 {
-    height: 12px;
+    height: 14px;
     line-height: 1;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 10px;
     svg {
       margin-right: 4px;
@@ -244,7 +244,7 @@ export default {
     &_title {
       margin-bottom: 10px;
       b {
-        font-size: 14px;
+        font-size: 12px;
       }
       .el-radio-group {
         float: right;

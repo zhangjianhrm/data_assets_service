@@ -3,46 +3,41 @@
     <h5>
       <svg-icon icon-class="tit"></svg-icon>
       <span>实时操作提醒</span>
+      <!-- <span @click="add" style="float:right;">更新</span> -->
     </h5>
     <div class="data-monitor__live_content">
-      <el-carousel
-        height="26px"
-        direction="vertical"
-        indicator-position="none"
-        v-for="(item,index) in table"
-        :key="index"
-        :autoplay="true"
-      >
-        <el-carousel-item v-for="itemChild in 3" :key="itemChild">
-          <el-row>
-            <el-col :span="14">{{item.event}}</el-col>
-            <el-col :span="10">{{item.time}}</el-col>
-          </el-row>
-        </el-carousel-item>
-      </el-carousel>
+      <transition-group name="list-complete" tag="div">
+        <p v-for="item in table" :key="item" class="list-complete-item">
+          <span>{{ item }}</span>
+          <span>2019-07-25 15:28</span>
+        </p>
+      </transition-group>
     </div>
-    <div class="data-monitor__live_cover"></div>
+    <!-- <div class="data-monitor__live_cover"></div> -->
   </div>
 </template>
 <script>
+import { setInterval } from "timers";
 export default {
   data() {
     return {
       table: [
-        {
-          event: "用户陈肖下载了数据目录",
-          time: "2019-7-15 17:14"
-        },
-        {
-          event: "用户李瑞秋下载了很多的数据目录",
-          time: "2019-7-15 17:14"
-        },
-        {
-          event: "用户朱阳亭下载了数据目录",
-          time: "2019-7-15 17:14"
-        }
-      ]
+        "用户 3 下载了数据目录",
+        "用户 2 下载了很多很多很多的数据目录",
+        "用户 1 下载了数据目录"
+      ],
+      nextNum: 4
     };
+  },
+  mounted() {
+    setInterval(() => {
+      this.add();
+    }, 5000);
+  },
+  methods: {
+    add() {
+      this.table.splice(0, 0, "用户 " + this.nextNum++ + " 下载了数据目录");
+    }
   }
 };
 </script>
@@ -56,60 +51,66 @@ export default {
   box-sizing: border-box;
   padding: 14px;
   position: relative;
+  overflow: hidden;
   > h5 {
-    height: 12px;
+    height: 14px;
     line-height: 1;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 10px;
     svg {
       margin-right: 4px;
     }
     span {
       color: rgba(41, 193, 204, 1);
+      cursor: pointer;
     }
   }
   &_content {
     font-size: 12px;
     width: 100%;
-    height: 130px;
-    .el-carousel:nth-child(2n-1) {
-      .el-row {
+    // height: 78px;
+    // overflow: hidden;
+    p {
+      height: 26px;
+      line-height: 26px;
+      padding: 0 10px;
+      span:nth-child(1) {
+        float: left;
+        width: 50%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      span:nth-child(2) {
+        float: right;
+      }
+      &:nth-child(1) {
+        color: rgba(216, 64, 64, 1);
         background: rgba(0, 114, 201, 0.1);
       }
-    }
-    .el-row {
-      line-height: 26px;
-      font-weight: 600;
-      .el-col {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+      &:nth-child(2) {
+        color: rgba(204, 112, 41, 1);
       }
-      .el-col:nth-child(1) {
-        padding-left: 10px;
+      &:nth-child(3) {
+        color: rgba(179, 156, 54, 1);
+        background: rgba(0, 114, 201, 0.1);
       }
-      .el-col:nth-child(2) {
-        padding-right: 10px;
-        text-align: right;
+      &:nth-child(4) {
+        line-height: 100px;
+        color: transparent;
       }
-    }
-    .el-carousel:nth-child(1) {
-      color: rgba(216, 64, 64, 1);
-    }
-    .el-carousel:nth-child(2) {
-      color: rgba(204, 112, 41, 1);
-    }
-    .el-carousel:nth-child(3) {
-      color: rgba(179, 156, 54, 1);
     }
   }
-  &_cover {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-  }
+}
+.list-complete-item {
+  transition: all 1s;
+}
+.list-complete-enter,
+.list-complete-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.list-complete-leave-active {
+  position: absolute;
 }
 </style>

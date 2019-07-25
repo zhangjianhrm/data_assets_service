@@ -2,7 +2,7 @@
   <div class="stat-bar-graph">
     <p class="stat-bar-graph_title">下载次数与浏览次数统计</p>
     <!-- 轮播 -->
-    <el-carousel class="stat-bar-graph_overview" arrow="never" height="100%">
+    <el-carousel class="stat-bar-graph_overview" arrow="never" height="100%" :interval="5000">
       <el-carousel-item v-for="(item,index) in system" :key="index">
         <h3>{{ item.name }}</h3>
         <h2>{{ parseInt(item.rate[0]*100)+'%' }}</h2>
@@ -93,7 +93,7 @@ export default {
         { name: "xxxx15", download: 3453, use: 456 },
         { name: "xxxx16", download: 3534, use: 55 },
         { name: "xxxx17", download: 4564, use: 3534 },
-        { name: "xxxx18", download: 345, use: 456 },
+        { name: "xxxx18", download: 345, use: 456 }
       ],
       // 颜色
       color: [

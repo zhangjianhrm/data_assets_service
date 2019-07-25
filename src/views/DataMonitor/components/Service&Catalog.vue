@@ -5,6 +5,7 @@
       arrow="never"
       indicator-position="outside"
       trigger="click"
+      :interval="5000"
       :autoplay="true"
     >
       <el-carousel-item class="data-monitor__catalog">
@@ -24,21 +25,22 @@
             <p>（代码/模型）</p>
           </div>
           <div>
-            <h3>54/56</h3>
+            <h3>546</h3>
             <p>标准规范</p>
           </div>
         </div>
+        <div class="data-monitor__catalog_divider"></div>
         <h5>
           <svg-icon icon-class="tit"></svg-icon>
           <span>数据目录</span>
         </h5>
         <div class="data-monitor__catalog_catalog">
-          <div v-for="(item,index) in rate" :key="index">
+          <div v-for="(item,index) in DataCatalogCount" :key="index">
             <p>
               <b></b>
               <span>{{item.name}}</span>
             </p>
-            <h3>{{item.rate | formatNum}}</h3>
+            <h3>{{item.count | formatNum}}</h3>
           </div>
           <section class="data-monitor__catalog_catalog_pie"></section>
         </div>
@@ -49,12 +51,16 @@
           <span>数据服务</span>
         </h5>
         <div class="data-monitor__service_count">
-          <div class="data-monitor__service_count_item" v-for="item in 4" :key="item">
+          <div
+            class="data-monitor__service_count_item"
+            v-for="(item,index) in DataServiceCount"
+            :key="index"
+          >
             <p>
               <b></b>
-              <span>总数</span>
+              <span>{{item.name}}</span>
             </p>
-            <h3>{{234345 | formatNum}}</h3>
+            <h3>{{item.count | formatNum}}</h3>
           </div>
         </div>
         <div class="data-monitor__service_graph">
@@ -78,11 +84,23 @@ export default {
   data() {
     return {
       radio: "本周",
-      rate: [
-        { name: "总数", rate: 15655 },
-        { name: "下载次数", rate: 12345 },
-        { name: "申请", rate: 12346 },
-        { name: "纠错", rate: 2366 }
+      DataCatalogCount: [
+        { name: "总数", count: 15655 },
+        { name: "下载次数", count: 12345 },
+        { name: "申请", count: 12346 },
+        { name: "纠错", count: 2366 }
+      ],
+      infoStandardPie: [
+        { value: 335, name: "人事部" },
+        { value: 310, name: "财务部" },
+        { value: 234, name: "教务处" },
+        { value: 135, name: "后勤部" }
+      ],
+      DataServiceCount: [
+        { name: "总数", count: 15655 },
+        { name: "下载次数", count: 12345 },
+        { name: "申请", count: 12346 },
+        { name: "纠错", count: 2366 }
       ]
     };
   },
@@ -115,7 +133,23 @@ export default {
             color: "#fff",
             fontSize: "10"
           },
-          data: ["人事部", "财务部", "教务处", "后勤部"]
+          data: ["人事部", "财务部", "教务处", "后勤部"],
+          formatter: params => {
+            switch (params) {
+              case "人事部":
+                return params + "（" + this.infoStandardPie[0].value + "）";
+                break;
+              case "财务部":
+                return params + "（" + this.infoStandardPie[1].value + "）";
+                break;
+              case "教务处":
+                return params + "（" + this.infoStandardPie[2].value + "）";
+                break;
+              case "后勤部":
+                return params + "（" + this.infoStandardPie[3].value + "）";
+                break;
+            }
+          }
         },
         calculable: true,
         series: [
@@ -123,21 +157,16 @@ export default {
             name: "访问来源",
             type: "pie",
             radius: ["50%", "70%"],
-            center: ["30%", "50%"],
+            center: ["15%", "50%"],
             color: ["#992E2E", "#3F64D1", "#2E997C", "#B39C36"],
             avoidLabelOverlap: false,
             label: {
-              show: true,
+              show: false,
               color: "#fff",
               formatter: "{c}",
               position: "inside"
             },
-            data: [
-              { value: 335, name: "人事部" },
-              { value: 310, name: "财务部" },
-              { value: 234, name: "教务处" },
-              { value: 135, name: "后勤部" }
-            ]
+            data: this.infoStandardPie
           }
         ]
       };
@@ -148,15 +177,15 @@ export default {
       var myChart = echarts.init(dom);
 
       let option = {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            crossStyle: {
-              color: "#999"
-            }
-          }
-        },
+        // tooltip: {
+        //   trigger: "axis",
+        //   axisPointer: {
+        //     type: "cross",
+        //     crossStyle: {
+        //       color: "#999"
+        //     }
+        //   }
+        // },
         grid: {
           containLabel: true,
           right: 0,
@@ -204,9 +233,9 @@ export default {
           {
             type: "value",
             name: "API 数量",
-            min: 0,
-            max: 250,
-            interval: 50,
+            // min: 0,
+            // max: 250,
+            // interval: 50,
             // 坐标轴刻度
             axisTick: {
               show: false
@@ -257,7 +286,8 @@ export default {
             name: "当日",
             type: "bar",
             itemStyle: {
-              color: "rgba(63, 100, 209, 1)"
+              color: "rgba(63, 100, 209, 1)",
+              barBorderRadius: 5
             },
             data: [
               2.0,
@@ -278,7 +308,8 @@ export default {
             name: "环比",
             type: "bar",
             itemStyle: {
-              color: "rgba(204, 112, 41, 1)"
+              color: "rgba(204, 112, 41, 1)",
+              barBorderRadius: 5
             },
             data: [
               2.6,
@@ -288,7 +319,7 @@ export default {
               28.7,
               70.7,
               175.6,
-              182.2,
+              252.2,
               48.7,
               18.8,
               6.0,
@@ -337,16 +368,16 @@ export default {
   box-sizing: border-box;
   padding: 14px;
   margin-bottom: 20px;
-  
+
   .el-carousel__indicator--horizontal {
     padding: 4px 4px;
   }
 }
 .data-monitor__catalog {
   > h5 {
-    height: 12px;
+    height: 14px;
     line-height: 1;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 10px;
     svg {
       margin-right: 4px;
@@ -358,7 +389,7 @@ export default {
   &_info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     > div {
       h3 {
         font-size: 20px;
@@ -388,6 +419,12 @@ export default {
         color: rgba(63, 100, 209, 1);
       }
     }
+  }
+  &_divider {
+    width: 100%;
+    height: 1px;
+    background: #2052a0;
+    margin-bottom: 10px;
   }
   &_catalog {
     display: flex;
@@ -425,9 +462,9 @@ export default {
 }
 .data-monitor__service {
   > h5 {
-    height: 12px;
+    height: 14px;
     line-height: 1;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 10px;
     svg {
       margin-right: 4px;
@@ -478,6 +515,5 @@ export default {
       height: 160px;
     }
   }
-  
 }
 </style>

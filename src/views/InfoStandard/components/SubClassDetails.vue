@@ -20,6 +20,7 @@
       :tableData="tableData"
       :showSelection="true"
       :showIndex="false"
+      :hasAddButton="false"
       @selection-change="selectionChange"
       @change-page="changePage"
       @next-page="changePage"

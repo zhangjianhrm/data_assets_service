@@ -272,7 +272,7 @@ export default {
 .map {
   &-wrap {
     height: calc(100vh - 80px);
-    background-image: url(../../assets/bg.jpg);
+    // background-image: url(../../assets/bg.jpg);
   }
 }
 </style>

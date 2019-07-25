@@ -1,7 +1,7 @@
 <template>
   <div class="home__search">
     <div class="home__search_wrap">
-      <el-input placeholder="请输入内容" v-model="input3" class="home__search_wrap_search">
+      <el-input clearable placeholder="请输入内容" v-model="input3" class="home__search_wrap_search">
         <el-button slot="append">
           <i class="su-icon-inquire" style="margin-right:5px;"></i>
           <span>搜索</span>

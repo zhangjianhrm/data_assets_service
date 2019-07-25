@@ -1,6 +1,6 @@
-const SERVER = "http://60.174.249.83:8057";
-
 const MOCKURL = "https://easy-mock.com/mock/5cece354191d1b55805a1434/data_assets_service/";
+
+const SERVER = "http://60.174.249.83:8057";
 
 const SERVERURL = "https://bird.ioliu.cn/v2?url=" + SERVER;
 
@@ -34,7 +34,13 @@ const URL = {
       getNationalStandardCodeSubClassDetails: SERVERURL + "/api/service/code/refer/code/page?" // 国家标准代码标准子类详情
     },
     // 模型标准
-    modelStandard: {},
+    modelStandard: {
+      // 学校执行模型
+      getExecutionModelCount: SERVERURL + "/api/service/model/execute/subset/amountAll", // 数量
+      getExecutionModelList: SERVERURL + "/api/service/model/execute/subset/list", // 列表
+      downloadExecutionModel: SERVERURL + "/api/service/model/execute/subset/export?type=word", // 下载
+      getExecutionModelSubclass: SERVERURL + "/api/service/model/execute/class/classPage?" // 获取子类
+    },
     // 信息标准管理规范
     managementNorms: {}
   },
