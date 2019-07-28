@@ -1,5 +1,6 @@
 <template>
-  <div class="data-map__details">
+  <div class="data-map__details" @click="closeAllSelect">
+    <data-monitor-nav></data-monitor-nav>
     <div class="data-map__details_title"></div>
     <div class="data-map__details_effect">
       <div class="data-map__details_effect_top"></div>
@@ -51,16 +52,63 @@
         <div class="data-map__details_map_select_bottom"></div>
         <div class="data-map__details_map_select_db">
           <span class="data-map__details_map_select_db_name">数据库</span>
-          <el-select class="data-map__details_map_select_db_select" v-model="value" placeholder>
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <i
+            class="data-map__details_map_select_db_arrow el-icon-arrow-down"
+            @click.stop="selectDB()"
+          ></i>
+          <div class="data-map__details_map_select_db_items" v-show="selectDBvisible">
+            <div
+              v-for="(item,index) in DBList"
+              :key="index"
+              @click.stop="selectDB(item.label)"
+            >{{item.label}}</div>
+          </div>
+        </div>
+        <div class="data-map__details_map_select_table">
+          <span class="data-map__details_map_select_table_name">元数据表</span>
+          <i
+            class="data-map__details_map_select_table_arrow el-icon-arrow-down"
+            @click.stop="selectTable()"
+          ></i>
+          <div class="data-map__details_map_select_table_items" v-show="selectTableVisible">
+            <div
+              v-for="(item,index) in tableList"
+              :key="index"
+              @click.stop="selectTable(item.label)"
+            >{{item.label}}</div>
+          </div>
+        </div>
+        <div class="data-map__details_map_select_field">
+          <span class="data-map__details_map_select_field_name">元数据字段</span>
+          <i
+            class="data-map__details_map_select_field_arrow el-icon-arrow-down"
+            @click.stop="selectField()"
+          ></i>
+          <div class="data-map__details_map_select_field_items" v-show="selectFieldVisible">
+            <div
+              v-for="(item,index) in fieldList"
+              :key="index"
+              @click.stop="selectField(item.label)"
+            >{{item.label}}</div>
+          </div>
+        </div>
+        <div class="data-map__details_map_select_divider"></div>
+        <div class="data-map__details_map_select_rg">
+          <div class="data-map__details_map_select_rg_blood">
+            <div class="data-map__details_map_select_rg_blood_bg"></div>
+            <span>血缘分析</span>
+          </div>
+          <div class="data-map__details_map_select_rg_effect">
+            <div class="data-map__details_map_select_rg_effect_bg"></div>
+            <span>影响分析</span>
+          </div>
+          <div class="data-map__details_map_select_rg_all">
+            <div class="data-map__details_map_select_rg_all_bg"></div>
+            <span>全链分析</span>
+          </div>
         </div>
       </div>
+      <d-map></d-map>
     </div>
   </div>
 </template>
@@ -69,10 +117,14 @@ import echarts from "echarts";
 export default {
   name: "DataMapDetails",
   components: {
-    ScrollCard: () => import("./ScrollCard")
+    DataMonitorNav: () => import("./Nav"),
+    ScrollCard: () => import("./ScrollCard"),
+    DMap: () => import("./DataMapWhole"),
+
   },
   data() {
     return {
+      // 影响力排行
       effectTable: [
         { name: "学生信息表", db: "全量库", r: 45 },
         { name: "教职工信息表", db: "人事系统", r: 35 },
@@ -80,6 +132,7 @@ export default {
         { name: "奖学金", db: "财务系统", r: 15 },
         { name: "图书基本信息", db: "图书馆系统", r: 5 }
       ],
+      // 元数据变化
       pieData: [
         { value: 40, name: "人事部", icon: "circle" },
         { value: 35, name: "教务部", icon: "circle" },
@@ -88,36 +141,107 @@ export default {
         { value: 40, name: "后勤部", icon: "circle" },
         { value: 30, name: "宣传部", icon: "circle" }
       ],
+      // 影响列表
       workTable: [
         { name: "学生信息表", db: "全量库", time: "19/07/26" },
         { name: "教职工信息表", db: "人事系统", time: "19/07/26" },
         { name: "一卡通信息表", db: "财务系统", time: "19/07/26" },
         { name: "奖学金", db: "财务系统", time: "19/07/26" },
-        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" }
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
       ],
-      options: [
+      // 数据库
+      selectDBvisible: false,
+      DBList: [
         {
           value: "选项1",
-          label: "黄金糕"
+          label: "全量库"
         },
         {
           value: "选项2",
-          label: "教务数据库分析"
+          label: "人事系统"
         },
         {
           value: "选项3",
-          label: "蚵仔煎"
+          label: "财务系统"
         },
         {
           value: "选项4",
-          label: "龙须面"
+          label: "财务系统"
         },
         {
           value: "选项5",
-          label: "北京烤鸭"
+          label: "图书馆系统"
         }
       ],
-      value: ""
+      currentDB: "",
+      // 元数据表
+      selectTableVisible: false,
+      tableList: [
+        {
+          value: "选项1",
+          label: "全量库"
+        },
+        {
+          value: "选项2",
+          label: "人事系统"
+        },
+        {
+          value: "选项3",
+          label: "财务系统"
+        },
+        {
+          value: "选项4",
+          label: "财务系统"
+        },
+        {
+          value: "选项5",
+          label: "图书馆系统"
+        }
+      ],
+      currentTable: "",
+      // 元数据字段
+      selectFieldVisible: false,
+      fieldList: [
+        {
+          value: "选项1",
+          label: "全量库"
+        },
+        {
+          value: "选项2",
+          label: "人事系统"
+        },
+        {
+          value: "选项3",
+          label: "财务系统"
+        },
+        {
+          value: "选项4",
+          label: "财务系统"
+        },
+        {
+          value: "选项5",
+          label: "图书馆系统"
+        }
+      ],
+      currentField: ""
     };
   },
   mounted() {
@@ -188,6 +312,67 @@ export default {
         ]
       };
       myChart.setOption(option, true);
+    },
+    selectDB(item) {
+      this.selectDBvisible = !this.selectDBvisible;
+      if (item) {
+        this.currentDB = item;
+      }
+    },
+    selectTable(item) {
+      this.selectTableVisible = !this.selectTableVisible;
+      if (item) {
+        this.currentTable = item;
+      }
+    },
+    selectField(item) {
+      this.selectFieldVisible = !this.selectFieldVisible;
+      if (item) {
+        this.currentField = item;
+      }
+    },
+    closeAllSelect() {
+      this.selectDBvisible = false;
+      this.selectTableVisible = false;
+      this.selectFieldVisible = false;
+    }
+  },
+  watch: {
+    selectDBvisible(n, o) {
+      let DBArrow = document.querySelector(
+        ".data-map__details_map_select_db_arrow"
+      );
+      if (n) {
+        DBArrow.classList.add("selectBtnTrans");
+        this.selectTableVisible = false;
+        this.selectFieldVisible = false;
+      } else {
+        DBArrow.classList.remove("selectBtnTrans");
+      }
+    },
+    selectTableVisible(n, o) {
+      let TableArrow = document.querySelector(
+        ".data-map__details_map_select_table_arrow"
+      );
+      if (n) {
+        TableArrow.classList.add("selectBtnTrans");
+        this.selectDBvisible = false;
+        this.selectFieldVisible = false;
+      } else {
+        TableArrow.classList.remove("selectBtnTrans");
+      }
+    },
+    selectFieldVisible(n, o) {
+      let fieldArrow = document.querySelector(
+        ".data-map__details_map_select_field_arrow"
+      );
+      if (n) {
+        fieldArrow.classList.add("selectBtnTrans");
+        this.selectDBvisible = false;
+        this.selectTableVisible = false;
+      } else {
+        fieldArrow.classList.remove("selectBtnTrans");
+      }
     }
   }
 };
@@ -298,6 +483,7 @@ export default {
     bottom: 15px;
     width: 310px;
     // height: 351px;
+    overflow: hidden;
     &_top {
       position: absolute;
       top: 0;
@@ -354,6 +540,7 @@ export default {
     &_content {
       position: absolute;
       top: 230px;
+      bottom: 15px;
       width: 100%;
       font-size: 12px;
       text-align: center;
@@ -362,7 +549,6 @@ export default {
       font-weight: 600;
       padding: 0 15px;
       box-sizing: border-box;
-      height: 104px;
       overflow: hidden;
       .el-row {
         color: #fff;
@@ -443,6 +629,7 @@ export default {
         width: 214px;
         height: 38px;
         background: url(../../../assets/DataMonitor/select.png);
+        cursor: pointer;
         &_name {
           color: rgba(41, 193, 204, 1);
           font-size: 12px;
@@ -450,19 +637,228 @@ export default {
           line-height: 38px;
           margin-left: 12px;
         }
-        &_select {
+        &_arrow {
           float: right;
+          color: #fff;
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 38px;
+          text-align: center;
+          width: 34px;
+          position: relative;
+          z-index: 2;
+          transition: all 0.3s;
+        }
+        &_items {
+          position: absolute;
+          top: 2px;
+          right: 16px;
+          border: 1px solid rgba(39, 115, 230, 0.4);
+          border-bottom: none;
+          border-right: none;
+          width: 140px;
+          z-index: 1;
+          > div {
+            color: #fff;
+            height: 33px;
+            line-height: 33px;
+            border-right: 1px solid rgba(39, 115, 230, 0.4);
+            border-bottom: 1px solid rgba(39, 115, 230, 0.4);
+            background-color: rgba(13, 29, 76, 0.4);
+            text-indent: 12px;
+            font-size: 12px;
+            &:hover {
+              background: rgba(31, 70, 144, 1);
+            }
+            &:nth-child(1) {
+              border-right: none;
+            }
+          }
         }
       }
-
-      .el-input__inner {
-        width: 100px;
-        background: transparent;
-        border-color: transparent !important;
-        // &:hover {
-        //   border-color: transparent;
-        // }
+      &_table {
+        position: absolute;
+        top: 113px;
+        left: 15px;
+        width: 214px;
+        height: 38px;
+        background: url(../../../assets/DataMonitor/select.png);
+        cursor: pointer;
+        &_name {
+          color: rgba(41, 193, 204, 1);
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 38px;
+          margin-left: 12px;
+        }
+        &_arrow {
+          float: right;
+          color: #fff;
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 38px;
+          text-align: center;
+          width: 34px;
+          position: relative;
+          z-index: 2;
+          transition: all 0.3s;
+        }
+        &_items {
+          position: absolute;
+          top: 2px;
+          right: 16px;
+          border: 1px solid rgba(39, 115, 230, 0.4);
+          border-bottom: none;
+          border-right: none;
+          width: 140px;
+          z-index: 1;
+          > div {
+            color: #fff;
+            height: 33px;
+            line-height: 33px;
+            border-right: 1px solid rgba(39, 115, 230, 0.4);
+            border-bottom: 1px solid rgba(39, 115, 230, 0.4);
+            background-color: rgba(13, 29, 76, 0.4);
+            text-indent: 12px;
+            font-size: 12px;
+            &:hover {
+              background: rgba(31, 70, 144, 1);
+            }
+            &:nth-child(1) {
+              border-right: none;
+            }
+          }
+        }
       }
+      &_field {
+        position: absolute;
+        top: 186px;
+        left: 15px;
+        width: 214px;
+        height: 38px;
+        background: url(../../../assets/DataMonitor/select.png);
+        cursor: pointer;
+        &_name {
+          color: rgba(41, 193, 204, 1);
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 38px;
+          margin-left: 12px;
+        }
+        &_arrow {
+          float: right;
+          color: #fff;
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 38px;
+          text-align: center;
+          width: 34px;
+          position: relative;
+          z-index: 2;
+          transition: all 0.3s;
+        }
+        &_items {
+          position: absolute;
+          top: 2px;
+          right: 16px;
+          border: 1px solid rgba(39, 115, 230, 0.4);
+          border-bottom: none;
+          border-right: none;
+          width: 140px;
+          z-index: 1;
+          > div {
+            color: #fff;
+            height: 33px;
+            line-height: 33px;
+            border-right: 1px solid rgba(39, 115, 230, 0.4);
+            border-bottom: 1px solid rgba(39, 115, 230, 0.4);
+            background-color: rgba(13, 29, 76, 0.4);
+            text-indent: 12px;
+            font-size: 12px;
+            &:hover {
+              background: rgba(31, 70, 144, 1);
+            }
+            &:nth-child(1) {
+              border-right: none;
+            }
+          }
+        }
+      }
+      &_divider {
+        position: absolute;
+        top: 245px;
+        left: 16px;
+        width: 189px;
+        height: 29px;
+        background: url(../../../assets/DataMonitor/divider.png);
+      }
+      &_rg {
+        position: absolute;
+        top: 258px;
+        width: 190px;
+        bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        &_blood,
+        &_effect,
+        &_all {
+          width: 110px;
+          height: 110px;
+          line-height: 110px;
+          text-align: center;
+          color: rgba(41, 193, 204, 1);
+          position: relative;
+          cursor: pointer;
+          font-size: 14px;
+          animation: clockwise 5s infinite linear;
+          div {
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image: url(../../../assets/DataMonitor/ring.png);
+            background-size: 100%;
+          }
+          span {
+            display: block;
+            position: relative;
+            z-index: 1;
+            animation: anticlockwise 5s infinite linear;
+          }
+          &:hover {
+            color: #fff;
+            div {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+    &_content{
+
+    }
+  }
+  .selectBtnTrans {
+    transform: rotate(180deg);
+  }
+  @keyframes clockwise {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes anticlockwise {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
     }
   }
   @media only screen and (min-width: 1366px) and (max-width: 1599px) {

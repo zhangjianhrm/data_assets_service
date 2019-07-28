@@ -1,17 +1,17 @@
 <template>
   <div class="data-monitor__nav">
-    <el-tooltip
-      class="item"
-      effect="light"
-      placement="top"
-      v-for="(item,index) in navItem"
-      :key="index"
-      :content="item.name"
-    >
-      <div class="data-monitor__nav_item" @click="$router.push(item.route)">
-        <i :class="item.icon"></i>
-      </div>
-    </el-tooltip>
+    <div class="data-monitor__nav_wrap">
+      <el-tooltip effect="light" content="返回">
+        <div class="data-monitor__nav_wrap_item" @click="$router.go(-1)">
+          <i class="el-icon-back"></i>
+        </div>
+      </el-tooltip>
+      <el-tooltip effect="light" v-for="(item,index) in navItem" :key="index" :content="item.name">
+        <div class="data-monitor__nav_wrap_item" @click="$router.push(item.route)">
+          <i :class="item.icon"></i>
+        </div>
+      </el-tooltip>
+    </div>
   </div>
 </template>
 <script>
@@ -51,28 +51,40 @@ export default {
 <style lang="scss">
 @import "~@/styles/variables.scss";
 .data-monitor__nav {
-  width: 600px;
-  height: 100px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 100vw;
+  height: 20px;
   // background: rgba(255, 255, 255, 0.5);
-  display: flex;
-  justify-content: space-between;
-  &:hover {
-    .data-monitor__nav_item {
-      transform: translateY(50px);
-    }
-  }
-  &_item {
-    width: 50px;
+  z-index: 999;
+  &_wrap {
+    width: 700px;
     height: 50px;
-    border-radius: 50%;
-    background: rgba(40, 40, 40, 0.9);
-    color: rgba(255, 255, 255, 1);
-    text-align: center;
-    line-height: 50px;
-    font-size: 20px;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
     transform: translateY(-50px);
     transition: all 0.4s;
+    // background: rgba(255, 255, 255, 0.5);
+    &_item {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(40, 40, 40, 0.9);
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      line-height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    .data-monitor__nav_wrap {
+      transform: translateY(20px);
+    }
   }
 }
 </style>

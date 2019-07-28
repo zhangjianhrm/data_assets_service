@@ -127,7 +127,7 @@ export default {
     padding: 0;
     margin: 0;
     // height: 2520px;
-    animation: movee 20s linear 0s infinite normal;
+    animation: conveyor 20s linear 0s infinite normal;
     &:hover {
       animation-play-state: paused;
       li {
@@ -179,13 +179,13 @@ export default {
       }
     }
   }
-}
-@keyframes movee {
-  from {
-    margin-top: -1080px;
-  }
-  to {
-    margin-top: 0;
+  @keyframes conveyor {
+    from {
+      margin-top: 0;
+    }
+    to {
+      margin-top: -1080px;
+    }
   }
 }
 </style>

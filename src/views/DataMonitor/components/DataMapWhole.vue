@@ -1,37 +1,30 @@
 <template>
-  <div class="data-map" @click="$router.push('/data_monitor/data_map_details')">
-    <div class="data-map__content"></div>
-    <div class="data-map__center">
-      <svg-icon icon-class="center" class="data-map__center_center"></svg-icon>
-      <svg-icon icon-class="glow" class="data-map__center_glow"></svg-icon>
-      <svg-icon icon-class="ball" class="data-map__center_ball"></svg-icon>
-      <div class="data-map__center_shine">
-        <svg-icon icon-class="ball-lig-up" class="data-map__center_shine_1"></svg-icon>
-        <svg-icon icon-class="ball-lig-down" class="data-map__center_shine_2"></svg-icon>
-        <svg-icon icon-class="ball-lig-down" class="data-map__center_shine_3"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="data-map__center_shine_4"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="data-map__center_shine_5"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="data-map__center_shine_6"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="data-map__center_shine_7"></svg-icon>
+  <div class="dmap">
+    <div class="dmap__content"></div>
+    <svg-icon icon-class="center" class="dmap__center"></svg-icon>
+    <svg-icon icon-class="ball" class="dmap__ball"></svg-icon>
+    <div class="dmap__center">
+      <!-- <div class="dmap__center_shine">
+        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_1"></svg-icon>
+        <svg-icon icon-class="ball-lig-down" class="dmap__center_shine_2"></svg-icon>
+        <svg-icon icon-class="ball-lig-down" class="dmap__center_shine_3"></svg-icon>
+        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_4"></svg-icon>
+        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_5"></svg-icon>
+        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_6"></svg-icon>
+        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_7"></svg-icon>
       </div>
-      <div class="data-map__center_orbit">
-        <div class="data-map__center_orbit_1"></div>
-        <div class="data-map__center_orbit_2"></div>
-      </div>
-      <svg-icon icon-class="orbit-max" class="data-map__center_orbit-max"></svg-icon>
-      <svg-icon icon-class="orbit-top" class="data-map__center_orbit-top"></svg-icon>
-      <!-- <svg-icon icon-class="monitor" class="data-map__center_monitor"></svg-icon>
-      <svg-icon icon-class="monitor1" class="data-map__center_monitor-1"></svg-icon>-->
-      <svg-icon icon-class="monitor2" class="data-map__center_monitor-2"></svg-icon>
+      <svg-icon icon-class="orbit-max" class="dmap__center_orbit-max"></svg-icon>
+      <svg-icon icon-class="orbit-top" class="dmap__center_orbit-top"></svg-icon>
+      <svg-icon icon-class="monitor2" class="dmap__center_monitor-2"></svg-icon>-->
     </div>
   </div>
 </template>
 <script>
 import load from "@/utils/load.js"; // 加载 Js
-// import echarts from "echarts";
 
+// import echarts from "echarts";
 export default {
-  name: "DataMap",
+  name: "DMap",
   props: {},
   data() {
     return {
@@ -56,14 +49,16 @@ export default {
   },
   async created() {
     await load(
-      "https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.min.js"
+      "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
     );
     await load(
       "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
     );
     this.createMap();
   },
-  mounted() {},
+  mounted() {
+    this.computedPos();
+  },
   methods: {
     // 自动圆形排列
     computedPos() {
@@ -136,7 +131,7 @@ export default {
     // 创建地图
     createMap() {
       // eslint-disable-next-line
-      let myChart = echarts.init(document.querySelector(".data-map__content"));
+      let myChart = echarts.init(document.querySelector(".dmap__content"));
       // 图表配置
       myChart.setOption(
         {
@@ -145,9 +140,9 @@ export default {
             map: "china",
             center: this.pointData[0].coord, // 地图中心
             roam: false, // 是否可拖动
-            zoom: 2,
+            zoom: 1.5,
             silent: true, // 是否禁用选中
-            aspectScale: 1, // 长宽比
+            aspectScale: 4 / 3, // 长宽比
             itemStyle: {
               opacity: 0
             }
@@ -175,7 +170,7 @@ export default {
           },
           // 图例
           legend: {
-            show: true,
+            show: false,
             itemWidth: 20,
             itemHeight: 2,
             data: ["流入", "流出"],
@@ -324,211 +319,144 @@ export default {
 };
 </script>
 <style lang="scss">
-.data-map {
-  width: 910px;
-  height: 650px;
-  cursor: pointer;
+.dmap {
+  position: absolute;
+  top: 100px;
+  right: 160px;
+  bottom: 100px;
+  left: 250px;
   &__content {
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    // z-index: 1;
   }
   &__center {
+    width: 280px !important;
+    height: 280px !important;
     position: absolute;
-    width: 100%;
-    height: 100%;
-    > svg,
-    &_orbit,
-    &_shine {
-      position: absolute;
-      left: 0;
-      right: 0;
-      margin: auto;
-    }
-    &_center {
-      top: 31px;
-      width: 280px !important;
-      height: 280px !important;
-    }
-    &_glow {
-      top: -48px;
-      width: 695px !important;
-      height: 530px !important;
-    }
-    &_ball {
-      top: 107px;
-      width: 133px !important;
-      height: 133px !important;
-    }
-    &_shine {
-      top: 107px;
-      width: 133px !important;
-      height: 133px !important;
-      // background: #000;
-      position: relative;
-      > * {
-        position: absolute;
-      }
-      &_1 {
-        top: 9px;
-        left: 36px;
-        width: 40px !important;
-        height: 40px !important;
-        animation: shine 1.6s ease-in-out infinite;
-      }
-      &_2 {
-        bottom: -15px;
-        left: 58px;
-        width: 40px !important;
-        height: 40px !important;
-        animation: shine 1s ease-in-out infinite;
-      }
-      &_3 {
-        bottom: 25px;
-        right: -13px;
-        width: 40px !important;
-        height: 40px !important;
-        animation: shine 3s ease-in-out infinite;
-      }
-      &_4 {
-        top: -2px;
-        right: 24px;
-        width: 40px !important;
-        height: 40px !important;
-        animation: shine 1s ease-in-out infinite;
-      }
-      &_5 {
-        bottom: -53px;
-        right: 47px;
-        width: 18px !important;
-        height: 18px !important;
-        animation: float 3s ease-in-out infinite;
-      }
-      &_6 {
-        bottom: -67px;
-        right: 58px;
-        width: 18px !important;
-        height: 18px !important;
-        animation: float 2.5s ease-in-out infinite;
-      }
-      &_7 {
-        bottom: -32px;
-        left: 31px;
-        width: 18px !important;
-        height: 18px !important;
-        animation: float 2.5s ease-in-out infinite;
-      }
-    }
-    &_orbit {
-      top: 25px;
-      width: 600px;
-      height: 600px;
-      transform-style: preserve-3d;
-      transform: rotateX(71deg);
-      opacity: 0.5;
-      > * {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-      }
-      &_1 {
-        width: 470px;
-        height: 470px;
-        top: -90px;
-        border-radius: 50%;
-        border: 3px dashed #1375dc;
-        animation: rotate 50s linear infinite;
-      }
-      &_2 {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        border: 1px dashed #29f4ee;
-        animation: rotate 50s linear infinite;
-      }
-    }
-    &_orbit-max {
-      width: 633px !important;
-      height: 254px !important;
-      top: 210px;
-    }
-    &_orbit-top {
-      width: 378px !important;
-      height: 76px !important;
-      top: 140px;
-    }
-    &_monitor {
-      top: 138px;
-      left: -300px !important;
-      width: 44px !important;
-      height: 64px !important;
-    }
-    &_monitor-1 {
-      top: 118px;
-      right: -320px !important;
-      width: 52px !important;
-      height: 39px !important;
-    }
-    &_monitor-2 {
-      top: 244px;
-      right: -57px !important;
-      width: 15px !important;
-      height: 15px !important;
-    }
-    // 动画
-    @keyframes rotate {
-      0% {
-        transform: rotate(360deg);
-      }
-      100% {
-        transform: rotate(0);
-      }
-    }
-    @keyframes shine {
-      0% {
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-    @keyframes float {
-      0% {
-        opacity: 0;
-        transform: translateY(0px);
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-    }
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
   }
-  @media only screen and (min-width: 100px) and (max-width: 1365px) {
-    top: -25px;
-    transform: scale(0.65);
+  &__ball {
+    width: 133px !important;
+    height: 133px !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
   }
-  @media only screen and (min-width: 1366px) and (max-width: 1439px) {
-    top: -50px;
-    transform: scale(0.7);
-  }
-  @media only screen and (min-width: 1440px) and (max-width: 1599px) {
-    transform: scale(0.8);
-  }
-  @media only screen and (min-width: 1600px) and (max-width: 1919px) {
-    transform: scale(0.9);
-  }
-  @media only screen and (min-width: 1920px) {
-    // transform: scale(1.3);
-  }
+  // &__center {
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 100%;
+  //   > svg,
+  //   &_orbit,
+  //   &_shine {
+  //     position: absolute;
+  //     left: 0;
+  //     right: 0;
+  //     margin: auto;
+  //   }
+  //   &_center {
+  //     top: 31px;
+  //     width: 280px !important;
+  //     height: 280px !important;
+  //   }
+  //   &_ball {
+  //     top: 107px;
+  //     width: 133px !important;
+  //     height: 133px !important;
+  //   }
+  //   &_shine {
+  //     top: 107px;
+  //     width: 133px !important;
+  //     height: 133px !important;
+  //     // background: #000;
+  //     position: relative;
+  //     > * {
+  //       position: absolute;
+  //     }
+  //     &_1 {
+  //       top: 9px;
+  //       left: 36px;
+  //       width: 40px !important;
+  //       height: 40px !important;
+  //       animation: shine 1.6s ease-in-out infinite;
+  //     }
+  //     &_2 {
+  //       bottom: -15px;
+  //       left: 58px;
+  //       width: 40px !important;
+  //       height: 40px !important;
+  //       animation: shine 1s ease-in-out infinite;
+  //     }
+  //     &_3 {
+  //       bottom: 25px;
+  //       right: -13px;
+  //       width: 40px !important;
+  //       height: 40px !important;
+  //       animation: shine 3s ease-in-out infinite;
+  //     }
+  //     &_4 {
+  //       top: -2px;
+  //       right: 24px;
+  //       width: 40px !important;
+  //       height: 40px !important;
+  //       animation: shine 1s ease-in-out infinite;
+  //     }
+  //     &_5 {
+  //       bottom: -53px;
+  //       right: 47px;
+  //       width: 18px !important;
+  //       height: 18px !important;
+  //       animation: float 3s ease-in-out infinite;
+  //     }
+  //     &_6 {
+  //       bottom: -67px;
+  //       right: 58px;
+  //       width: 18px !important;
+  //       height: 18px !important;
+  //       animation: float 2.5s ease-in-out infinite;
+  //     }
+  //     &_7 {
+  //       bottom: -32px;
+  //       left: 31px;
+  //       width: 18px !important;
+  //       height: 18px !important;
+  //       animation: float 2.5s ease-in-out infinite;
+  //     }
+  //   }
+  //   @keyframes shine {
+  //     0% {
+  //       opacity: 0;
+  //     }
+  //     50% {
+  //       opacity: 1;
+  //     }
+  //     100% {
+  //       opacity: 0;
+  //     }
+  //   }
+  // }
+  // @media only screen and (min-width: 100px) and (max-width: 1365px) {
+  //   top: -25px;
+  //   transform: scale(0.65);
+  // }
+  // @media only screen and (min-width: 1366px) and (max-width: 1599px) {
+  //   top: -50px;
+  //   transform: scale(0.7);
+  // }
+  // @media only screen and (min-width: 1600px) and (max-width: 1919px) {
+  //   transform: scale(0.9);
+  // }
+  // @media only screen and (min-width: 1920px) {
+  //   // transform: scale(1.3);
+  // }
 }
 </style>

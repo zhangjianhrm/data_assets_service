@@ -48,14 +48,9 @@ export default {
   overflow: hidden;
   background-color: $color-header;
   position: relative;
-  &__nav{
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    margin: auto;
-    z-index: 3;
-  }
+  // &__nav {
+  //   z-index: 3;
+  // }
   &__cover {
     width: 100%;
     height: 100%;
