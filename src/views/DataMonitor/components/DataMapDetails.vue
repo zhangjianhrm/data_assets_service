@@ -45,18 +45,19 @@
       </div>
     </div>
     <scroll-card></scroll-card>
-    <div class="data-map__details_map">
-      <div class="data-map__details_map_select">
-        <div class="data-map__details_map_select_top"></div>
-        <div class="data-map__details_map_select_center"></div>
-        <div class="data-map__details_map_select_bottom"></div>
-        <div class="data-map__details_map_select_db">
-          <span class="data-map__details_map_select_db_name">数据库</span>
+    <div class="data-map__details_rg">
+      <div class="data-map__details_rg_select">
+        <div class="data-map__details_rg_select_top"></div>
+        <div class="data-map__details_rg_select_center"></div>
+        <div class="data-map__details_rg_select_bottom"></div>
+        <div class="data-map__details_rg_select_db">
+          <span class="data-map__details_rg_select_db_name">数据库</span>
+          <b v-show="!selectDBvisible">{{currentDB}}</b>
           <i
-            class="data-map__details_map_select_db_arrow el-icon-arrow-down"
+            class="data-map__details_rg_select_db_arrow el-icon-arrow-down"
             @click.stop="selectDB()"
           ></i>
-          <div class="data-map__details_map_select_db_items" v-show="selectDBvisible">
+          <div class="data-map__details_rg_select_db_items" v-show="selectDBvisible">
             <div
               v-for="(item,index) in DBList"
               :key="index"
@@ -64,13 +65,14 @@
             >{{item.label}}</div>
           </div>
         </div>
-        <div class="data-map__details_map_select_table">
-          <span class="data-map__details_map_select_table_name">元数据表</span>
+        <div class="data-map__details_rg_select_table">
+          <span class="data-map__details_rg_select_table_name">元数据表</span>
+          <b v-show="!selectTableVisible">{{currentTable}}</b>
           <i
-            class="data-map__details_map_select_table_arrow el-icon-arrow-down"
+            class="data-map__details_rg_select_table_arrow el-icon-arrow-down"
             @click.stop="selectTable()"
           ></i>
-          <div class="data-map__details_map_select_table_items" v-show="selectTableVisible">
+          <div class="data-map__details_rg_select_table_items" v-show="selectTableVisible">
             <div
               v-for="(item,index) in tableList"
               :key="index"
@@ -78,13 +80,14 @@
             >{{item.label}}</div>
           </div>
         </div>
-        <div class="data-map__details_map_select_field">
-          <span class="data-map__details_map_select_field_name">元数据字段</span>
+        <div class="data-map__details_rg_select_field">
+          <span class="data-map__details_rg_select_field_name">元数据字段</span>
+          <b v-show="!selectFieldVisible">{{currentField}}</b>
           <i
-            class="data-map__details_map_select_field_arrow el-icon-arrow-down"
+            class="data-map__details_rg_select_field_arrow el-icon-arrow-down"
             @click.stop="selectField()"
           ></i>
-          <div class="data-map__details_map_select_field_items" v-show="selectFieldVisible">
+          <div class="data-map__details_rg_select_field_items" v-show="selectFieldVisible">
             <div
               v-for="(item,index) in fieldList"
               :key="index"
@@ -92,24 +95,25 @@
             >{{item.label}}</div>
           </div>
         </div>
-        <div class="data-map__details_map_select_divider"></div>
-        <div class="data-map__details_map_select_rg">
-          <div class="data-map__details_map_select_rg_blood">
-            <div class="data-map__details_map_select_rg_blood_bg"></div>
+        <div class="data-map__details_rg_select_divider"></div>
+        <div class="data-map__details_rg_select_btn">
+          <div class="data-map__details_rg_select_btn_blood">
+            <div class="data-map__details_rg_select_btn_blood_bg"></div>
             <span>血缘分析</span>
           </div>
-          <div class="data-map__details_map_select_rg_effect">
-            <div class="data-map__details_map_select_rg_effect_bg"></div>
+          <div class="data-map__details_rg_select_btn_effect">
+            <div class="data-map__details_rg_select_btn_effect_bg"></div>
             <span>影响分析</span>
           </div>
-          <div class="data-map__details_map_select_rg_all">
-            <div class="data-map__details_map_select_rg_all_bg"></div>
+          <div class="data-map__details_rg_select_btn_all">
+            <div class="data-map__details_rg_select_btn_all_bg"></div>
             <span>全链分析</span>
           </div>
         </div>
       </div>
-      <d-map></d-map>
+      <div class="data-map__details_rg_content"></div>
     </div>
+    <d-map></d-map>
   </div>
 </template>
 <script>
@@ -119,8 +123,7 @@ export default {
   components: {
     DataMonitorNav: () => import("./Nav"),
     ScrollCard: () => import("./ScrollCard"),
-    DMap: () => import("./DataMapWhole"),
-
+    DMap: () => import("./DataMapWhole")
   },
   data() {
     return {
@@ -165,7 +168,7 @@ export default {
         { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
         { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
         { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
-        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" },
+        { name: "图书基本信息", db: "图书馆系统", time: "19/07/26" }
       ],
       // 数据库
       selectDBvisible: false,
@@ -340,7 +343,7 @@ export default {
   watch: {
     selectDBvisible(n, o) {
       let DBArrow = document.querySelector(
-        ".data-map__details_map_select_db_arrow"
+        ".data-map__details_rg_select_db_arrow"
       );
       if (n) {
         DBArrow.classList.add("selectBtnTrans");
@@ -352,7 +355,7 @@ export default {
     },
     selectTableVisible(n, o) {
       let TableArrow = document.querySelector(
-        ".data-map__details_map_select_table_arrow"
+        ".data-map__details_rg_select_table_arrow"
       );
       if (n) {
         TableArrow.classList.add("selectBtnTrans");
@@ -364,7 +367,7 @@ export default {
     },
     selectFieldVisible(n, o) {
       let fieldArrow = document.querySelector(
-        ".data-map__details_map_select_field_arrow"
+        ".data-map__details_rg_select_field_arrow"
       );
       if (n) {
         fieldArrow.classList.add("selectBtnTrans");
@@ -576,7 +579,7 @@ export default {
     bottom: 15px;
     z-index: 1;
   }
-  &_map {
+  &_rg {
     position: absolute;
     top: 27px;
     right: 400px;
@@ -628,14 +631,19 @@ export default {
         left: 15px;
         width: 214px;
         height: 38px;
-        background: url(../../../assets/DataMonitor/select.png);
+        background: url(../../../assets/DataMonitor/select-small.png);
         cursor: pointer;
         &_name {
           color: rgba(41, 193, 204, 1);
           font-size: 12px;
           font-weight: bold;
           line-height: 38px;
-          margin-left: 12px;
+          margin: 0 12px;
+        }
+        > b {
+          color: #fff;
+          font-size: 12px;
+          margin: 0 12px;
         }
         &_arrow {
           float: right;
@@ -682,14 +690,19 @@ export default {
         left: 15px;
         width: 214px;
         height: 38px;
-        background: url(../../../assets/DataMonitor/select.png);
+        background: url(../../../assets/DataMonitor/select-medium.png);
         cursor: pointer;
         &_name {
           color: rgba(41, 193, 204, 1);
           font-size: 12px;
           font-weight: bold;
           line-height: 38px;
-          margin-left: 12px;
+          margin: 0 12px;
+        }
+        > b {
+          color: #fff;
+          font-size: 12px;
+          margin: 0 12px;
         }
         &_arrow {
           float: right;
@@ -710,7 +723,7 @@ export default {
           border: 1px solid rgba(39, 115, 230, 0.4);
           border-bottom: none;
           border-right: none;
-          width: 140px;
+          width: 129px;
           z-index: 1;
           > div {
             color: #fff;
@@ -743,7 +756,12 @@ export default {
           font-size: 12px;
           font-weight: bold;
           line-height: 38px;
-          margin-left: 12px;
+          margin: 0 12px;
+        }
+        > b {
+          color: #fff;
+          font-size: 12px;
+          margin: 0 12px;
         }
         &_arrow {
           float: right;
@@ -764,7 +782,7 @@ export default {
           border: 1px solid rgba(39, 115, 230, 0.4);
           border-bottom: none;
           border-right: none;
-          width: 140px;
+          width: 116px;
           z-index: 1;
           > div {
             color: #fff;
@@ -792,7 +810,7 @@ export default {
         height: 29px;
         background: url(../../../assets/DataMonitor/divider.png);
       }
-      &_rg {
+      &_btn {
         position: absolute;
         top: 258px;
         width: 190px;
@@ -812,9 +830,8 @@ export default {
           position: relative;
           cursor: pointer;
           font-size: 14px;
-          animation: clockwise 5s infinite linear;
           div {
-            opacity: 0.5;
+            opacity: 0.3;
             position: absolute;
             top: 0;
             right: 0;
@@ -827,19 +844,21 @@ export default {
             display: block;
             position: relative;
             z-index: 1;
-            animation: anticlockwise 5s infinite linear;
           }
           &:hover {
             color: #fff;
+            animation: clockwise 5s infinite linear;
             div {
               opacity: 1;
+            }
+            span {
+              animation: anticlockwise 5s infinite linear;
             }
           }
         }
       }
     }
-    &_content{
-
+    &_content {
     }
   }
   .selectBtnTrans {
@@ -875,7 +894,7 @@ export default {
     &_scroll-card {
       top: 72px;
     }
-    &_map {
+    &_rg {
       top: 37px;
       left: 16px;
     }

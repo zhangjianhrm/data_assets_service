@@ -1,12 +1,18 @@
 <template>
   <div class="data-monitor__nav">
     <div class="data-monitor__nav_wrap">
-      <el-tooltip effect="light" content="返回">
+      <el-tooltip effect="light" content="返回" :open-delay="400">
         <div class="data-monitor__nav_wrap_item" @click="$router.go(-1)">
           <i class="el-icon-back"></i>
         </div>
       </el-tooltip>
-      <el-tooltip effect="light" v-for="(item,index) in navItem" :key="index" :content="item.name">
+      <el-tooltip
+        effect="light"
+        v-for="(item,index) in navItem"
+        :key="index"
+        :content="item.name"
+        :open-delay="400"
+      >
         <div class="data-monitor__nav_wrap_item" @click="$router.push(item.route)">
           <i :class="item.icon"></i>
         </div>

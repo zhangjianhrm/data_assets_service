@@ -327,12 +327,14 @@ export default {
 .data-map {
   width: 910px;
   height: 650px;
-  cursor: pointer;
   &__content {
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: 1;
+    * {
+      cursor: pointer !important;
+    }
   }
   &__center {
     position: absolute;
@@ -360,6 +362,7 @@ export default {
       top: 107px;
       width: 133px !important;
       height: 133px !important;
+      cursor: pointer;
     }
     &_shine {
       top: 107px;

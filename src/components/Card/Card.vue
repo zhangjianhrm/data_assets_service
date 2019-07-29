@@ -4,7 +4,6 @@
       v-if="checkbox"
       v-model="cardData.checked"
       class="card_checkbox"
-      @click.native.stop
       @change="changeClick"
     />
     <p class="card_title">{{cardData.NAME}}</p>

@@ -1,21 +1,10 @@
 <template>
   <div class="dmap">
     <div class="dmap__content"></div>
-    <svg-icon icon-class="center" class="dmap__center"></svg-icon>
-    <svg-icon icon-class="ball" class="dmap__ball"></svg-icon>
-    <div class="dmap__center">
-      <!-- <div class="dmap__center_shine">
-        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_1"></svg-icon>
-        <svg-icon icon-class="ball-lig-down" class="dmap__center_shine_2"></svg-icon>
-        <svg-icon icon-class="ball-lig-down" class="dmap__center_shine_3"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_4"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_5"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_6"></svg-icon>
-        <svg-icon icon-class="ball-lig-up" class="dmap__center_shine_7"></svg-icon>
-      </div>
-      <svg-icon icon-class="orbit-max" class="dmap__center_orbit-max"></svg-icon>
-      <svg-icon icon-class="orbit-top" class="dmap__center_orbit-top"></svg-icon>
-      <svg-icon icon-class="monitor2" class="dmap__center_monitor-2"></svg-icon>-->
+    <div class="dmap__legend">
+      <div>全部</div>
+      <div>API 流向</div>
+      <div>数据交换</div>
     </div>
   </div>
 </template>
@@ -44,7 +33,8 @@ export default {
       lineWidth: 0.5, // 线条宽度
       lineCurveness: 0.1, // 线条曲率
       lineOpacity: 0.4, // 线条透明度
-      dataCenter: require("@/assets/icon/datamap/全量库.png")
+      dataCenter: require("@/assets/DataMonitor/ball.png"),
+      symbolSize: 50
     };
   },
   async created() {
@@ -84,7 +74,7 @@ export default {
           symbol:
             "image://" +
             require("@/assets/icon/datamap/" + data[i].name + ".png"),
-          symbolSize: 90
+          symbolSize: this.symbolSize
         });
       }
       // 中心点
@@ -92,7 +82,7 @@ export default {
         name: data[0].name,
         value: data[0].coord,
         symbol: "image://" + this.dataCenter,
-        symbolSize: 0
+        symbolSize: 100
       });
       return pointCoord;
     },
@@ -142,7 +132,7 @@ export default {
             roam: false, // 是否可拖动
             zoom: 1.5,
             silent: true, // 是否禁用选中
-            aspectScale: 4 / 3, // 长宽比
+            aspectScale: 5 / 3, // 长宽比
             itemStyle: {
               opacity: 0
             }
@@ -179,8 +169,7 @@ export default {
             textStyle: {
               color: "rgba(255,255,255,0.1)"
             },
-            selectedMode: "multiple",
-            zlevel: 2
+            selectedMode: "multiple"
           },
           // 系列列表
           series: [
@@ -192,7 +181,7 @@ export default {
               data: this.getRouteMap(this.pointData, "out"),
               // 箭头效果
               effect: {
-                show: true, // 是否显示特效
+                show: true,
                 period: 6, // 特效动画的时间，单位为 s
                 trailLength: 0.1,
                 symbol: this.planePath,
@@ -233,8 +222,7 @@ export default {
                 width: this.lineWidth,
                 opacity: this.lineOpacity,
                 curveness: this.lineCurveness
-              },
-              zlevel: 2
+              }
             },
             // 流入
             {
@@ -286,8 +274,7 @@ export default {
                 width: this.lineWidth,
                 opacity: this.lineOpacity,
                 curveness: this.lineCurveness
-              },
-              zlevel: 2
+              }
             },
             // 点
             {
@@ -302,13 +289,11 @@ export default {
                 show: true, // 文字样式
                 color: "white",
                 fontSize: 12,
-                fontFamily: "PingFang SC",
                 fontWeight: "lighter",
                 distance: 14,
                 position: "top",
                 formatter: "{b}"
-              },
-              zlevel: 2
+              }
             }
           ]
         },
@@ -322,141 +307,65 @@ export default {
 .dmap {
   position: absolute;
   top: 100px;
-  right: 160px;
-  bottom: 100px;
-  left: 250px;
+  right: 570px;
+  bottom: 15px;
+  left: 260px;
+  // overflow: hidden;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
   &__content {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    // z-index: 1;
+    width: 1100px !important;
+    height: 800px !important;
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-  &__center {
-    width: 280px !important;
-    height: 280px !important;
+  &__legend {
+    width: 258px;
+    height: 31px;
     position: absolute;
-    top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     margin: auto;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    > div {
+      transition: all 0.2s;
+      width: 86px;
+      height: 31px;
+      background-image: url(../../../assets/DataMonitor/tab.png);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: 100%;
+      color: #fff;
+      text-align: center;
+      line-height: 28px;
+      font-size: 12px;
+      &:hover {
+        background-image: url(../../../assets/DataMonitor/tab-active.png);
+      }
+    }
   }
-  &__ball {
-    width: 133px !important;
-    height: 133px !important;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
+  @media only screen and (min-width: 100px) and (max-width: 1365px) {
+    // top: -25px;
+    // transform: scale(0.65);
   }
-  // &__center {
-  //   position: absolute;
-  //   width: 100%;
-  //   height: 100%;
-  //   > svg,
-  //   &_orbit,
-  //   &_shine {
-  //     position: absolute;
-  //     left: 0;
-  //     right: 0;
-  //     margin: auto;
-  //   }
-  //   &_center {
-  //     top: 31px;
-  //     width: 280px !important;
-  //     height: 280px !important;
-  //   }
-  //   &_ball {
-  //     top: 107px;
-  //     width: 133px !important;
-  //     height: 133px !important;
-  //   }
-  //   &_shine {
-  //     top: 107px;
-  //     width: 133px !important;
-  //     height: 133px !important;
-  //     // background: #000;
-  //     position: relative;
-  //     > * {
-  //       position: absolute;
-  //     }
-  //     &_1 {
-  //       top: 9px;
-  //       left: 36px;
-  //       width: 40px !important;
-  //       height: 40px !important;
-  //       animation: shine 1.6s ease-in-out infinite;
-  //     }
-  //     &_2 {
-  //       bottom: -15px;
-  //       left: 58px;
-  //       width: 40px !important;
-  //       height: 40px !important;
-  //       animation: shine 1s ease-in-out infinite;
-  //     }
-  //     &_3 {
-  //       bottom: 25px;
-  //       right: -13px;
-  //       width: 40px !important;
-  //       height: 40px !important;
-  //       animation: shine 3s ease-in-out infinite;
-  //     }
-  //     &_4 {
-  //       top: -2px;
-  //       right: 24px;
-  //       width: 40px !important;
-  //       height: 40px !important;
-  //       animation: shine 1s ease-in-out infinite;
-  //     }
-  //     &_5 {
-  //       bottom: -53px;
-  //       right: 47px;
-  //       width: 18px !important;
-  //       height: 18px !important;
-  //       animation: float 3s ease-in-out infinite;
-  //     }
-  //     &_6 {
-  //       bottom: -67px;
-  //       right: 58px;
-  //       width: 18px !important;
-  //       height: 18px !important;
-  //       animation: float 2.5s ease-in-out infinite;
-  //     }
-  //     &_7 {
-  //       bottom: -32px;
-  //       left: 31px;
-  //       width: 18px !important;
-  //       height: 18px !important;
-  //       animation: float 2.5s ease-in-out infinite;
-  //     }
-  //   }
-  //   @keyframes shine {
-  //     0% {
-  //       opacity: 0;
-  //     }
-  //     50% {
-  //       opacity: 1;
-  //     }
-  //     100% {
-  //       opacity: 0;
-  //     }
-  //   }
-  // }
-  // @media only screen and (min-width: 100px) and (max-width: 1365px) {
-  //   top: -25px;
-  //   transform: scale(0.65);
-  // }
-  // @media only screen and (min-width: 1366px) and (max-width: 1599px) {
-  //   top: -50px;
-  //   transform: scale(0.7);
-  // }
-  // @media only screen and (min-width: 1600px) and (max-width: 1919px) {
-  //   transform: scale(0.9);
-  // }
-  // @media only screen and (min-width: 1920px) {
-  //   // transform: scale(1.3);
-  // }
+  @media only screen and (min-width: 1366px) and (max-width: 1599px) {
+    .dmap__content {
+      transform: translate(-50%, -50%) scale(0.6);
+    }
+  }
+  @media only screen and (min-width: 1600px) and (max-width: 1919px) {
+    .dmap__content {
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+  }
+  @media only screen and (min-width: 1920px) {
+    // transform: scale(1);
+  }
 }
 </style>

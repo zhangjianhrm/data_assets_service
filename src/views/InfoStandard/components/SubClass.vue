@@ -78,7 +78,7 @@ import { close } from "fs";
 export default {
   name: "SubClass",
   components: {
-    Card: () => import("@/components/Card/Card.1")
+    Card: () => import("@/components/Card/Card")
   },
   data() {
     return {

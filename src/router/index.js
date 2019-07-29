@@ -1,11 +1,12 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import Layout from "@/components/Layout/Index";
+// import Layout from "@/components/Layout/Index";
 import HeaderNav from "@/components/Layout/HeaderNav";
 
 // 子路由
 import InfoStandard from "./modules/InfoStandard";
+import DataCatalog from "./modules/DataCatalog";
 import DataQuality from "./modules/DataQuality";
 import DataManagement from "./modules/DataManagement";
 import DataMonitor from "./modules/DataMonitor";
@@ -35,72 +36,7 @@ const router = new Router({
     // 信息标准
     InfoStandard,
     // 数据目录
-    {
-      path: "/data_catalog",
-      component: Layout,
-      children: [
-        // 数据目录首页
-        {
-          name: "DataCatalog",
-          path: "/",
-          component: () => import("@/views/DataCatalog/Index"),
-          meta: {
-            title: "数据目录"
-          }
-        },
-        // 二级页面
-        {
-          path: "catalog",
-          component: {
-            render(h) {
-              return h("router-view");
-            }
-          },
-          // redirect: '/subpage',
-          children: [
-            // 二级页面内容
-            {
-              name: "DataCatalogCard",
-              path: "",
-              component: () => import("@/views/DataCatalog/components/DataCatalogCard"),
-              meta: {
-                title: "数据目录详情"
-              }
-            },
-            // 三级页面
-            {
-              path: "details",
-              component: {
-                render(h) {
-                  return h("router-view");
-                }
-              },
-              // redirect: '/sanjiyemian',
-              children: [
-                // 三级页面内容
-                {
-                  name: "DataCatalogDetails",
-                  path: "id=:id&name=:name",
-                  component: () => import("@/views/DataCatalog/components/DataCatalogDetails"),
-                  meta: {
-                    title: "信息标准三级"
-                  }
-                },
-                // 四级页面内容
-                {
-                  name: "None",
-                  path: "sijiyemian",
-                  component: () => import("@/views/InfoStandard/components/sijiyemian"),
-                  meta: {
-                    title: "信息标准四级"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
+    DataCatalog,
     // 数据管理
     DataManagement,
     // 数据质量

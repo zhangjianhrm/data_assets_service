@@ -1,24 +1,39 @@
 <template>
-  <div class="data-catalog-card">
-    <div class="data-catalog-card__title">
+  <div class="data-catalog__list">
+    <div class="data-catalog__list__title">
       <h3>数据目录</h3>
     </div>
-    <div class="data-catalog-card__op">
+    <div class="data-catalog__list__op">
       <el-button size="small" icon="el-icon-back" @click="$router.go(-1)">返回</el-button>
-      <el-button size="small" @click="downloadSubClass">
-        <svg-icon icon-class="download.2" style="margin-right:3px;" />
-        <span v-if="selected.length">下载选中</span>
-        <span v-else>下载全部</span>
-      </el-button>
-      <!-- <el-button size="small" @click="selectAll">全选</el-button> -->
-      <span
-        v-show="selected.length"
-        style="font-size:14px;margin-left:10px;"
-      >已选择 {{selected.length}} 个</span>
-      <el-input placeholder="数据目录" v-model="input3" size="small">
+      <el-select size="small" v-model="value" clearable placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <el-select size="small" v-model="value" clearable placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <el-select size="small" v-model="value" clearable placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <el-button size="small" type="primary" @click="$router.push({name:'DataCatalogApply'})">数据目录申请</el-button>
+      <el-input placeholder="数据目录" v-model="searchInput" size="small">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
-      <el-button-group class="data-catalog-card__op_sort">
+      <el-button-group class="data-catalog__list__op_sort">
         <el-button
           size="small"
           v-for="(item,index) in sortMethods"
@@ -27,7 +42,7 @@
           @click="cardSort(item.name)"
         >
           <span>{{item.title}}</span>
-          <span class="data-catalog-card__op_sort_icon">
+          <span class="data-catalog__list__op_sort_icon">
             <i
               class="el-icon-caret-top"
               :style="orderByType==item.name && orderByWay=='desc' ? 'color:#fff;' : ''"
@@ -40,18 +55,19 @@
         </el-button>
       </el-button-group>
     </div>
-    <div class="data-catalog-card__card">
+    <div class="data-catalog__list__card">
       <card
         v-for="(item,index) in cardData"
         :key="index"
         :cardData="item"
+        :checkbox="false"
         @cardSelected="cardSelected"
         @click.native="goDetails(item.ID,item.NAME)"
       ></card>
     </div>
     <el-pagination
       background
-      class="data-catalog-card__pagination"
+      class="data-catalog__list__pagination"
       layout="total, prev, pager, next, sizes, jumper"
       :page-size="pageSize"
       :page-sizes="[15, 30]"
@@ -59,8 +75,7 @@
       :current-page="pageIndex"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-    >
-    </el-pagination>
+    ></el-pagination>
   </div>
 </template>
 <script>
@@ -69,9 +84,9 @@ import Qs from "qs";
 import url from "@/service.config";
 import { close } from "fs";
 export default {
-  name: "DataCatalogCard",
+  name: "DataCatalogList",
   components: {
-    Card: () => import("@/components/Card/Card.1")
+    Card: () => import("@/components/Card/Card")
   },
   data() {
     return {
@@ -79,13 +94,32 @@ export default {
       id: this.$route.params.id,
       title: this.$route.params.name,
       subClassUrl: url.infoStandard.codeStandard.getExecutionCodeSubClass,
-      input3: "",
-      // 需要给 Card 组件传递的 props
-      cardData: [
-
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕"
+        },
+        {
+          value: "选项2",
+          label: "双皮奶"
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎"
+        },
+        {
+          value: "选项4",
+          label: "龙须面"
+        },
+        {
+          value: "选项5",
+          label: "北京烤鸭"
+        }
       ],
-      // 当前选中的 Card
-      selected: [],
+      value: "",
+      searchInput: "",
+      // 需要给 Card 组件传递的 props
+      cardData: [],
       // 排序方式
       sortMethods: [
         { title: "更新时间", name: "UPDATE_TIME" },
@@ -216,7 +250,7 @@ export default {
 </script>
 <style lang="scss">
 @import "~@/styles/variables.scss";
-.data-catalog-card {
+.data-catalog__list {
   width: 100%;
   overflow: hidden;
   &__title {
@@ -231,15 +265,34 @@ export default {
   }
   &__op {
     width: 1280px;
+    height: 32px;
     margin: 0 auto;
     margin-bottom: 35px;
-    > div {
+    // 返回
+    > .el-button:nth-child(1) {
+      float: left;
+      margin-right: 24px;
+    }
+    // 选择
+    > .el-select {
+      float: left;
+      width: 96px;
+      margin-right: 12px;
+    }
+    // 排序按钮
+    > .el-button-group {
       float: right;
     }
     // 搜索
-    .el-input-group {
+    > .el-input-group {
+      float: right;
       width: 300px;
-      margin-left: 28px;
+      margin-left: 24px;
+    }
+    // 数据目录申请
+    > .el-button:nth-child(5) {
+      float: right;
+      margin-left: 24px;
     }
     // 排序
     &_sort {
@@ -271,51 +324,6 @@ export default {
     margin-bottom: 48px;
     display: flex;
     justify-content: center;
-    // &_total {
-    //   margin-right: 15px;
-    //   color: rgba(66, 78, 103, 1);
-    //   line-height: 36px !important;
-    //   b {
-    //     color: $color-blue;
-    //   }
-    // }
-    // .btn-prev,
-    // .btn-next {
-    //   width: 40px;
-    //   height: 40px;
-    //   border: 1px solid rgba(232, 232, 232, 1);
-    //   border-radius: 3px;
-    //   background: rgba(255, 255, 255, 1) !important;
-    // }
-    // ul {
-    //   li {
-    //     box-sizing: border-box;
-    //     width: 40px;
-    //     height: 40px;
-    //     background: rgba(255, 255, 255, 1) !important;
-    //     border: 1px solid rgba(232, 232, 232, 1) !important;
-    //     border-radius: 3px !important;
-    //     line-height: 38px;
-    //     &.active {
-    //       background: $color-blue !important;
-    //       & + li {
-    //         border: 1px solid rgba(232, 232, 232, 1);
-    //       }
-    //     }
-    //   }
-    // }
-    // .el-input__inner {
-    //   height: 40px !important;
-    //   border: 1px solid rgba(232, 232, 232, 1) !important;
-    // }
-    // .el-pagination__jump {
-    //   color: rgba(66, 78, 103, 1);
-    // }
-    // .el-pager li.btn-quicknext,
-    // .el-pager li.btn-quickprev {
-    //   line-height: 38px;
-    //   color: rgba(66, 78, 103, 1);
-    // }
   }
 }
 </style>
