@@ -41,6 +41,82 @@
         <span>{{cardData.DOWNLOAD_NUM}}</span>
       </div>
     </div>
+    <el-dialog
+      title="数据目录下载申请"
+      width="30%"
+      :visible.sync="dialogVisible"
+      :before-close="handleClose"
+      :append-to-body="true"
+    >
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane label="线上申请" name="first">
+          <el-form ref="form1" :model="form" label-width="90px" :rules="rules">
+            <el-form-item label="申请人">
+              <el-input v-model="form.user" size="medium" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="真实姓名">
+              <el-input v-model="form.name" size="medium" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="所在部门">
+              <el-input v-model="form.department" size="medium" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="联系方式" prop="tel">
+              <el-input v-model.number="form.tel" size="medium" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="附件上传">
+              <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                :on-exceed="handleExceed"
+                :file-list="form.fileList"
+              >
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="线下申请" name="second">
+          <el-checkbox-group v-model="checkedCities">
+            <el-checkbox
+              v-for="city in cities"
+              :label="city"
+              :key="city"
+              style="width:100%;margin:0 0 20px 20px"
+            >
+              <span style="margin-right:14px;">{{city}}</span>
+              <el-tooltip effect="dark" content="点击下载" placement="right">
+                <svg-icon icon-class="download.2" @click.prevent="downloadApplyWord(city)" />
+              </el-tooltip>
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-tab-pane>
+      </el-tabs>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="dialogVisible = false">取消</el-button>
+        <el-button
+          v-show="activeName == 'first'"
+          size="small"
+          type="primary"
+          @click="submit('form1')"
+        >提交</el-button>
+        <el-button
+          v-show="activeName == 'second' && checkedCities.length == 0"
+          size="small"
+          type="primary"
+          @click="downloadApplyWord(cities)"
+        >全部下载</el-button>
+        <el-button
+          v-show="activeName == 'second' && checkedCities.length > 0"
+          size="small"
+          type="primary"
+          @click="downloadApplyWord(checkedCities)"
+        >下载选中</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -59,7 +135,31 @@ export default {
     }
   },
   data() {
-    return { checked: false };
+    return {
+      checked: false,
+      dialogVisible: false,
+      activeName: "first",
+      form: {
+        user: "李孟哲",
+        name: "李孟哲",
+        department: "教务处",
+        tel: "",
+        fileList: []
+      },
+      rules: {
+        tel: [
+          { required: true, message: "不能为空" },
+          { type: "number", message: "必须为数字值" }
+        ]
+      },
+      cities: [
+        "人事部门申请模板",
+        "财务部门申请模板",
+        "学工部门申请模板",
+        "教务部门申请模板"
+      ],
+      checkedCities: []
+    };
   },
   methods: {
     // 点击 checkbox
@@ -79,8 +179,73 @@ export default {
     },
     // 下载
     download(data) {
+      // this.$message({
+      //   message: "下载 " + JSON.stringify(data),
+      //   type: "success"
+      // });
+      this.$confirm("您没有下载权限, 是否申请下载?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.dialogVisible = true;
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消"
+          });
+        });
+    },
+    // 标签切换
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    // 关闭 dialog
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+    // 文件上传
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 3 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    // 提交申请
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$message({
+            message: "已提交",
+            type: "success"
+          });
+          this.dialogVisible = false;
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    // 下载模板
+    downloadApplyWord(file) {
       this.$message({
-        message: "下载 " + JSON.stringify(data),
+        message: "已下载" + file,
         type: "success"
       });
     }

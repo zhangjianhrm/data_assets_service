@@ -7,11 +7,11 @@
       </div>
     </div>
     <el-form
-      :model="ruleForm"
-      :rules="rules"
       ref="ruleForm"
       label-width="120px"
-      class="demo-ruleForm"
+      class="data-catalog__apply_form"
+      :model="ruleForm"
+      :rules="rules"
     >
       <el-form-item label="申请人" prop="name">
         <el-input v-model="ruleForm.user" size="medium" disabled></el-input>
@@ -77,7 +77,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item label="联系方式" prop="tel">
-        <el-input v-model="ruleForm.tel" size="medium" clearable></el-input>
+        <el-input v-model.number="ruleForm.tel" size="medium" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">提交申请</el-button>
@@ -144,27 +144,14 @@ export default {
         applyReason: [
           { required: true, message: "请填写申请理由", trigger: "blur" }
         ],
-        tel: [{ validator: this.checkAge, trigger: "blur" }]
+        tel: [
+          { required: true, message: "不能为空" },
+          { type: "number", message: "必须为数字值" }
+        ]
       }
     };
   },
   methods: {
-    checkAge(rule, value, callback) {
-      if (!value) {
-        return callback(new Error("请输入联系方式"));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error("只能输入数字"));
-        } else {
-          if (value.length < 7) {
-            callback(new Error("请输入正确的联系方式"));
-          } else {
-            callback();
-          }
-        }
-      }, 1000);
-    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {

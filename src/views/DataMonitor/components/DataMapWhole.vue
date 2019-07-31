@@ -2,15 +2,17 @@
   <div class="dmap">
     <div class="dmap__content"></div>
     <div class="dmap__legend">
-      <div>全部</div>
-      <div>API 流向</div>
-      <div>数据交换</div>
+      <div :class="activeDMap=='全部'?'dmap__legend-avtive':''" @click="activeDMap='全部'">全部</div>
+      <div
+        :class="activeDMap=='API 流向'?'dmap__legend-avtive':''"
+        @click="activeDMap='API 流向'"
+      >API 流向</div>
+      <div :class="activeDMap=='数据交换'?'dmap__legend-avtive':''" @click="activeDMap='数据交换'">数据交换</div>
     </div>
   </div>
 </template>
 <script>
 import load from "@/utils/load.js"; // 加载 Js
-
 // import echarts from "echarts";
 export default {
   name: "DMap",
@@ -34,7 +36,8 @@ export default {
       lineCurveness: 0.1, // 线条曲率
       lineOpacity: 0.4, // 线条透明度
       dataCenter: require("@/assets/DataMonitor/ball.png"),
-      symbolSize: 50
+      symbolSize: 50,
+      activeDMap: "全部"
     };
   },
   async created() {
@@ -82,7 +85,10 @@ export default {
         name: data[0].name,
         value: data[0].coord,
         symbol: "image://" + this.dataCenter,
-        symbolSize: 100
+        symbolSize: 100,
+        label: {
+          show: false
+        }
       });
       return pointCoord;
     },
@@ -191,13 +197,14 @@ export default {
               // 标签
               label: {
                 show: true,
-                position: "end",
+                color: "#fff",
+                position: "middle",
                 formatter: params => {
                   let txt = "";
                   if (params.data.coords) {
                     txt = params.data.coords[1][2].out;
                   }
-                  return txt;
+                  return txt + " / " + txt;
                 }
               },
               // 线条的颜色
@@ -249,7 +256,7 @@ export default {
                   if (params.data.coords) {
                     txt = params.data.coords[0][2].in;
                   }
-                  return txt;
+                  return txt + " / " + txt;
                 }
               },
               // 线条的颜色
@@ -291,7 +298,7 @@ export default {
                 fontSize: 12,
                 fontWeight: "lighter",
                 distance: 14,
-                position: "top",
+                position: "bottom",
                 formatter: "{b}"
               }
             }
@@ -348,6 +355,10 @@ export default {
       &:hover {
         background-image: url(../../../assets/DataMonitor/tab-active.png);
       }
+    }
+    &-avtive {
+      background-image: url(../../../assets/DataMonitor/tab-active.png) !important;
+      color: rgba(41, 193, 204, 1) !important;
     }
   }
   @media only screen and (min-width: 100px) and (max-width: 1365px) {

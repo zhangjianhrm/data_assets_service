@@ -3,7 +3,7 @@
     <div class="data-catalog__list__title">
       <h3>数据目录</h3>
     </div>
-    <div class="data-catalog__list__op">
+    <div class="data-catalog__list__filter">
       <el-button size="small" icon="el-icon-back" @click="$router.go(-1)">返回</el-button>
       <el-select size="small" v-model="value" clearable placeholder="请选择">
         <el-option
@@ -33,7 +33,7 @@
       <el-input placeholder="数据目录" v-model="searchInput" size="small">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
-      <el-button-group class="data-catalog__list__op_sort">
+      <el-button-group class="data-catalog__list__filter_sort">
         <el-button
           size="small"
           v-for="(item,index) in sortMethods"
@@ -42,7 +42,7 @@
           @click="cardSort(item.name)"
         >
           <span>{{item.title}}</span>
-          <span class="data-catalog__list__op_sort_icon">
+          <span class="data-catalog__list__filter_sort_icon">
             <i
               class="el-icon-caret-top"
               :style="orderByType==item.name && orderByWay=='desc' ? 'color:#fff;' : ''"
@@ -54,6 +54,10 @@
           </span>
         </el-button>
       </el-button-group>
+    </div>
+    <div class="data-catalog__list__keyword">
+      <span>关键词：</span>
+      <span>关键词</span>
     </div>
     <div class="data-catalog__list__card">
       <card
@@ -263,11 +267,11 @@ export default {
     font-size: 28px;
     margin-bottom: 40px;
   }
-  &__op {
+  &__filter {
     width: 1280px;
     height: 32px;
     margin: 0 auto;
-    margin-bottom: 35px;
+    margin-bottom: 14px;
     // 返回
     > .el-button:nth-child(1) {
       float: left;
@@ -309,6 +313,20 @@ export default {
           bottom: -2px;
         }
       }
+    }
+  }
+  &__keyword {
+    width: 1280px;
+    height: 32px;
+    margin: 0 auto;
+    border: 1px solid #dcdfe6;
+    border-radius: 3px;
+    margin-bottom: 30px;
+    span {
+      margin-left: 20px;
+      line-height: 32px;
+      font-size: 14px;
+      color: #606266;
     }
   }
   &__card {

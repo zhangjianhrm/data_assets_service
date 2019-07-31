@@ -56,7 +56,7 @@ export default {
   },
   async created() {
     await load(
-      "https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.min.js"
+      "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
     );
     await load(
       "https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"
