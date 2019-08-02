@@ -317,10 +317,6 @@ export default {
   right: 570px;
   bottom: 15px;
   left: 260px;
-  // overflow: hidden;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
   &__content {
     width: 1100px !important;
     height: 800px !important;

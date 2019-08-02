@@ -3,7 +3,11 @@
     <div class="management-norms__left">
       <h3>
         <span>标准规范管理文档</span>
-        <el-button type="warning" size="small" @click="showCollect">已收藏</el-button>
+        <!-- <el-button type="warning" size="small" @click="showCollect">已收藏</el-button> -->
+        <el-button size="small" plain type="primary" @click="showCollect">
+          <svg-icon icon-class="collects" style="margin-right:3px;" />
+          <span>查看已收藏</span>
+        </el-button>
       </h3>
       <p class="management-norms__left_search">
         <el-input placeholder="输入关键词" v-model="input4" size="small">
@@ -318,7 +322,7 @@ export default {
       }
       > button:nth-child(2) {
         float: right;
-        color: #fff;
+        // color: #fff;
       }
     }
     &_search {

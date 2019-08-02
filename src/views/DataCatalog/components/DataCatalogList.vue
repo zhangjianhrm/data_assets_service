@@ -5,6 +5,10 @@
     </div>
     <div class="data-catalog__list__filter">
       <el-button size="small" icon="el-icon-back" @click="$router.go(-1)">返回</el-button>
+      <el-button size="small" plain @click="getCollected" type="primary">
+        <svg-icon icon-class="collects" style="margin-right:3px;" />
+        <span>查看已收藏</span>
+      </el-button>
       <el-select size="small" v-model="value" clearable placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -30,7 +34,7 @@
         ></el-option>
       </el-select>
       <el-button size="small" type="primary" @click="$router.push({name:'DataCatalogApply'})">数据目录申请</el-button>
-      <el-input placeholder="数据目录" v-model="searchInput" size="small">
+      <el-input placeholder="数据目录" v-model="searchInput" size="small" style="width:200px;">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
       <el-button-group class="data-catalog__list__filter_sort">
@@ -275,7 +279,12 @@ export default {
     // 返回
     > .el-button:nth-child(1) {
       float: left;
-      margin-right: 24px;
+      margin-right: 12px;
+    }
+    // 查看收藏
+    > .el-button:nth-child(2) {
+      float: left;
+      margin-right: 12px;
     }
     // 选择
     > .el-select {
@@ -294,7 +303,7 @@ export default {
       margin-left: 24px;
     }
     // 数据目录申请
-    > .el-button:nth-child(5) {
+    > .el-button:nth-child(6) {
       float: right;
       margin-left: 24px;
     }

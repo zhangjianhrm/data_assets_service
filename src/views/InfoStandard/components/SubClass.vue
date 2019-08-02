@@ -8,12 +8,15 @@
     <hr />
     <div class="national-standard__op">
       <el-button size="small" icon="el-icon-back" @click="$router.go(-1)">返回</el-button>
+      <el-button size="small" plain type="primary" @click="showCollect">
+        <svg-icon icon-class="collects" style="margin-right:3px;" />
+        <span>查看已收藏</span>
+      </el-button>
       <el-button size="small" @click="downloadSubClass">
         <svg-icon icon-class="download.2" style="margin-right:3px;" />
         <span v-if="selected.length">下载选中</span>
         <span v-else>下载全部</span>
       </el-button>
-      <!-- <el-button size="small" @click="selectAll">全选</el-button> -->
       <span
         v-show="selected.length"
         style="font-size:14px;margin-left:10px;"
@@ -33,11 +36,11 @@
           <span class="national-standard__op_sort_icon">
             <i
               class="el-icon-caret-top"
-              :style="orderByType==item.name && orderByWay=='desc' ? 'color:#fff;' : ''"
+              :style="orderByType==item.name && order=='desc' ? 'color:#fff;' : ''"
             ></i>
             <i
               class="el-icon-caret-bottom"
-              :style="orderByType==item.name && orderByWay=='asc' ? 'color:#fff;' : ''"
+              :style="orderByType==item.name && order=='asc' ? 'color:#fff;' : ''"
             ></i>
           </span>
         </el-button>
@@ -88,6 +91,7 @@ export default {
       subClassUrl: url.infoStandard.codeStandard.getExecutionCodeSubClass,
       downloadSubClassUrl:
         url.infoStandard.codeStandard.downloadExecutionCodeSubClass,
+      // 搜索关键词
       keyword: "",
       // 需要给 Card 组件传递的 props
       cardData: [],
@@ -100,10 +104,10 @@ export default {
         { title: "收藏量", name: "COLLECT_NUM" },
         { title: "代码量", name: "REFER_CODE_COUNT" }
       ],
+      // 升序降序
+      order: "desc", // desc || asc
       // 当前排序
       orderByType: "UPDATE_TIME",
-      // 升序降序
-      orderByWay: "desc", // desc || asc
       // 当前页
       pageIndex: 1,
       // 每页数量
@@ -117,26 +121,38 @@ export default {
     // 获取数据
     getCard() {
       switch (this.type) {
-        case "executionCode":
+        case "executionCode": // 执行代码
           this.subClassUrl =
             url.infoStandard.codeStandard.getExecutionCodeSubClass;
           break;
-        case "nationalStandardCode":
+        case "nationalStandardCode": // 国家标准代码
           this.subClassUrl =
             url.infoStandard.codeStandard.getNationalStandardCodeSubClass;
           break;
-        case "executionModel":
+        case "executionModel": // 执行模型
           this.subClassUrl =
             url.infoStandard.modelStandard.getExecutionModelSubclass;
           break;
+        // case "executionModel": // 执行模型 三级
+        //   this.subClassUrl =
+        //     url.infoStandard.modelStandard.getExecutionModelSubclass;
+        //   break;
+        case "nationalStandardModel": // 国家标准模型
+          this.subClassUrl =
+            url.infoStandard.modelStandard.getStandardModelSubclass;
+          break;
+        // case "nationalStandardModel": // 国家标准模型 三级
+        //   this.subClassUrl =
+        //     url.infoStandard.modelStandard.getStandardModelSubclass;
+        //   break;
       }
       axios({
         url: this.subClassUrl,
         method: "get",
         params: {
-          id: this.id,
-          order: this.orderByType,
-          orderByWay: this.orderByWay,
+          parentId: this.id,
+          order: this.order,
+          orderByType: this.orderByType,
           pageIndex: this.pageIndex - 1,
           pageSize: this.pageSize,
           keyword: this.keyword
@@ -145,16 +161,16 @@ export default {
           return Qs.stringify(params, { arrayFormat: "repeat" });
         }
       }).then(res => {
-        // this.cardData = res.data.data.items;
         console.log(res);
+        // this.cardData = res.data.data.items;
       });
     },
     // 卡片排序
     cardSort(type) {
-      if (this.orderByWay == "desc") {
-        this.orderByWay = "asc";
+      if (this.order == "desc") {
+        this.order = "asc";
       } else {
-        this.orderByWay = "desc";
+        this.order = "desc";
       }
       this.orderByType = type;
       this.getCard();
@@ -214,21 +230,28 @@ export default {
     },
     // 查看详情
     goDetails(id, name) {
-      console.log(id, name);
       // this.$router.push("/info_standard/code_subclass/subclass_details");
-      this.$router.push({
-        name: "SubclassDetails",
-        params: {
-          type: this.type,
-          id: id,
-          name: name
-        }
-      });
+
+      if (this.type == "nationalStandardCode") {
+        this.id = id;
+        this.getCard();
+      } else {
+        this.$router.push({
+          name: "SubclassDetails",
+          params: {
+            type: this.type,
+            id: id,
+            name: name
+          }
+        });
+      }
     },
     // 搜索
     searchSubClass() {
       this.getCard();
     },
+    // 查看已收藏
+    showCollect() {},
 
     // 全选
     // selectAll(eve) {

@@ -9,7 +9,7 @@
             <b>20</b>个模型子类，
             <b>200</b>条模型。
           </span>
-          <span>可访问：{{executionModelCount.classAmount}}个类数量，{{executionModelCount.subsetAmount}}个子集数量，{{executionModelCount.subclassAmount}}个子类数量，{{executionModelCount.dataitemAmount}}数据项数量。</span>
+          <span>可访问：{{executionModelCount.classAmount}}个类，{{executionModelCount.subsetAmount}}个子集，{{executionModelCount.subclassAmount}}个子类，{{executionModelCount.dataitemAmount}}数据项。</span>
           <el-button
             plain
             type="primary"
@@ -46,12 +46,12 @@
       </el-tab-pane>
       <el-tab-pane name="standardModel" label="国家标准模型">
         <p class="model-standard_count">
-          <span>可访问：{{nationalStandardCodeCount.CLASS_COUNT}}个模型类，{{nationalStandardCodeCount.SUBCLASS_COUNT}}个模型子类，{{nationalStandardCodeCount.CODE_COUNT}}条模型。</span>
+          <span>可访问：{{standardModelCount.classAmount}}个模型类，{{standardModelCount.subclassAmount}}个模型子类，{{standardModelCount.subsetAmount}}个子集，{{standardModelCount.dataitemAmount}}个数据项。</span>
           <el-button
             plain
             type="primary"
             size="small"
-            @click="downloadModel('downloadNationalStandardCode')"
+            @click="downloadModel('downloadStandardModel')"
           >
             <svg-icon icon-class="download" />
             <span>下载国家标准模型</span>
@@ -59,9 +59,9 @@
         </p>
         <div class="model-standard_code">
           <div
-            v-for="(item,index) in nationalStandardCode"
+            v-for="(item,index) in standardModel"
             :key="index"
-            @click="goSubClass('nationalStandardCode',item.ID,item.NAME)"
+            @click="goSubClass('standardModel',item.ID,item.NAME)"
           >
             <svg-icon :icon-class="'code-icon-' + index" />
             <p>{{item.NAME}}</p>
@@ -70,7 +70,7 @@
         <el-button
           plain
           type="primary"
-          v-if="nationalStandardCode.length > 16"
+          v-if="standardModel.length > 16"
           id="expand-all-excution-code"
           @click="expandAll"
         >
@@ -93,27 +93,26 @@ export default {
     return {
       activeNameModelStandard: "executionModel",
       executionModelToggle: true,
-      executionModelCount: {},
+      executionModelCount: {}, // 执行模型数量
       executionModel: [],
-      nationalStandardCodeCount: {}, // 国家标准模型数量
-      nationalStandardCode: [] // 国家标准模型
+      standardModelCount: {}, // 标准模型数量
+      standardModel: [] // 标准模型
     };
   },
   created() {
-    this.getExecutionCodeCount();
+    this.getExecutionModelCount();
     this.getExecutionModelList();
-    this.getNationalStandardCodeCount();
-    this.getNationalStandardCode();
+    this.getStandardModelCount();
+    this.getStandardModelList();
   },
   methods: {
     // 获取学校执行模型数量
-    getExecutionCodeCount() {
+    getExecutionModelCount() {
       axios({
         url: url.infoStandard.modelStandard.getExecutionModelCount
       }).then(res => {
         if (res.data.status == 200) {
           this.executionModelCount = res.data.data;
-          console.log(this.executionModelCount);
         }
       });
     },
@@ -124,28 +123,27 @@ export default {
       }).then(res => {
         if (res.data.status == 200) {
           this.executionModel = res.data.data;
-          console.log(res);
         }
       });
     },
     // 获取国家标准模型数量
-    getNationalStandardCodeCount() {
+    getStandardModelCount() {
       axios({
-        url: url.infoStandard.codeStandard.getNationalStandardCodeCount
+        url: url.infoStandard.modelStandard.getStandardModelCount
       }).then(res => {
         if (res.data.status == 200) {
-          this.nationalStandardCodeCount = res.data.data;
+          this.standardModelCount = res.data.data;
         }
       });
     },
     // 获取国家标准模型
-    getNationalStandardCode() {
+    getStandardModelList() {
       axios({
-        url: url.infoStandard.codeStandard.getNationalStandardCode
+        url: url.infoStandard.modelStandard.getStandardModelList
       }).then(res => {
         if (res.data.status == 200) {
-          this.nationalStandardCode = res.data.data;
-          // console.log(res);
+          this.standardModel = res.data.data;
+          console.log(res.data.data);
         }
       });
     },
@@ -154,8 +152,8 @@ export default {
       axios({
         url: url.infoStandard.modelStandard[type]
       }).then(res => {
+        console.log(res);
         if (res.data.status == 200) {
-          // console.log(res.data.data);
           let fileName = res.data.data;
           window.location.href =
             url.server +
@@ -163,6 +161,8 @@ export default {
             fileName +
             "&clientFileName=" +
             fileName;
+        } else {
+          this.$message.error(res.data.message);
         }
       });
     },

@@ -39,7 +39,13 @@ const URL = {
       getExecutionModelCount: SERVERURL + "/api/service/model/execute/subset/amountAll", // 数量
       getExecutionModelList: SERVERURL + "/api/service/model/execute/subset/list", // 列表
       downloadExecutionModel: SERVERURL + "/api/service/model/execute/subset/export?type=word", // 下载
-      getExecutionModelSubclass: SERVERURL + "/api/service/model/execute/class/classPage?" // 获取子类
+      getExecutionModelSubclass: SERVERURL + "/api/service/model/execute/class/classPage?", // 获取子类
+
+      // 国家标准模型
+      getStandardModelCount: SERVERURL + "/api/service/model/refer/subset/amountAll", // 数量
+      getStandardModelList: SERVERURL + "/api/service/model/refer/subset/list", // 列表
+      downloadStandardModel: SERVERURL + "/api/service/model/refer/subset/export?type=word", // 下载
+      getStandardModelSubclass: SERVERURL + "/api/service/model/refer/subclass/subclassPage?" //
     },
     // 信息标准管理规范
     managementNorms: {}

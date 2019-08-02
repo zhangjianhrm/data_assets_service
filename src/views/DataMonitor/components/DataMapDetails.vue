@@ -1,6 +1,7 @@
 <template>
   <div class="data-map__details" @click="closeAllSelect">
     <data-monitor-nav></data-monitor-nav>
+    <div class="data-map__details_bg"></div>
     <div class="data-map__details_title"></div>
     <div class="data-map__details_effect">
       <div class="data-map__details_effect_top"></div>
@@ -45,75 +46,67 @@
       </div>
     </div>
     <scroll-card></scroll-card>
-    <div class="data-map__details_rg">
-      <div class="data-map__details_rg_select">
-        <div class="data-map__details_rg_select_top"></div>
-        <div class="data-map__details_rg_select_center"></div>
-        <div class="data-map__details_rg_select_bottom"></div>
-        <div class="data-map__details_rg_select_db">
-          <span class="data-map__details_rg_select_db_name">数据库</span>
-          <b v-show="!selectDBvisible">{{currentDB}}</b>
-          <i
-            class="data-map__details_rg_select_db_arrow el-icon-arrow-down"
-            @click.stop="selectDB()"
-          ></i>
-          <div class="data-map__details_rg_select_db_items" v-show="selectDBvisible">
-            <div
-              v-for="(item,index) in DBList"
-              :key="index"
-              @click.stop="selectDB(item.label)"
-            >{{item.label}}</div>
-          </div>
-        </div>
-        <div class="data-map__details_rg_select_table">
-          <span class="data-map__details_rg_select_table_name">元数据表</span>
-          <b v-show="!selectTableVisible">{{currentTable}}</b>
-          <i
-            class="data-map__details_rg_select_table_arrow el-icon-arrow-down"
-            @click.stop="selectTable()"
-          ></i>
-          <div class="data-map__details_rg_select_table_items" v-show="selectTableVisible">
-            <div
-              v-for="(item,index) in tableList"
-              :key="index"
-              @click.stop="selectTable(item.label)"
-            >{{item.label}}</div>
-          </div>
-        </div>
-        <div class="data-map__details_rg_select_field">
-          <span class="data-map__details_rg_select_field_name">元数据字段</span>
-          <b v-show="!selectFieldVisible">{{currentField}}</b>
-          <i
-            class="data-map__details_rg_select_field_arrow el-icon-arrow-down"
-            @click.stop="selectField()"
-          ></i>
-          <div class="data-map__details_rg_select_field_items" v-show="selectFieldVisible">
-            <div
-              v-for="(item,index) in fieldList"
-              :key="index"
-              @click.stop="selectField(item.label)"
-            >{{item.label}}</div>
-          </div>
-        </div>
-        <div class="data-map__details_rg_select_divider"></div>
-        <div class="data-map__details_rg_select_btn">
-          <div class="data-map__details_rg_select_btn_blood">
-            <div class="data-map__details_rg_select_btn_blood_bg"></div>
-            <span>血缘分析</span>
-          </div>
-          <div class="data-map__details_rg_select_btn_effect">
-            <div class="data-map__details_rg_select_btn_effect_bg"></div>
-            <span>影响分析</span>
-          </div>
-          <div class="data-map__details_rg_select_btn_all">
-            <div class="data-map__details_rg_select_btn_all_bg"></div>
-            <span>全链分析</span>
-          </div>
+    <div class="data-map__details_select">
+      <div class="data-map__details_select_top"></div>
+      <div class="data-map__details_select_center"></div>
+      <div class="data-map__details_select_bottom"></div>
+      <div class="data-map__details_select_db">
+        <span class="data-map__details_select_db_name">数据库</span>
+        <b v-show="!selectDBvisible">{{currentDB}}</b>
+        <i class="data-map__details_select_db_arrow el-icon-arrow-down" @click.stop="selectDB()"></i>
+        <div class="data-map__details_select_db_items" v-show="selectDBvisible">
+          <div
+            v-for="(item,index) in DBList"
+            :key="index"
+            @click.stop="selectDB(item.label)"
+          >{{item.label}}</div>
         </div>
       </div>
-      <div class="data-map__details_rg_content"></div>
+      <div class="data-map__details_select_table">
+        <span class="data-map__details_select_table_name">元数据表</span>
+        <b v-show="!selectTableVisible">{{currentTable}}</b>
+        <i
+          class="data-map__details_select_table_arrow el-icon-arrow-down"
+          @click.stop="selectTable()"
+        ></i>
+        <div class="data-map__details_select_table_items" v-show="selectTableVisible">
+          <div
+            v-for="(item,index) in tableList"
+            :key="index"
+            @click.stop="selectTable(item.label)"
+          >{{item.label}}</div>
+        </div>
+      </div>
+      <div class="data-map__details_select_field">
+        <span class="data-map__details_select_field_name">元数据字段</span>
+        <b v-show="!selectFieldVisible">{{currentField}}</b>
+        <i
+          class="data-map__details_select_field_arrow el-icon-arrow-down"
+          @click.stop="selectField()"
+        ></i>
+        <div class="data-map__details_select_field_items" v-show="selectFieldVisible">
+          <div
+            v-for="(item,index) in fieldList"
+            :key="index"
+            @click.stop="selectField(item.label)"
+          >{{item.label}}</div>
+        </div>
+      </div>
+      <div class="data-map__details_select_divider"></div>
+      <div class="data-map__details_select_btn">
+        <div
+          v-for="(item,index) in RsGType"
+          :key="index"
+          :class="currentRsGType == item.type ? 'activeRsGType':''"
+          @click="currentRsGType = item.type"
+        >
+          <div></div>
+          <span>血缘分析</span>
+        </div>
+      </div>
     </div>
     <d-map></d-map>
+    <rs-graph></rs-graph>
   </div>
 </template>
 <script>
@@ -123,7 +116,8 @@ export default {
   components: {
     DataMonitorNav: () => import("./Nav"),
     ScrollCard: () => import("./ScrollCard"),
-    DMap: () => import("./DataMapWhole")
+    DMap: () => import("./DataMapWhole"),
+    RsGraph: () => import("./RsGraph")
   },
   data() {
     return {
@@ -244,7 +238,13 @@ export default {
           label: "图书馆系统"
         }
       ],
-      currentField: ""
+      currentField: "",
+      RsGType: [
+        { name: "血缘分析", type: "blood" },
+        { name: "影响分析", type: "effect" },
+        { name: "全链分析", type: "all" }
+      ],
+      currentRsGType: "blood"
     };
   },
   mounted() {
@@ -343,7 +343,7 @@ export default {
   watch: {
     selectDBvisible(n, o) {
       let DBArrow = document.querySelector(
-        ".data-map__details_rg_select_db_arrow"
+        ".data-map__details_select_db_arrow"
       );
       if (n) {
         DBArrow.classList.add("selectBtnTrans");
@@ -355,7 +355,7 @@ export default {
     },
     selectTableVisible(n, o) {
       let TableArrow = document.querySelector(
-        ".data-map__details_rg_select_table_arrow"
+        ".data-map__details_select_table_arrow"
       );
       if (n) {
         TableArrow.classList.add("selectBtnTrans");
@@ -367,7 +367,7 @@ export default {
     },
     selectFieldVisible(n, o) {
       let fieldArrow = document.querySelector(
-        ".data-map__details_rg_select_field_arrow"
+        ".data-map__details_select_field_arrow"
       );
       if (n) {
         fieldArrow.classList.add("selectBtnTrans");
@@ -389,6 +389,17 @@ export default {
   background-image: url(../../../assets/DataMonitor/grid.png);
   background-color: $color-footer;
   position: relative;
+  &_bg {
+    position: absolute;
+    top: 90px;
+    right: 400px;
+    bottom: 0;
+    left: 120px;
+    background: url(../../../assets/DataMonitor/map-min.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
   &_title {
     width: 100%;
     height: 100px;
@@ -579,290 +590,284 @@ export default {
     bottom: 15px;
     z-index: 1;
   }
-  &_rg {
+  &_select {
     position: absolute;
     top: 27px;
-    right: 400px;
     left: 11px;
-    bottom: 0;
-    background: url(../../../assets/DataMonitor/map-min.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    &_select {
+    bottom: 15px;
+    width: 240px;
+    &_top {
       position: absolute;
       top: 0;
-      width: 240px;
-      bottom: 15px;
-      &_top {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 70px;
-        background: url(../../../assets/DataMonitor/left-top.png);
-        background-repeat: no-repeat;
-        background-position: top left;
+      width: 100%;
+      height: 70px;
+      background: url(../../../assets/DataMonitor/left-top.png);
+      background-repeat: no-repeat;
+      background-position: top left;
+    }
+    &_center {
+      position: absolute;
+      top: 70px;
+      right: 0;
+      bottom: 70px;
+      left: 2px;
+      background: linear-gradient(
+        90deg,
+        rgba(0, 9, 77, 0.7) 0%,
+        rgba(11, 2, 52, 0.33) 87%,
+        rgba(0, 9, 77, 0.07) 99%
+      );
+    }
+    &_bottom {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 70px;
+      background: url(../../../assets/DataMonitor/left-bottom.png);
+      background-repeat: no-repeat;
+      background-position: top left;
+    }
+    &_db {
+      position: absolute;
+      top: 40px;
+      left: 15px;
+      width: 214px;
+      height: 38px;
+      background: url(../../../assets/DataMonitor/select-small.png);
+      cursor: pointer;
+      &_name {
+        color: rgba(41, 193, 204, 1);
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 38px;
+        margin: 0 12px;
       }
-      &_center {
-        position: absolute;
-        top: 70px;
-        right: 0;
-        bottom: 70px;
-        left: 2px;
-        background: linear-gradient(
-          90deg,
-          rgba(0, 9, 77, 0.7) 0%,
-          rgba(11, 2, 52, 0.33) 87%,
-          rgba(0, 9, 77, 0.07) 99%
-        );
+      > b {
+        color: #fff;
+        font-size: 12px;
+        margin: 0 12px;
       }
-      &_bottom {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 70px;
-        background: url(../../../assets/DataMonitor/left-bottom.png);
-        background-repeat: no-repeat;
-        background-position: top left;
+      &_arrow {
+        float: right;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 38px;
+        text-align: center;
+        width: 34px;
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s;
       }
-      &_db {
+      &_items {
         position: absolute;
-        top: 40px;
-        left: 15px;
-        width: 214px;
-        height: 38px;
-        background: url(../../../assets/DataMonitor/select-small.png);
-        cursor: pointer;
-        &_name {
-          color: rgba(41, 193, 204, 1);
-          font-size: 12px;
-          font-weight: bold;
-          line-height: 38px;
-          margin: 0 12px;
-        }
-        > b {
+        top: 2px;
+        right: 16px;
+        border: 1px solid rgba(39, 115, 230, 0.4);
+        border-bottom: none;
+        border-right: none;
+        width: 140px;
+        z-index: 1;
+        > div {
           color: #fff;
+          height: 33px;
+          line-height: 33px;
+          border-right: 1px solid rgba(39, 115, 230, 0.4);
+          border-bottom: 1px solid rgba(39, 115, 230, 0.4);
+          background-color: rgba(13, 29, 76, 0.4);
+          text-indent: 12px;
           font-size: 12px;
-          margin: 0 12px;
-        }
-        &_arrow {
-          float: right;
-          color: #fff;
-          font-size: 12px;
-          font-weight: bold;
-          line-height: 38px;
-          text-align: center;
-          width: 34px;
-          position: relative;
-          z-index: 2;
-          transition: all 0.3s;
-        }
-        &_items {
-          position: absolute;
-          top: 2px;
-          right: 16px;
-          border: 1px solid rgba(39, 115, 230, 0.4);
-          border-bottom: none;
-          border-right: none;
-          width: 140px;
-          z-index: 1;
-          > div {
-            color: #fff;
-            height: 33px;
-            line-height: 33px;
-            border-right: 1px solid rgba(39, 115, 230, 0.4);
-            border-bottom: 1px solid rgba(39, 115, 230, 0.4);
-            background-color: rgba(13, 29, 76, 0.4);
-            text-indent: 12px;
-            font-size: 12px;
-            &:hover {
-              background: rgba(31, 70, 144, 1);
-            }
-            &:nth-child(1) {
-              border-right: none;
-            }
-          }
-        }
-      }
-      &_table {
-        position: absolute;
-        top: 113px;
-        left: 15px;
-        width: 214px;
-        height: 38px;
-        background: url(../../../assets/DataMonitor/select-medium.png);
-        cursor: pointer;
-        &_name {
-          color: rgba(41, 193, 204, 1);
-          font-size: 12px;
-          font-weight: bold;
-          line-height: 38px;
-          margin: 0 12px;
-        }
-        > b {
-          color: #fff;
-          font-size: 12px;
-          margin: 0 12px;
-        }
-        &_arrow {
-          float: right;
-          color: #fff;
-          font-size: 12px;
-          font-weight: bold;
-          line-height: 38px;
-          text-align: center;
-          width: 34px;
-          position: relative;
-          z-index: 2;
-          transition: all 0.3s;
-        }
-        &_items {
-          position: absolute;
-          top: 2px;
-          right: 16px;
-          border: 1px solid rgba(39, 115, 230, 0.4);
-          border-bottom: none;
-          border-right: none;
-          width: 129px;
-          z-index: 1;
-          > div {
-            color: #fff;
-            height: 33px;
-            line-height: 33px;
-            border-right: 1px solid rgba(39, 115, 230, 0.4);
-            border-bottom: 1px solid rgba(39, 115, 230, 0.4);
-            background-color: rgba(13, 29, 76, 0.4);
-            text-indent: 12px;
-            font-size: 12px;
-            &:hover {
-              background: rgba(31, 70, 144, 1);
-            }
-            &:nth-child(1) {
-              border-right: none;
-            }
-          }
-        }
-      }
-      &_field {
-        position: absolute;
-        top: 186px;
-        left: 15px;
-        width: 214px;
-        height: 38px;
-        background: url(../../../assets/DataMonitor/select.png);
-        cursor: pointer;
-        &_name {
-          color: rgba(41, 193, 204, 1);
-          font-size: 12px;
-          font-weight: bold;
-          line-height: 38px;
-          margin: 0 12px;
-        }
-        > b {
-          color: #fff;
-          font-size: 12px;
-          margin: 0 12px;
-        }
-        &_arrow {
-          float: right;
-          color: #fff;
-          font-size: 12px;
-          font-weight: bold;
-          line-height: 38px;
-          text-align: center;
-          width: 34px;
-          position: relative;
-          z-index: 2;
-          transition: all 0.3s;
-        }
-        &_items {
-          position: absolute;
-          top: 2px;
-          right: 16px;
-          border: 1px solid rgba(39, 115, 230, 0.4);
-          border-bottom: none;
-          border-right: none;
-          width: 116px;
-          z-index: 1;
-          > div {
-            color: #fff;
-            height: 33px;
-            line-height: 33px;
-            border-right: 1px solid rgba(39, 115, 230, 0.4);
-            border-bottom: 1px solid rgba(39, 115, 230, 0.4);
-            background-color: rgba(13, 29, 76, 0.4);
-            text-indent: 12px;
-            font-size: 12px;
-            &:hover {
-              background: rgba(31, 70, 144, 1);
-            }
-            &:nth-child(1) {
-              border-right: none;
-            }
-          }
-        }
-      }
-      &_divider {
-        position: absolute;
-        top: 245px;
-        left: 16px;
-        width: 189px;
-        height: 29px;
-        background: url(../../../assets/DataMonitor/divider.png);
-      }
-      &_btn {
-        position: absolute;
-        top: 258px;
-        width: 190px;
-        bottom: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        &_blood,
-        &_effect,
-        &_all {
-          width: 110px;
-          height: 110px;
-          line-height: 110px;
-          text-align: center;
-          color: rgba(41, 193, 204, 1);
-          position: relative;
-          cursor: pointer;
-          font-size: 14px;
-          div {
-            opacity: 0.3;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-image: url(../../../assets/DataMonitor/ring.png);
-            background-size: 100%;
-          }
-          span {
-            display: block;
-            position: relative;
-            z-index: 1;
-          }
           &:hover {
-            color: #fff;
-            animation: clockwise 5s infinite linear;
-            div {
-              opacity: 1;
-            }
-            span {
-              animation: anticlockwise 5s infinite linear;
-            }
+            background: rgba(31, 70, 144, 1);
+          }
+          &:nth-child(1) {
+            border-right: none;
           }
         }
       }
     }
-    &_content {
+    &_table {
+      position: absolute;
+      top: 113px;
+      left: 15px;
+      width: 214px;
+      height: 38px;
+      background: url(../../../assets/DataMonitor/select-medium.png);
+      cursor: pointer;
+      &_name {
+        color: rgba(41, 193, 204, 1);
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 38px;
+        margin: 0 12px;
+      }
+      > b {
+        color: #fff;
+        font-size: 12px;
+        margin: 0 12px;
+      }
+      &_arrow {
+        float: right;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 38px;
+        text-align: center;
+        width: 34px;
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s;
+      }
+      &_items {
+        position: absolute;
+        top: 2px;
+        right: 16px;
+        border: 1px solid rgba(39, 115, 230, 0.4);
+        border-bottom: none;
+        border-right: none;
+        width: 129px;
+        z-index: 1;
+        > div {
+          color: #fff;
+          height: 33px;
+          line-height: 33px;
+          border-right: 1px solid rgba(39, 115, 230, 0.4);
+          border-bottom: 1px solid rgba(39, 115, 230, 0.4);
+          background-color: rgba(13, 29, 76, 0.4);
+          text-indent: 12px;
+          font-size: 12px;
+          &:hover {
+            background: rgba(31, 70, 144, 1);
+          }
+          &:nth-child(1) {
+            border-right: none;
+          }
+        }
+      }
     }
+    &_field {
+      position: absolute;
+      top: 186px;
+      left: 15px;
+      width: 214px;
+      height: 38px;
+      background: url(../../../assets/DataMonitor/select.png);
+      cursor: pointer;
+      &_name {
+        color: rgba(41, 193, 204, 1);
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 38px;
+        margin: 0 12px;
+      }
+      > b {
+        color: #fff;
+        font-size: 12px;
+        margin: 0 12px;
+      }
+      &_arrow {
+        float: right;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 38px;
+        text-align: center;
+        width: 34px;
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s;
+      }
+      &_items {
+        position: absolute;
+        top: 2px;
+        right: 16px;
+        border: 1px solid rgba(39, 115, 230, 0.4);
+        border-bottom: none;
+        border-right: none;
+        width: 116px;
+        z-index: 1;
+        > div {
+          color: #fff;
+          height: 33px;
+          line-height: 33px;
+          border-right: 1px solid rgba(39, 115, 230, 0.4);
+          border-bottom: 1px solid rgba(39, 115, 230, 0.4);
+          background-color: rgba(13, 29, 76, 0.4);
+          text-indent: 12px;
+          font-size: 12px;
+          &:hover {
+            background: rgba(31, 70, 144, 1);
+          }
+          &:nth-child(1) {
+            border-right: none;
+          }
+        }
+      }
+    }
+    &_divider {
+      position: absolute;
+      top: 245px;
+      left: 16px;
+      width: 189px;
+      height: 29px;
+      background: url(../../../assets/DataMonitor/divider.png);
+    }
+    &_btn {
+      position: absolute;
+      top: 258px;
+      width: 190px;
+      bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      > div {
+        width: 110px;
+        height: 110px;
+        line-height: 110px;
+        text-align: center;
+        color: rgba(41, 193, 204, 1);
+        position: relative;
+        cursor: pointer;
+        font-size: 14px;
+        div {
+          opacity: 0.3;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-image: url(../../../assets/DataMonitor/ring.png);
+          background-size: 100%;
+        }
+        span {
+          display: block;
+          position: relative;
+          z-index: 1;
+        }
+      }
+    }
+  }
+  &_rsg {
+    position: absolute;
+    top: 27px;
+    right: 20px;
+    bottom: 15px;
+    left: 240px;
+    z-index: 2;
   }
   .selectBtnTrans {
     transform: rotate(180deg);
+  }
+  .activeRsGType {
+    color: #fff;
+    animation: clockwise 5s infinite linear;
+    > div {
+      opacity: 1;
+    }
+    > span {
+      animation: anticlockwise 5s infinite linear;
+    }
   }
   @keyframes clockwise {
     from {
@@ -894,10 +899,18 @@ export default {
     &_scroll-card {
       top: 72px;
     }
-    &_rg {
+    &_select {
       top: 37px;
       left: 16px;
     }
+    &_rsg {
+      top: 37px;
+      left: 256px;
+    }
+    // &_bg {
+    //   top: 37px;
+    //   left: 16px;
+    // }
   }
 }
 </style>
