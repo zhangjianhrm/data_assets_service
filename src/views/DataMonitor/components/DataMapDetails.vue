@@ -101,7 +101,7 @@
           @click="currentRsGType = item.type"
         >
           <div></div>
-          <span>血缘分析</span>
+          <span>{{item.name}}</span>
         </div>
       </div>
     </div>
