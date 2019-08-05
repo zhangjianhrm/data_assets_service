@@ -46,6 +46,7 @@
       </div>
     </div>
     <scroll-card></scroll-card>
+    <div class="data-map__details_cover" v-if="RsGVisible" @click="RsGVisible = false"></div>
     <div class="data-map__details_select">
       <div class="data-map__details_select_top"></div>
       <div class="data-map__details_select_center"></div>
@@ -54,6 +55,11 @@
         <span class="data-map__details_select_db_name">数据库</span>
         <b v-show="!selectDBvisible">{{currentDB}}</b>
         <i class="data-map__details_select_db_arrow el-icon-arrow-down" @click.stop="selectDB()"></i>
+        <i
+          v-show="!selectDBvisible & currentDB != ''"
+          class="data-map__details_select_table_clear el-icon-circle-close"
+          @click="currentDB = ''"
+        ></i>
         <div class="data-map__details_select_db_items" v-show="selectDBvisible">
           <div
             v-for="(item,index) in DBList"
@@ -68,6 +74,11 @@
         <i
           class="data-map__details_select_table_arrow el-icon-arrow-down"
           @click.stop="selectTable()"
+        ></i>
+        <i
+          v-show="!selectTableVisible & currentTable != ''"
+          class="data-map__details_select_table_clear el-icon-circle-close"
+          @click="currentTable = ''"
         ></i>
         <div class="data-map__details_select_table_items" v-show="selectTableVisible">
           <div
@@ -84,6 +95,11 @@
           class="data-map__details_select_field_arrow el-icon-arrow-down"
           @click.stop="selectField()"
         ></i>
+        <i
+          v-show="!selectFieldVisible & currentField != ''"
+          class="data-map__details_select_table_clear el-icon-circle-close"
+          @click="currentField = ''"
+        ></i>
         <div class="data-map__details_select_field_items" v-show="selectFieldVisible">
           <div
             v-for="(item,index) in fieldList"
@@ -97,8 +113,9 @@
         <div
           v-for="(item,index) in RsGType"
           :key="index"
-          :class="currentRsGType == item.type ? 'activeRsGType':''"
-          @click="currentRsGType = item.type"
+          :class="RsGVisible & currentRsGType == item.type ? 'activeRsGType':''"
+          :style="currentTable != '' ? 'cursor:pointer':''"
+          @click="showRsG(item)"
         >
           <div></div>
           <span>{{item.name}}</span>
@@ -106,7 +123,9 @@
       </div>
     </div>
     <d-map></d-map>
-    <rs-graph></rs-graph>
+    <transition name="slide-fade">
+      <rs-graph ref="rsgraph" v-if="RsGVisible" :nodeData="nodeData" :linkData="linkData"></rs-graph>
+    </transition>
   </div>
 </template>
 <script>
@@ -239,12 +258,18 @@ export default {
         }
       ],
       currentField: "",
+      // 分析图类型
       RsGType: [
         { name: "血缘分析", type: "blood" },
         { name: "影响分析", type: "effect" },
         { name: "全链分析", type: "all" }
       ],
-      currentRsGType: "blood"
+      currentRsGType: "blood",
+      // 分析图开关
+      RsGVisible: false,
+      // 分析图数据
+      nodeData: [],
+      linkData: []
     };
   },
   mounted() {
@@ -338,6 +363,325 @@ export default {
       this.selectDBvisible = false;
       this.selectTableVisible = false;
       this.selectFieldVisible = false;
+    },
+    // 打开分析图
+    showRsG(item) {
+      if (this.currentTable != "") {
+        this.currentRsGType = item.type;
+        this.RsGVisible = true;
+        switch (item.type) {
+          case "blood":
+            this.nodeData = [
+              {
+                key: 1,
+                blood: true,
+                header: "全量库",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名", type: "normal" },
+                  { name: "专业", type: "normal" },
+                  { name: "年龄", type: "descendants" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              },
+              {
+                key: 4,
+                blood: true,
+                header: "测试4",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 5,
+                blood: true,
+                header: "测试5",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 7,
+                blood: true,
+                header: "测试7",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 10,
+                blood: true,
+                header: "测试10",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 11,
+                blood: true,
+                header: "测试11",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              }
+            ];
+            this.linkData = [
+              { from: 5, to: 1 },
+              { from: 10, to: 1 },
+              { from: 4, to: 5 },
+              { from: 7, to: 5 },
+              { from: 11, to: 10 }
+            ];
+            break;
+          case "effect":
+            this.nodeData = [
+              {
+                key: 1,
+                blood: true,
+                header: "全量库",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名", type: "normal" },
+                  { name: "专业", type: "normal" },
+                  { name: "年龄", type: "descendants" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              },
+              {
+                key: 2,
+                header: "测试2",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名", type: "normal" },
+                  { name: "年龄", type: "" },
+                  { name: "班级" },
+                  { name: "专业" },
+                  { name: "学院" }
+                ]
+              },
+              {
+                key: 3,
+                header: "测试3",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 6,
+                header: "测试6",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 8,
+                header: "测试8",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 9,
+                header: "测试9",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              },
+              {
+                key: 12,
+                header: "测试12",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              }
+            ];
+            this.linkData = [
+              { from: 1, to: 2 },
+              { from: 1, to: 9 },
+              { from: 2, to: 3 },
+              { from: 2, to: 6 },
+              { from: 6, to: 8 },
+              { from: 3, to: 12 }
+            ];
+            break;
+          case "all":
+            this.nodeData = [
+              {
+                key: 1,
+                blood: true,
+                header: "全量库",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名", type: "normal" },
+                  { name: "专业", type: "normal" },
+                  { name: "年龄", type: "descendants" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              },
+              {
+                key: 2,
+                header: "测试2",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名", type: "normal" },
+                  { name: "年龄", type: "" },
+                  { name: "班级" },
+                  { name: "专业" },
+                  { name: "学院" }
+                ]
+              },
+              {
+                key: 3,
+                header: "测试3",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 4,
+                header: "测试4",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ],
+                blood: true
+              },
+              {
+                key: 5,
+                blood: true,
+                header: "测试5",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 6,
+                header: "测试6",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 7,
+                blood: true,
+                header: "测试7",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 8,
+                header: "测试8",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 9,
+                header: "测试9",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              },
+              {
+                key: 10,
+                blood: true,
+                header: "测试10",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "descendants" }
+                ]
+              },
+              {
+                key: 11,
+                blood: true,
+                header: "测试11",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              },
+              {
+                key: 12,
+                header: "测试12",
+                tableName: "学生基本信息",
+                tableField: [
+                  { name: "姓名" },
+                  { name: "年龄" },
+                  { name: "班级", type: "ancestors" }
+                ]
+              }
+            ];
+            this.linkData = [
+              { from: 1, to: 2 },
+              { from: 5, to: 1 },
+              { from: 1, to: 9 },
+              { from: 10, to: 1 },
+              { from: 4, to: 5 },
+              { from: 7, to: 5 },
+              { from: 11, to: 10 },
+              { from: 2, to: 3 },
+              { from: 2, to: 6 },
+              { from: 6, to: 8 },
+              { from: 3, to: 12 }
+            ];
+            break;
+        }
+      }
     }
   },
   watch: {
@@ -590,6 +934,14 @@ export default {
     bottom: 15px;
     z-index: 1;
   }
+  &_cover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
   &_select {
     position: absolute;
     top: 27px;
@@ -646,6 +998,12 @@ export default {
         color: #fff;
         font-size: 12px;
         margin: 0 12px;
+      }
+      &_clear {
+        float: right;
+        color: #fff;
+        font-size: 14px;
+        line-height: 38px;
       }
       &_arrow {
         float: right;
@@ -706,6 +1064,12 @@ export default {
         font-size: 12px;
         margin: 0 12px;
       }
+      &_clear {
+        float: right;
+        color: #fff;
+        font-size: 14px;
+        line-height: 38px;
+      }
       &_arrow {
         float: right;
         color: #fff;
@@ -764,6 +1128,12 @@ export default {
         color: #fff;
         font-size: 12px;
         margin: 0 12px;
+      }
+      &_clear {
+        float: right;
+        color: #fff;
+        font-size: 14px;
+        line-height: 38px;
       }
       &_arrow {
         float: right;
@@ -828,7 +1198,7 @@ export default {
         text-align: center;
         color: rgba(41, 193, 204, 1);
         position: relative;
-        cursor: pointer;
+        cursor: not-allowed;
         font-size: 14px;
         div {
           opacity: 0.3;
@@ -869,6 +1239,17 @@ export default {
       animation: anticlockwise 5s infinite linear;
     }
   }
+  .slide-fade-enter-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+  .slide-fade-enter,
+  .slide-fade-leave-to {
+    transform: translateX(-500px);
+    opacity: 0;
+  }
   @keyframes clockwise {
     from {
       transform: rotate(0deg);
@@ -907,10 +1288,6 @@ export default {
       top: 37px;
       left: 256px;
     }
-    // &_bg {
-    //   top: 37px;
-    //   left: 16px;
-    // }
   }
 }
 </style>

@@ -1,5 +1,11 @@
 <template>
   <div class="data-map__details_rsg">
+    <div class="data-map__details_rsg_bg">
+      <div class="data-map__details_rsg_bg_top"></div>
+      <div class="data-map__details_rsg_bg_center"></div>
+      <div class="data-map__details_rsg_bg_bottom"></div>
+      <div class="data-map__details_rsg_bg_left"></div>
+    </div>
     <div class="data-map__details_rsg_content" id="go"></div>
   </div>
 </template>
@@ -7,8 +13,23 @@
 import go from "gojs";
 export default {
   name: "RsGraph",
+  props: {
+    nodeData: Array,
+    linkData: Array
+  },
+  data() {
+    return {};
+  },
   mounted() {
     this.createGo();
+  },
+  watch: {
+    nodeData() {
+      this.myDiagram.model = new go.GraphLinksModel(
+        this.nodeData,
+        this.linkData
+      );
+    }
   },
   methods: {
     createGo() {
@@ -23,6 +44,7 @@ export default {
           setsChildPortSpot: false,
           isRealtime: false
         }),
+        allowDragOut: true,
         hasHorizontalScrollbar: false,
         hasVerticalScrollbar: false
         // isReadOnly: true
@@ -36,7 +58,7 @@ export default {
         // 背景
         $(go.Shape, "RoundedRectangle", {
           width: 220,
-          fill: "transparent", // 背景色
+          fill: "rgba(0,198,255,0.05)", // 背景色
           stroke: "#1A4D99", // 描边色
           strokeWidth: 1 // 描边粗细
         }),
@@ -49,19 +71,33 @@ export default {
             go.Panel,
             "Auto",
             $(go.Shape, {
-              fill: "#0B0134",
-              width: 218,
+              width: 220,
               height: 35,
+              fill: "rgba(0,198,255,0.05)", // 背景色
               strokeWidth: 0 // 描边粗细
             }),
+            $(go.Picture, require("../../../assets/DataMonitor/rsg-bg.png"), {
+              margin: new go.Margin(0, 0, 0, 0),
+              width: 218,
+              height: 35
+            }),
             $(
-              go.TextBlock,
-              {
-                textAlign: "center",
-                stroke: "#7EFAFC",
-                font: "bold 14px PingFang SC"
-              },
-              new go.Binding("text", "header")
+              go.Panel,
+              "Horizontal",
+              $(
+                go.Picture,
+                require("../../../assets/DataMonitor/rsg-title.png"),
+                { margin: new go.Margin(0, 10, 0, 0), width: 21, height: 14 }
+              ),
+              $(
+                go.TextBlock,
+                {
+                  textAlign: "center",
+                  stroke: "#7EFAFC",
+                  font: "bold 14px PingFang SC"
+                },
+                new go.Binding("text", "header")
+              )
             )
           ),
           // 表
@@ -94,8 +130,6 @@ export default {
             ),
             // 下划线
             $(go.Shape, {
-              // column: 0,
-              // row: 1,
               fill: "#0B0235",
               width: 200,
               height: 1,
@@ -109,30 +143,54 @@ export default {
                 name: "LIST",
                 width: 200,
                 margin: new go.Margin(0, 0, 10, 0),
-                // height: 200,
-                // alignment: go.Spot.TopLeft,
-                // defaultAlignment: go.Spot.Left,
-                // stretch: go.GraphObject.Horizontal,
-                // defaultStretch: go.GraphObject.Vertical,
                 itemTemplate: $(
                   go.Panel,
                   "Auto",
                   {
-                    margin: new go.Margin(10, 20, 0, 0)
+                    margin: new go.Margin(5, 0, 0, 0)
                   },
-                  $(go.Shape, {
-                    fill: "rgba(63, 100, 209, 0.1)",
-                    width: 90,
-                    height: 30,
-                    strokeWidth: 0 // 描边粗细
-                  }),
+                  $(
+                    go.Shape,
+                    {
+                      fill: "rgba(63, 100, 209, 0.2)",
+                      width: 200,
+                      height: 20,
+                      strokeWidth: 0 // 描边粗细
+                    },
+                    new go.Binding("fill", "type", value => {
+                      switch (value) {
+                        case "descendants":
+                          return "rgba(245, 183, 0, 0.2)";
+                          break;
+                        case "ancestors":
+                          return "rgba(216, 64, 64, 0.2)";
+                          break;
+                        default:
+                          return "rgba(63, 100, 209, 0.2)";
+                          break;
+                      }
+                    })
+                  ),
                   $(
                     go.TextBlock,
                     {
                       stroke: "#FFF",
-                      font: "normal 12px PingFang SC"
+                      font: "normal 10px PingFang SC"
                     },
-                    new go.Binding("text", "name")
+                    new go.Binding("text", "name"),
+                    new go.Binding("stroke", "type", value => {
+                      switch (value) {
+                        case "descendants":
+                          return "rgba(204, 154, 4, 1)";
+                          break;
+                        case "ancestors":
+                          return "rgba(245, 47, 87, 1)";
+                          break;
+                        default:
+                          return "rgba(255, 255, 255, 1)";
+                          break;
+                      }
+                    })
                   )
                 )
               },
@@ -194,105 +252,8 @@ export default {
       );
       // 数据
       this.myDiagram.model = new go.GraphLinksModel(
-        [
-          {
-            key: 1,
-            header: "全量库",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }],
-            blood: true
-          },
-          {
-            key: 2,
-            header: "测试2",
-            tableName: "学生基本信息",
-            tableField: [
-              { name: "姓名" },
-              { name: "年龄" },
-              { name: "班级" },
-              { name: "专业" },
-              { name: "学院" }
-            ]
-          },
-          {
-            key: 3,
-            header: "测试3",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }]
-          },
-          {
-            key: 4,
-            header: "测试4",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }],
-            blood: true
-          },
-          {
-            key: 5,
-            header: "测试5",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }],
-            blood: true
-          },
-          {
-            key: 6,
-            header: "测试6",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }]
-          },
-          {
-            key: 7,
-            header: "测试7",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }],
-            blood: true
-          },
-          {
-            key: 8,
-            header: "测试8",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }]
-          },
-          {
-            key: 9,
-            header: "测试9",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }]
-          },
-          {
-            key: 10,
-            header: "测试10",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }],
-            blood: true
-          },
-          {
-            key: 11,
-            header: "测试11",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }],
-            blood: true
-          },
-          {
-            key: 12,
-            header: "测试11",
-            tableName: "学生基本信息",
-            tableField: [{ name: "姓名" }, { name: "年龄" }, { name: "班级" }]
-          }
-        ],
-        [
-          { from: 1, to: 2 },
-          { from: 5, to: 1 },
-          { from: 1, to: 9 },
-          { from: 10, to: 1 },
-          { from: 4, to: 5 },
-          { from: 7, to: 5 },
-          { from: 11, to: 10 },
-          { from: 2, to: 3 },
-          { from: 2, to: 6 },
-          { from: 6, to: 8 },
-          { from: 3, to: 12 }
-        ]
+        this.nodeData,
+        this.linkData
       );
     }
   }
@@ -300,13 +261,53 @@ export default {
 </script>
 <style lang="scss">
 .data-map__details_rsg {
-  opacity: 0.95;
-  background: linear-gradient(
-    90deg,
-    rgba(7, 22, 66, 0) 3%,
-    rgba(7, 22, 66, 0.62) 9%,
-    rgba(7, 22, 66, 1) 35%
-  );
+  // opacity: 0.95;
+  &_bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    &_top {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 40px;
+      background-image: url(../../../assets/DataMonitor/rsg-top.png);
+    }
+    &_center {
+      position: absolute;
+      top: 40px;
+      right: 0;
+      border-right: 1px solid rgba(39, 115, 229, 1);
+      bottom: 40px;
+      width: 100px;
+      box-sizing: border-box;
+      background: rgba(7, 22, 66, 1);
+    }
+    &_bottom {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100px;
+      height: 40px;
+      background-image: url(../../../assets/DataMonitor/rsg-bottom.png);
+    }
+    &_left {
+      position: absolute;
+      top: 0;
+      right: 100px;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(7, 22, 66, 0.1) 3%,
+        rgba(7, 22, 66, 0.62) 9%,
+        rgba(7, 22, 66, 1) 35%
+      );
+    }
+  }
   &_content {
     width: 100%;
     height: 100%;

@@ -33,7 +33,7 @@ const ModulesRouter = {
           path: "/",
           component: () => import("@/views/DataMonitor/components/DataMapDetails"),
           meta: {
-            title: "学生基本信息子类"
+            title: "数据全景地图"
           }
         }
       ]

@@ -5,32 +5,28 @@
         <p>数据质量报告</p>
         <p>Data quality report</p>
       </h3>
-      <el-radio-group v-model="radio" size="small">
-        <el-radio-button label="周报"></el-radio-button>
-        <el-radio-button label="月报"></el-radio-button>
-        <el-radio-button label="年报"></el-radio-button>
-      </el-radio-group>
-      <div class="data-quality-report__left_select">
-        <el-select v-model="currentYear" placeholder="请选择" size="small">
-          <el-option
-            v-for="item in years"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
+      <div class="data-quality-report__left_type">
+        <el-select v-model="currentType" placeholder="请选择" size="small">
+          <el-option v-for="item in type" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
-        <el-select v-model="currentYear" placeholder="请选择" size="small">
-          <el-option
-            v-for="item in years"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
+        <el-radio-group v-model="radio" size="small">
+          <el-radio-button label="周报"></el-radio-button>
+          <el-radio-button label="月报"></el-radio-button>
+          <el-radio-button label="年报"></el-radio-button>
+        </el-radio-group>
+      </div>
+      <div class="data-quality-report__left_date">
+        <el-cascader
+          v-model="currentDate"
+          size="small"
+          placeholder="年 / 周"
+          :options="tableOptions"
+          @change="handleChange"
+        ></el-cascader>
       </div>
       <div class="data-quality-report__left_op">
-        <el-button type="primary" size="medium">查询</el-button>
-        <el-button type="primary" size="medium" plain>下载</el-button>
+        <el-button type="primary" size="small">查询</el-button>
+        <el-button type="primary" size="small" plain>下载</el-button>
       </div>
     </div>
     <div class="data-quality-report__right">
@@ -77,7 +73,42 @@ export default {
   name: "DataQualityReport",
   data() {
     return {
+      // 全部 质量分析报告 质量问题报告
+      type: [
+        {
+          value: "all",
+          label: "全部"
+        },
+        {
+          value: "ana",
+          label: "质量分析报告"
+        },
+        {
+          value: "problem",
+          label: "质量问题报告"
+        }
+      ],
+      currentType: "全部",
       radio: "周报",
+
+      // 表菜单
+      tableOptions: [
+        {
+          id: "DB_01",
+          label: "数据库_01",
+          children: [
+            {
+              id: "DB_01_Table_01",
+              label: "表_01"
+            },
+            {
+              id: "DB_01_Table_02",
+              label: "表_02"
+            }
+          ]
+        }
+      ],
+      currentDate: [],
       collapseActiveName: 0,
       checkList: ["复选框 0-1", "复选框 A"],
       documentLibrary: [
@@ -233,6 +264,9 @@ export default {
   methods: {
     read() {
       console.log(1);
+    },
+    handleChange(value) {
+      console.log(value);
     }
   }
 };
@@ -265,10 +299,17 @@ export default {
         margin-bottom: 24px;
       }
     }
-    .el-radio-group {
+    &_type {
+      height: 32px;
       margin-bottom: 24px;
+      overflow: hidden;
+      .el-select {
+        float: left;
+        width: 140px;
+        margin-right: 24px;
+      }
     }
-    &_select {
+    &_date {
       .el-select:nth-child(1) {
         width: 90px;
         margin-right: 10px;
