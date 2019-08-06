@@ -1107,14 +1107,14 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
   }
   &_select {
     position: absolute;
     top: 27px;
     left: 11px;
     bottom: 15px;
-    width: 240px;
+    width: 240px;z-index: 2;
     &_top {
       position: absolute;
       top: 0;

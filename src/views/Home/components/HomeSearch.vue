@@ -22,35 +22,41 @@
       </el-input>
     </div>
     <div class="home__search_cover" v-if="frameworkVisible" @click="frameworkVisible = false"></div>
-    <div class="home__search_framework" v-if="frameworkVisible">
-      <div class="home__search_framework_title"></div>
-      <div class="home__search_framework_center">
-        <div class="home__search_framework_center_bg">
-          <div class="home__search_framework_center_bg_b"></div>
-        </div>
-        <div class="home__search_framework_center_item ODS">
-          <p>ODS</p>
-        </div>
-        <div class="home__search_framework_center_item ETL">
-          <p>ETL</p>
-        </div>
-        <div class="home__search_framework_center_item API">
-          <p>API</p>
-        </div>
-        <div class="home__search_framework_center_item ZTK">
-          <p>主题库</p>
-        </div>
-        <div class="home__search_framework_center_item BFK">
-          <p>备份库</p>
-        </div>
-        <div class="home__search_framework_center_item DMK">
-          <p>代码库</p>
-        </div>
-        <div class="home__search_framework_center_item LSK">
-          <p>历史库</p>
+    <transition name="slide-fade">
+      <div class="home__search_framework" v-if="frameworkVisible">
+        <div class="home__search_framework_title"></div>
+        <div class="home__search_framework_center">
+          <div class="home__search_framework_center_bg">
+            <div class="home__search_framework_center_bg_b"></div>
+          </div>
+          <div class="home__search_framework_center_bg2">
+            <div class="home__search_framework_center_bg2_b"></div>
+          </div>
+          <div class="home__search_framework_center_item ODS">
+            <p>ODS</p>
+          </div>
+          <div class="home__search_framework_center_item ETL">
+            <p>ETL</p>
+          </div>
+          <div class="home__search_framework_center_item API">
+            <p>API</p>
+          </div>
+          <div class="home__search_framework_center_item ZTK">
+            <p>主题库</p>
+          </div>
+          <div class="home__search_framework_center_item BFK">
+            <p>备份库</p>
+          </div>
+          <div class="home__search_framework_center_item DMK">
+            <p>代码库</p>
+          </div>
+          <div class="home__search_framework_center_item LSK">
+            <p>历史库</p>
+          </div>
+          <div class="home__search_framework_center_dot api_to_right"></div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -169,6 +175,26 @@ export default {
           box-shadow: 0 0 100px rgba(31, 115, 255, 0.5) inset;
         }
       }
+      &_bg2 {
+        position: absolute;
+        top: 172px;
+        right: 78px;
+        margin: auto;
+        width: 529px;
+        transform: rotateX(56.675deg);
+        &_b {
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          margin: auto;
+          width: 362px;
+          height: 362px;
+          background: rgba(39, 115, 229, 0.16);
+          transform: rotate(45deg);
+          box-shadow: 0 0 100px rgba(31, 115, 255, 0.5) inset;
+        }
+      }
       &_item {
         width: 150px;
         height: 150px;
@@ -181,6 +207,8 @@ export default {
           position: absolute;
           bottom: 10px;
           width: 100%;
+          line-height: 14px;
+          font-size: 14px;
         }
         &.ODS {
           background-image: url("../../../assets/Home/ODS.png");
@@ -218,7 +246,44 @@ export default {
           left: 549px;
         }
       }
+      &_dot {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(14, 208, 222, 1);
+        border-radius: 50%;
+        &.api_to_right {
+          top: 397px;
+          left: 392px;
+          animation: api_to_right 5s linear infinite normal;
+          @keyframes api_to_right {
+            0% {
+              transform: translate(0, 0);
+            }
+            40% {
+              transform: translate(197px, 125px);
+            }
+            70% {
+              transform: translate(390px, 18px);
+            }
+            100% {
+              transform: translate(540px, 65px);
+            }
+          }
+        }
+      }
     }
+  }
+  .slide-fade-enter-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+  .slide-fade-enter,
+  .slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
   }
 }
 </style>

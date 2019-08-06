@@ -6,6 +6,7 @@
       <div class="data-map__details_rsg_bg_bottom"></div>
       <div class="data-map__details_rsg_bg_left"></div>
     </div>
+    <div class="data-map__details_rsg_cover"></div>
     <div class="data-map__details_rsg_content" id="go"></div>
   </div>
 </template>
@@ -14,7 +15,7 @@ import go from "gojs";
 export default {
   name: "RsGraph",
   props: {
-    RsGData: Object,
+    RsGData: Object
   },
   data() {
     return {};
@@ -57,7 +58,7 @@ export default {
         // 背景
         $(go.Shape, "RoundedRectangle", {
           width: 220,
-          fill: "rgba(0,198,255,0.05)", // 背景色
+          fill: "rgba(7, 22, 66, 0.7)", // 背景色
           stroke: "#1A4D99", // 描边色
           strokeWidth: 1 // 描边粗细
         }),
@@ -261,7 +262,6 @@ export default {
 </script>
 <style lang="scss">
 .data-map__details_rsg {
-  // opacity: 0.95;
   &_bg {
     position: absolute;
     top: 0;
@@ -302,11 +302,19 @@ export default {
       left: 0;
       background: linear-gradient(
         90deg,
-        rgba(7, 22, 66, 0.1) 5%,
-        rgba(7, 22, 66, 0.7) 30%,
-        rgba(7, 22, 66, 1) 60%
+        rgba(7, 22, 66, 0.1) 3%,
+        rgba(7, 22, 66, 0.62) 9%,
+        rgba(7, 22, 66, 1) 35%
       );
     }
+  }
+  &_cover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url(../../../assets/DataMonitor/grid.png);
   }
   &_content {
     width: 100%;
