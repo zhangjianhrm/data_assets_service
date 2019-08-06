@@ -125,7 +125,7 @@ export default {
         transition-timing-function: ease-in-out;
         transition-delay: 0s;
         font-size: 24em;
-        background-image: url("../../../assets/home/sun-1.png");
+        background-image: url("../../../assets/Home/center.png");
         background-position: center;
         background-size: 100%;
         // opacity: 0.7;

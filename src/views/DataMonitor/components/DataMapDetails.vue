@@ -124,7 +124,7 @@
     </div>
     <d-map></d-map>
     <transition name="slide-fade">
-      <rs-graph ref="rsgraph" v-if="RsGVisible" :nodeData="nodeData" :linkData="linkData"></rs-graph>
+      <rs-graph ref="rsgraph" v-if="RsGVisible" :RsGData="RsGData"></rs-graph>
     </transition>
   </div>
 </template>
@@ -268,8 +268,9 @@ export default {
       // 分析图开关
       RsGVisible: false,
       // 分析图数据
-      nodeData: [],
-      linkData: []
+      // nodeData: [],
+      // linkData: [],
+      RsGData: {}
     };
   },
   mounted() {
@@ -371,314 +372,480 @@ export default {
         this.RsGVisible = true;
         switch (item.type) {
           case "blood":
-            this.nodeData = [
-              {
-                key: 1,
-                blood: true,
-                header: "全量库",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名", type: "normal" },
-                  { name: "专业", type: "normal" },
-                  { name: "年龄", type: "descendants" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              },
-              {
-                key: 4,
-                blood: true,
-                header: "测试4",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 5,
-                blood: true,
-                header: "测试5",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 7,
-                blood: true,
-                header: "测试7",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 10,
-                blood: true,
-                header: "测试10",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 11,
-                blood: true,
-                header: "测试11",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              }
-            ];
-            this.linkData = [
-              { from: 5, to: 1 },
-              { from: 10, to: 1 },
-              { from: 4, to: 5 },
-              { from: 7, to: 5 },
-              { from: 11, to: 10 }
-            ];
+            this.RsGData = {
+              nodeData: [
+                {
+                  key: 1,
+                  ancestors: true,
+                  header: "全量库",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 4,
+                  ancestors: true,
+                  header: "测试4",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 5,
+                  ancestors: true,
+                  header: "测试5",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 7,
+                  ancestors: true,
+                  header: "测试7",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 10,
+                  ancestors: true,
+                  header: "测试10",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 11,
+                  ancestors: true,
+                  header: "测试11",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              linkData: [
+                { from: 5, to: 1 },
+                { from: 10, to: 1 },
+                { from: 4, to: 5 },
+                { from: 7, to: 5 },
+                { from: 11, to: 10 }
+              ]
+            };
             break;
           case "effect":
-            this.nodeData = [
-              {
-                key: 1,
-                blood: true,
-                header: "全量库",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名", type: "normal" },
-                  { name: "专业", type: "normal" },
-                  { name: "年龄", type: "descendants" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              },
-              {
-                key: 2,
-                header: "测试2",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名", type: "normal" },
-                  { name: "年龄", type: "" },
-                  { name: "班级" },
-                  { name: "专业" },
-                  { name: "学院" }
-                ]
-              },
-              {
-                key: 3,
-                header: "测试3",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 6,
-                header: "测试6",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 8,
-                header: "测试8",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 9,
-                header: "测试9",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              },
-              {
-                key: 12,
-                header: "测试12",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              }
-            ];
-            this.linkData = [
-              { from: 1, to: 2 },
-              { from: 1, to: 9 },
-              { from: 2, to: 3 },
-              { from: 2, to: 6 },
-              { from: 6, to: 8 },
-              { from: 3, to: 12 }
-            ];
+            this.RsGData = {
+              nodeData: [
+                {
+                  key: 1,
+                  ancestors: true,
+                  header: "全量库",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 2,
+                  header: "测试2",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 3,
+                  header: "测试3",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 6,
+                  header: "测试6",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 9,
+                  header: "测试9",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              linkData: [
+                { from: 1, to: 2 },
+                { from: 1, to: 9 },
+                { from: 2, to: 3 },
+                { from: 2, to: 6 }
+              ]
+            };
             break;
           case "all":
-            this.nodeData = [
-              {
-                key: 1,
-                blood: true,
-                header: "全量库",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名", type: "normal" },
-                  { name: "专业", type: "normal" },
-                  { name: "年龄", type: "descendants" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              },
-              {
-                key: 2,
-                header: "测试2",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名", type: "normal" },
-                  { name: "年龄", type: "" },
-                  { name: "班级" },
-                  { name: "专业" },
-                  { name: "学院" }
-                ]
-              },
-              {
-                key: 3,
-                header: "测试3",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 4,
-                header: "测试4",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ],
-                blood: true
-              },
-              {
-                key: 5,
-                blood: true,
-                header: "测试5",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 6,
-                header: "测试6",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 7,
-                blood: true,
-                header: "测试7",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 8,
-                header: "测试8",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 9,
-                header: "测试9",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              },
-              {
-                key: 10,
-                blood: true,
-                header: "测试10",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "descendants" }
-                ]
-              },
-              {
-                key: 11,
-                blood: true,
-                header: "测试11",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              },
-              {
-                key: 12,
-                header: "测试12",
-                tableName: "学生基本信息",
-                tableField: [
-                  { name: "姓名" },
-                  { name: "年龄" },
-                  { name: "班级", type: "ancestors" }
-                ]
-              }
-            ];
-            this.linkData = [
-              { from: 1, to: 2 },
-              { from: 5, to: 1 },
-              { from: 1, to: 9 },
-              { from: 10, to: 1 },
-              { from: 4, to: 5 },
-              { from: 7, to: 5 },
-              { from: 11, to: 10 },
-              { from: 2, to: 3 },
-              { from: 2, to: 6 },
-              { from: 6, to: 8 },
-              { from: 3, to: 12 }
-            ];
+            this.RsGData = {
+              nodeData: [
+                {
+                  key: 1,
+                  ancestors: true,
+                  header: "全量库",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 2,
+                  header: "测试2",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 3,
+                  header: "测试3",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 4,
+                  ancestors: true,
+                  header: "测试4",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 5,
+                  ancestors: true,
+                  header: "测试5",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 6,
+                  header: "测试6",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 7,
+                  ancestors: true,
+                  header: "测试7",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 9,
+                  header: "测试9",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "班级", type: "ancestors" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 10,
+                  ancestors: true,
+                  header: "测试10",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  key: 11,
+                  ancestors: true,
+                  header: "测试11",
+                  table: [
+                    {
+                      tableName: "Table_01",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" },
+                        { name: "专业", type: "normal" }
+                      ]
+                    },
+                    {
+                      tableName: "Table_02",
+                      tableField: [
+                        { name: "年龄", type: "descendants" },
+                        { name: "姓名", type: "normal" }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              linkData: [
+                { from: 1, to: 2 },
+                { from: 5, to: 1 },
+                { from: 1, to: 9 },
+                { from: 10, to: 1 },
+                { from: 4, to: 5 },
+                { from: 7, to: 5 },
+                { from: 11, to: 10 },
+                { from: 2, to: 3 },
+                { from: 2, to: 6 }
+              ]
+            };
             break;
         }
       }

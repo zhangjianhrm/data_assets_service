@@ -14,8 +14,7 @@ import go from "gojs";
 export default {
   name: "RsGraph",
   props: {
-    nodeData: Array,
-    linkData: Array
+    RsGData: Object,
   },
   data() {
     return {};
@@ -24,10 +23,10 @@ export default {
     this.createGo();
   },
   watch: {
-    nodeData() {
+    RsGData() {
       this.myDiagram.model = new go.GraphLinksModel(
-        this.nodeData,
-        this.linkData
+        this.RsGData.nodeData,
+        this.RsGData.linkData
       );
     }
   },
@@ -101,102 +100,103 @@ export default {
             )
           ),
           // 表
-          $(
-            go.Panel,
-            "Vertical",
-            // 表名
-            $(
-              go.Panel,
-              "Table",
-              {
-                margin: new go.Margin(10, 0, 10, 0)
-              },
-              $(
-                go.TextBlock,
-                {
-                  column: 0,
-                  width: 180,
-                  stroke: "#FFF",
-                  font: "bold 12px PingFang SC"
-                },
-                new go.Binding("text", "tableName")
-              ),
-              // 按钮
-              $("PanelExpanderButton", "LIST", {
-                column: 1,
-                "ButtonIcon.fill": "#FFF",
-                "ButtonIcon.stroke": "#FFF"
-              })
-            ),
-            // 下划线
-            $(go.Shape, {
-              fill: "#0B0235",
-              width: 200,
-              height: 1,
-              strokeWidth: 0 // 描边粗细
-            }),
-            // 列表
-            $(
+          $(go.Panel, "Vertical", new go.Binding("itemArray", "table"), {
+            itemTemplate: $(
               go.Panel,
               "Vertical",
-              {
-                name: "LIST",
-                width: 200,
-                margin: new go.Margin(0, 0, 10, 0),
-                itemTemplate: $(
-                  go.Panel,
-                  "Auto",
+              // 表名
+              $(
+                go.Panel,
+                "Table",
+                {
+                  margin: new go.Margin(10, 0, 10, 0)
+                },
+                $(
+                  go.TextBlock,
                   {
-                    margin: new go.Margin(5, 0, 0, 0)
+                    column: 0,
+                    width: 180,
+                    stroke: "#FFF",
+                    font: "bold 12px PingFang SC"
                   },
-                  $(
-                    go.Shape,
+                  new go.Binding("text", "tableName")
+                ),
+                // 按钮
+                $("PanelExpanderButton", {
+                  column: 1,
+                  "ButtonIcon.fill": "#FFF",
+                  "ButtonIcon.stroke": "#FFF"
+                })
+              ),
+              // 下划线
+              $(go.Shape, {
+                fill: "#0B0235",
+                width: 200,
+                height: 1,
+                margin: new go.Margin(0, 0, 5, 0),
+                strokeWidth: 0 // 描边粗细
+              }),
+              // 字段
+              $(
+                go.Panel,
+                "Vertical",
+                { name: "COLLAPSIBLE" },
+                new go.Binding("itemArray", "tableField"),
+                {
+                  itemTemplate: $(
+                    go.Panel,
+                    "Auto",
                     {
-                      fill: "rgba(63, 100, 209, 0.2)",
-                      width: 200,
-                      height: 20,
-                      strokeWidth: 0 // 描边粗细
+                      margin: new go.Margin(0, 0, 5, 0)
                     },
-                    new go.Binding("fill", "type", value => {
-                      switch (value) {
-                        case "descendants":
-                          return "rgba(245, 183, 0, 0.2)";
-                          break;
-                        case "ancestors":
-                          return "rgba(216, 64, 64, 0.2)";
-                          break;
-                        default:
-                          return "rgba(63, 100, 209, 0.2)";
-                          break;
-                      }
-                    })
-                  ),
-                  $(
-                    go.TextBlock,
-                    {
-                      stroke: "#FFF",
-                      font: "normal 10px PingFang SC"
-                    },
-                    new go.Binding("text", "name"),
-                    new go.Binding("stroke", "type", value => {
-                      switch (value) {
-                        case "descendants":
-                          return "rgba(204, 154, 4, 1)";
-                          break;
-                        case "ancestors":
-                          return "rgba(245, 47, 87, 1)";
-                          break;
-                        default:
-                          return "rgba(255, 255, 255, 1)";
-                          break;
-                      }
-                    })
+                    $(
+                      go.Shape,
+                      {
+                        fill: "rgba(63, 100, 209, 0.2)",
+                        width: 200,
+                        height: 20,
+                        strokeWidth: 0 // 描边粗细
+                      },
+                      new go.Binding("fill", "type", value => {
+                        switch (value) {
+                          case "descendants":
+                            return "rgba(245, 183, 0, 0.2)";
+                            break;
+                          case "ancestors":
+                            return "rgba(216, 64, 64, 0.2)";
+                            break;
+                          default:
+                            return "rgba(63, 100, 209, 0.2)";
+                            break;
+                        }
+                      })
+                    ),
+                    $(
+                      go.TextBlock,
+                      {
+                        stroke: "#FFF",
+                        font: "normal 10px PingFang SC"
+                      },
+                      new go.Binding("text", "name"),
+                      new go.Binding("stroke", "type", value => {
+                        switch (value) {
+                          case "descendants":
+                            return "rgba(204, 154, 4, 1)";
+                            break;
+                          case "ancestors":
+                            return "rgba(245, 47, 87, 1)";
+                            break;
+                          default:
+                            return "rgba(255, 255, 255, 1)";
+                            break;
+                        }
+                      })
+                    )
                   )
-                )
-              },
-              new go.Binding("itemArray", "tableField")
+                }
+              )
             )
-          )
+          })
         )
       );
       // 连接线 过滤器
@@ -204,27 +204,27 @@ export default {
         var link = elt.part;
         if (!link) return pink;
         var f = link.fromNode;
-        if (!f || !f.data || !f.data.blood) return pink;
+        if (!f || !f.data || !f.data.ancestors) return pink;
         var t = link.toNode;
-        if (!t || !t.data || !t.data.blood) return pink;
+        if (!t || !t.data || !t.data.ancestors) return pink;
         return yellow;
       }
       function toArrowConverter(linkdata, elt) {
         var link = elt.part;
         if (!link) return 1;
         var f = link.fromNode;
-        if (!f || !f.data || !f.data.blood) return 1;
+        if (!f || !f.data || !f.data.ancestors) return 1;
         var t = link.toNode;
-        if (!t || !t.data || !t.data.blood) return 1;
+        if (!t || !t.data || !t.data.ancestors) return 1;
         return 0;
       }
       function fromArrowConverter(linkdata, elt) {
         var link = elt.part;
         if (!link) return 0;
         var f = link.fromNode;
-        if (!f || !f.data || !f.data.blood) return 0;
+        if (!f || !f.data || !f.data.ancestors) return 0;
         var t = link.toNode;
-        if (!t || !t.data || !t.data.blood) return 0;
+        if (!t || !t.data || !t.data.ancestors) return 0;
         return 1;
       }
       // 连接线
@@ -252,8 +252,8 @@ export default {
       );
       // 数据
       this.myDiagram.model = new go.GraphLinksModel(
-        this.nodeData,
-        this.linkData
+        this.RsGData.nodeData,
+        this.RsGData.linkData
       );
     }
   }
@@ -302,9 +302,9 @@ export default {
       left: 0;
       background: linear-gradient(
         90deg,
-        rgba(7, 22, 66, 0.1) 3%,
-        rgba(7, 22, 66, 0.62) 9%,
-        rgba(7, 22, 66, 1) 35%
+        rgba(7, 22, 66, 0.1) 5%,
+        rgba(7, 22, 66, 0.7) 30%,
+        rgba(7, 22, 66, 1) 60%
       );
     }
   }
