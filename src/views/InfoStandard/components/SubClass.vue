@@ -48,7 +48,7 @@
     </div>
     <div class="national-standard__card">
       <card
-        v-for="(item,index) in cardData"
+        v-for="(item,index) in cardData.items"
         :key="index"
         :cardData="item"
         @cardSelected="cardSelected"
@@ -61,7 +61,7 @@
       layout="slot, prev, pager, next, sizes, jumper"
       :page-size="pageSize"
       :page-sizes="[15, 30]"
-      :total="cardData.length"
+      :total="Number(cardData.totalCount)"
       :current-page="pageIndex"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -93,8 +93,8 @@ export default {
         url.infoStandard.codeStandard.downloadExecutionCodeSubClass,
       // 搜索关键词
       keyword: "",
-      // 需要给 Card 组件传递的 props
-      cardData: [],
+      // Card 数据
+      cardData: {},
       // 当前选中的 Card
       selected: [],
       // 排序方式
@@ -106,7 +106,7 @@ export default {
       ],
       // 升序降序
       order: "desc", // desc || asc
-      // 当前排序
+      // 类型排序
       orderByType: "UPDATE_TIME",
       // 当前页
       pageIndex: 1,
@@ -161,8 +161,8 @@ export default {
           return Qs.stringify(params, { arrayFormat: "repeat" });
         }
       }).then(res => {
-        console.log(res);
-        // this.cardData = res.data.data.items;
+        console.log(res.data.data);
+        this.cardData = res.data.data;
       });
     },
     // 卡片排序
@@ -289,7 +289,9 @@ export default {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
+      this.pageIndex = val;
+      this.getCard();
     }
   }
 };

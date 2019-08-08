@@ -103,18 +103,6 @@ export default {
         &:nth-child(2n) {
           background: #f4f0e6;
         }
-        // &:nth-child(3) {
-        //   background: #ceefe4;
-        // }
-        // &:nth-child(4) {
-        //   background: #9dd3a8;
-        // }
-        // &:nth-child(5) {
-        //   background: #d9d9f3;
-        // }
-        // &:nth-child(6) {
-        //   background: #f4f0e6;
-        // }
         &:hover {
           opacity: 1;
         }

@@ -37,6 +37,26 @@ const ModulesRouter = {
           }
         }
       ]
+    },
+    // 二级页面
+    {
+      path: "ISM",
+      component: {
+        render(h) {
+          return h("router-view");
+        }
+      },
+      children: [
+        // 二级页面内容
+        {
+          name: "ISM",
+          path: "/",
+          component: () => import("@/views/DataMonitor/components/ISMonitor"),
+          meta: {
+            title: "信息标准监控"
+          }
+        }
+      ]
     }
   ]
 };

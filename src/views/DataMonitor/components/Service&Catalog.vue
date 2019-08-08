@@ -12,6 +12,7 @@
         <h5>
           <svg-icon icon-class="tit"></svg-icon>
           <span>信息标准</span>
+          <i @click="$router.push('/data_monitor/ISM')">更多</i>
         </h5>
         <div class="data-monitor__catalog_info">
           <div>
@@ -368,7 +369,6 @@ export default {
   box-sizing: border-box;
   padding: 14px;
   margin-bottom: 20px;
-
   .el-carousel__indicator--horizontal {
     padding: 4px 4px;
   }
@@ -384,6 +384,12 @@ export default {
     }
     span {
       color: rgba(41, 193, 204, 1);
+    }
+    i {
+      float: right;
+      font-style: normal;
+      font-weight: normal;
+      opacity: 0.3;
     }
   }
   &_info {

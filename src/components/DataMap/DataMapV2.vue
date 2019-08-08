@@ -12,6 +12,7 @@ export default {
   data() {
     return {
       pointData: [
+        { name: "离校系统", coord: [90, 40, { in: 10, out: 9 }] },
         { name: "全量库", coord: [105, 40] }, // 中心点放在最前面
         { name: "宿管系统", coord: [130, 50, { in: 10, out: 9 }] },
         { name: "人事系统", coord: [130, 45, { in: 10, out: 9 }] },
@@ -20,9 +21,9 @@ export default {
         { name: "学工系统", coord: [130, 30, { in: 10, out: 9 }] },
         { name: "财务系统", coord: [80, 50, { in: 10, out: 9 }] },
         { name: "招生系统", coord: [70, 40, { in: 10, out: 9 }] },
-        { name: "离校系统", coord: [90, 40, { in: 10, out: 9 }] }
       ],
       testData: [
+        { coords: [[105, 40], [90, 40, { in: 10, out: 9 }]] },
         { coords: [[105, 40], [130, 50, { in: 10, out: 9 }]] },
         { coords: [[105, 40], [130, 45, { in: 10, out: 9 }]] },
         { coords: [[105, 40], [130, 40, { in: 1, out: 1 }]] },
@@ -30,9 +31,9 @@ export default {
         { coords: [[105, 40], [130, 30, { in: 10, out: 9 }]] },
         { coords: [[90, 40], [80, 50, { in: 10, out: 9 }]] },
         { coords: [[90, 40], [70, 40, { in: 10, out: 9 }]] },
-        { coords: [[105, 40], [90, 40, { in: 10, out: 9 }]] }
       ],
       testData2: [
+        { coords: [[90, 40, { in: 10, out: 9 }], [105, 40]] },
         { coords: [[130, 50, { in: 10, out: 9 }], [105, 40]] },
         { coords: [[130, 45, { in: 10, out: 9 }], [105, 40]] },
         { coords: [[130, 40, { in: 1, out: 1 }], [105, 40]] },
@@ -40,7 +41,6 @@ export default {
         { coords: [[130, 30, { in: 10, out: 9 }], [105, 40]] },
         { coords: [[80, 50, { in: 10, out: 9 }], [90, 40]] },
         { coords: [[70, 40, { in: 10, out: 9 }], [90, 40]] },
-        { coords: [[90, 40, { in: 10, out: 9 }], [105, 40]] }
       ]
     };
   },

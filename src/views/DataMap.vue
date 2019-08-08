@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <data-map-v1 :pointData="pointData"></data-map-v1>
-    <data-map-v2></data-map-v2> -->
+    <!-- <data-map-v1 :pointData="pointData"></data-map-v1> -->
+    <data-map-v2></data-map-v2>
     <!-- <data-map-v3></data-map-v3> -->
   </div>
 </template>

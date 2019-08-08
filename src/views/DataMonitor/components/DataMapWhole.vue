@@ -2,12 +2,9 @@
   <div class="dmap">
     <div class="dmap__content"></div>
     <div class="dmap__legend">
-      <div :class="activeDMap=='全部'?'dmap__legend-avtive':''" @click="activeDMap='全部'">全部</div>
-      <div
-        :class="activeDMap=='API 流向'?'dmap__legend-avtive':''"
-        @click="activeDMap='API 流向'"
-      >API 流向</div>
-      <div :class="activeDMap=='数据交换'?'dmap__legend-avtive':''" @click="activeDMap='数据交换'">数据交换</div>
+      <div :class="activeDMap=='All'?'dmap__legend-avtive':''" @click="changeType('All')">全部</div>
+      <div :class="activeDMap=='API'?'dmap__legend-avtive':''" @click="changeType('API')">API 流向</div>
+      <div :class="activeDMap=='EX'?'dmap__legend-avtive':''" @click="changeType('EX')">数据交换</div>
     </div>
   </div>
 </template>
@@ -35,9 +32,9 @@ export default {
       lineWidth: 0.5, // 线条宽度
       lineCurveness: 0.1, // 线条曲率
       lineOpacity: 0.4, // 线条透明度
-      dataCenter: require("@/assets/DataMonitor/ball.png"),
-      symbolSize: 50,
-      activeDMap: "全部"
+      // dataCenter: require("@/assets/DataMonitor/ball.png"),
+      symbolSize: 80,
+      activeDMap: "API"
     };
   },
   async created() {
@@ -53,6 +50,10 @@ export default {
     this.computedPos();
   },
   methods: {
+    changeType(type) {
+      this.activeDMap = type;
+      this.createMap();
+    },
     // 自动圆形排列
     computedPos() {
       let angle = 360 / (this.pointData.length - 1); // 初始角度
@@ -60,8 +61,10 @@ export default {
       let r = 20; // 半径
       for (let i = 1; i < this.pointData.length; i++) {
         angle += angleX;
-        let x = 105 + r * Math.cos((angle * Math.PI) / 180);
-        let y = 40 + r * Math.sin((angle * Math.PI) / 180);
+        let x =
+          this.pointData[0].coord[0] + r * Math.cos((angle * Math.PI) / 180);
+        let y =
+          this.pointData[0].coord[1] + r * Math.sin((angle * Math.PI) / 180);
         this.$set(this.pointData[i].coord, [0], x);
         this.$set(this.pointData[i].coord, [1], y);
       }
@@ -84,7 +87,9 @@ export default {
       pointCoord.push({
         name: data[0].name,
         value: data[0].coord,
-        symbol: "image://" + this.dataCenter,
+        symbol:
+          "image://" +
+          require("@/assets/icon/datamap/" + data[0].name + ".png"),
         symbolSize: 100,
         label: {
           show: false
@@ -127,9 +132,38 @@ export default {
     // 创建地图
     createMap() {
       // eslint-disable-next-line
-      let myChart = echarts.init(document.querySelector(".dmap__content"));
+      let dataMap = echarts.init(document.querySelector(".dmap__content"));
+      //
+      dataMap.on("click", params => {
+        console.log(params);
+        if (params.name == "全量库") {
+          this.pointData = [
+            { name: "全量库", coord: [105, 40] }, // 中心点放在最前面
+            { name: "财务系统", coord: [96, 43, { in: 10, out: 9 }] },
+            { name: "图书馆系统", coord: [92, 40, { in: 10, out: 0 }] },
+            { name: "宿管系统", coord: [96, 36, { in: 10, out: 9 }] },
+            { name: "一卡通系统", coord: [105, 35, { in: 10, out: 9 }] },
+            { name: "资产系统", coord: [114, 36, { in: 10, out: 9 }] },
+            { name: "人事系统", coord: [118, 40, { in: 10, out: 9 }] },
+            { name: "教务系统", coord: [114, 43, { in: 10, out: 0 }] }
+          ];
+        } else {
+          this.pointData = [
+            { name: "财务系统", coord: [96, 43] },
+            { name: "全量库", coord: [105, 40, { in: 10, out: 9 }] },
+            { name: "图书馆系统", coord: [92, 40, { in: 10, out: 0 }] },
+            { name: "宿管系统", coord: [96, 36, { in: 10, out: 9 }] },
+            { name: "一卡通系统", coord: [105, 35, { in: 10, out: 9 }] },
+            { name: "资产系统", coord: [114, 36, { in: 10, out: 9 }] },
+            { name: "人事系统", coord: [118, 40, { in: 10, out: 9 }] },
+            { name: "教务系统", coord: [114, 43, { in: 10, out: 0 }] }
+          ];
+        }
+        this.computedPos();
+        this.createMap();
+      });
       // 图表配置
-      myChart.setOption(
+      dataMap.setOption(
         {
           // 地图
           geo: {
@@ -161,7 +195,7 @@ export default {
               return txt;
             },
             textStyle: {
-              fontSize: 12
+              fontSize: 18
             }
           },
           // 图例
@@ -201,10 +235,17 @@ export default {
                 position: "middle",
                 formatter: params => {
                   let txt = "";
-                  if (params.data.coords) {
-                    txt = params.data.coords[1][2].out;
+                  if (this.activeDMap == "All") {
+                    if (params.data.coords) {
+                      txt = params.data.coords[1][2].out;
+                    }
+                    return txt + " / " + txt;
+                  } else {
+                    if (params.data.coords) {
+                      txt = params.data.coords[1][2].out;
+                    }
+                    return txt;
                   }
-                  return txt + " / " + txt;
                 }
               },
               // 线条的颜色
@@ -251,12 +292,19 @@ export default {
                 show: true,
                 color: "#fff",
                 position: "middle",
-                formatter: function(params) {
+                formatter: params => {
                   let txt = "";
-                  if (params.data.coords) {
-                    txt = params.data.coords[0][2].in;
+                  if (this.activeDMap == "All") {
+                    if (params.data.coords) {
+                      txt = params.data.coords[0][2].in;
+                    }
+                    return txt + " / " + txt;
+                  } else {
+                    if (params.data.coords) {
+                      txt = params.data.coords[0][2].in;
+                    }
+                    return txt;
                   }
-                  return txt + " / " + txt;
                 }
               },
               // 线条的颜色
@@ -295,7 +343,7 @@ export default {
               label: {
                 show: true, // 文字样式
                 color: "white",
-                fontSize: 12,
+                fontSize: 18,
                 fontWeight: "lighter",
                 distance: 14,
                 position: "bottom",

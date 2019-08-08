@@ -113,7 +113,6 @@ export default {
       }).then(res => {
         if (res.data.status == 200) {
           this.executionCodeCount = res.data.data;
-          console.log(res.data.data);
         }
       });
     },
@@ -124,7 +123,6 @@ export default {
       }).then(res => {
         if (res.data.status == 200) {
           this.executionCode = res.data.data;
-          console.log(res);
         }
       });
     },
@@ -145,7 +143,6 @@ export default {
       }).then(res => {
         if (res.data.status == 200) {
           this.nationalStandardCode = res.data.data;
-          // console.log(res);
         }
       });
     },

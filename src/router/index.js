@@ -52,7 +52,7 @@ const router = new Router({
         "header-nav": HeaderNav
       },
       meta: {
-        title: "圆形分布"
+        title: "数据地图"
       }
     },
     // 404

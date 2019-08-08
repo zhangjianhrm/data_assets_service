@@ -1,7 +1,7 @@
 <template>
   <div class="info-standard">
     <div class="info-standard__title">
-      <h3>信息标准</h3>
+      <h3>信息标准公示网</h3>
       <p>此处为信息标准模块的简单介绍，此处为信息标准模块的简单介绍。</p>
     </div>
     <!-- 代码标准、模型标准、信息标准管理规范 -->
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      activeName: "model-standard"
+      activeName: "code-standard"
     };
   },
   mounted() {

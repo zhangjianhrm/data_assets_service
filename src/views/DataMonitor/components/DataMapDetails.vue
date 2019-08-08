@@ -906,7 +906,7 @@ export default {
     right: 400px;
     bottom: 0;
     left: 120px;
-    background: url(../../../assets/DataMonitor/map-min.png);
+    background: url(../../../assets/Common/map.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
