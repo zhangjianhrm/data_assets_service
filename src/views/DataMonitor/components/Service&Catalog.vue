@@ -84,6 +84,8 @@ import load from "@/utils/load.js"; // 加载 Js
 export default {
   data() {
     return {
+      pie: null,
+      bar: null,
       radio: "本周",
       DataCatalogCount: [
         { name: "总数", count: 15655 },
@@ -110,14 +112,20 @@ export default {
       "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
     );
     this.createPie();
-    this.createGraph();
+    this.createBar();
   },
   mounted() {},
+  beforeDestroy() {
+    this.pie.dispose();
+    this.pie = null;
+    this.bar.dispose();
+    this.bar = null;
+  },
   methods: {
     createPie() {
       let dom = document.querySelector(".data-monitor__catalog_catalog_pie");
-      let myChart = echarts.init(dom);
-      let option = {
+      this.pie = echarts.init(dom);
+      this.pie.setOption({
         tooltip: {
           trigger: "item",
           // formatter: "{d}%"
@@ -170,14 +178,12 @@ export default {
             data: this.infoStandardPie
           }
         ]
-      };
-      myChart.setOption(option, true);
+      });
     },
-    createGraph() {
-      var dom = document.querySelector(".data-monitor__service_graph_content");
-      var myChart = echarts.init(dom);
-
-      let option = {
+    createBar() {
+      let dom = document.querySelector(".data-monitor__service_graph_content");
+      this.bar = echarts.init(dom);
+      this.bar.setOption({
         // tooltip: {
         //   trigger: "axis",
         //   axisPointer: {
@@ -350,11 +356,7 @@ export default {
             ]
           }
         ]
-      };
-
-      if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-      }
+      });
     }
   }
 };
@@ -390,6 +392,7 @@ export default {
       font-style: normal;
       font-weight: normal;
       opacity: 0.3;
+      cursor: pointer;
     }
   }
   &_info {

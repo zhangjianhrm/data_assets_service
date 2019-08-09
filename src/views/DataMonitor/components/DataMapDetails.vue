@@ -129,7 +129,7 @@
   </div>
 </template>
 <script>
-import echarts from "echarts";
+import load from "@/utils/load.js"; // 加载 Js
 export default {
   name: "DataMapDetails",
   components: {
@@ -270,17 +270,26 @@ export default {
       // 分析图数据
       // nodeData: [],
       // linkData: [],
-      RsGData: {}
+      RsGData: {},
+      pie: null
     };
   },
-  mounted() {
+  async created() {
+    await load(
+      "https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"
+    );
     this.createPie();
+  },
+  mounted() {},
+  beforeDestroy() {
+    this.pie.dispose();
+    this.pie = null;
   },
   methods: {
     createPie() {
       let dom = document.querySelector(".data-map__details_metadata_pie");
-      let myChart = echarts.init(dom);
-      let option = {
+      this.pie = echarts.init(dom);
+      this.pie.setOption({
         title: {
           show: false,
           text: "严重程度",
@@ -339,8 +348,7 @@ export default {
             data: this.pieData
           }
         ]
-      };
-      myChart.setOption(option, true);
+      });
     },
     selectDB(item) {
       this.selectDBvisible = !this.selectDBvisible;
@@ -1114,7 +1122,8 @@ export default {
     top: 27px;
     left: 11px;
     bottom: 15px;
-    width: 240px;z-index: 2;
+    width: 240px;
+    z-index: 2;
     &_top {
       position: absolute;
       top: 0;

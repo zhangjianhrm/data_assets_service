@@ -13,7 +13,6 @@
         </p>
       </transition-group>
     </div>
-    <!-- <div class="data-monitor__live_cover"></div> -->
   </div>
 </template>
 <script>

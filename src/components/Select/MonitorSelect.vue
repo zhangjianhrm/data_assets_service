@@ -1,8 +1,9 @@
 <template>
-  <div class="monitor-select">
-    <b class="monitor-select_value">{{currentValue}}</b>
-    <i class="monitor-select_arrow el-icon-arrow-down" @click.stop="showOptions"></i>
+  <div class="monitor-select" @click.stop="showOptions">
+    <b class="monitor-select_value">{{valueTrans}}</b>
+    <i class="monitor-select_arrow el-icon-arrow-down" ref="arrow"></i>
     <i
+      v-if="clearable"
       v-show="!optionsVisible && currentValue != ''"
       class="monitor-select_clear el-icon-circle-close"
       @click="currentValue = ''"
@@ -12,7 +13,7 @@
         class="monitor-select_options_item"
         v-for="(item,index) in options"
         :key="index"
-        @click.stop="select(item.label)"
+        @click.stop="select(item.value)"
       >{{item.label}}</div>
     </div>
   </div>
@@ -31,14 +32,17 @@ export default {
       default: () => {
         return [];
       }
-    }
+    },
+    clearable: { type: Boolean, default: false }
   },
   data() {
     return { optionsVisible: false };
   },
   mounted() {
     let body = document.querySelector("body");
-    // body.onclick = ;
+    body.addEventListener("click", () => {
+      this.optionsVisible = false;
+    });
   },
   methods: {
     // 展开选项
@@ -53,11 +57,20 @@ export default {
   },
   watch: {
     optionsVisible(n, o) {
-      let arrow = document.querySelector(".monitor-select_arrow");
+      let arrow = this.$refs.arrow;
       if (n) {
         arrow.classList.add("selectBtnTrans");
       } else {
         arrow.classList.remove("selectBtnTrans");
+      }
+    }
+  },
+  computed: {
+    valueTrans() {
+      for (let i = 0; i < this.options.length; i++) {
+        if (this.currentValue === this.options[i].value) {
+          return this.options[i].label;
+        }
       }
     }
   }
@@ -87,7 +100,6 @@ export default {
     right: 6px;
     color: #fff;
     font-size: 12px;
-    font-weight: bold;
     line-height: 27px;
     text-align: center;
     z-index: 2;

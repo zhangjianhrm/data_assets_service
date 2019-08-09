@@ -22,6 +22,10 @@ import VueElementExtends from "vue-element-extends";
 import "vue-element-extends/lib/index.css";
 Vue.use(VueElementExtends);
 
+// 无缝滚动
+import scroll from 'vue-seamless-scroll'
+Vue.use(scroll);
+
 // 全局 css
 import "@/styles/index.scss";
 import "@/styles/reset.scss";
