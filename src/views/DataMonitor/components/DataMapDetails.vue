@@ -123,9 +123,10 @@
       </div>
     </div>
     <d-map></d-map>
-    <transition name="slide-fade">
-      <rs-graph ref="rsgraph" v-if="RsGVisible" :RsGData="RsGData"></rs-graph>
-    </transition>
+    <!-- <transition name="slide-fade"> -->
+      <!-- <rs-graph ref="rsgraph" v-if="RsGVisible" :RsGData="RsGData"></rs-graph> -->
+      <rs-graph ref="rsgraph" :RsGData="RsGData"></rs-graph>
+    <!-- </transition> -->
   </div>
 </template>
 <script>
@@ -304,7 +305,7 @@ export default {
           formatter: "{c}"
         },
         legend: {
-          right: 0,
+          right: 10,
           y: "center",
           orient: "vertical",
           itemWidth: 8,
@@ -316,7 +317,6 @@ export default {
           },
           data: this.pieData
         },
-        calculable: true,
         series: [
           {
             name: "半径模式",
