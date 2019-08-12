@@ -34,8 +34,6 @@ module.exports = {
       .end();
   },
   devServer: {
-    // public: "0.0.0.0:8080",
-    hot: true,
-    disableHostCheck: true
+    port: 8000
   }
 };

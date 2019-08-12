@@ -5,6 +5,7 @@ import Router from "vue-router";
 import HeaderNav from "@/components/Layout/HeaderNav";
 
 // 子路由
+import Home from "./modules/Home";
 import InfoStandard from "./modules/InfoStandard";
 import DataCatalog from "./modules/DataCatalog";
 import DataQuality from "./modules/DataQuality";
@@ -25,14 +26,7 @@ const router = new Router({
     //   }
     // },
     // 首页
-    {
-      name: "NewHome",
-      path: "/",
-      component: () => import("@/views/Home/NewHome"),
-      meta: {
-        title: "数据资产服务平台"
-      }
-    },
+    Home,
     // 信息标准
     InfoStandard,
     // 数据目录

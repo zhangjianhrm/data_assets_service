@@ -9,18 +9,28 @@
       <div class="data-map__details_effect_bottom"></div>
       <div class="data-map__details_effect_title">表影响力排行</div>
       <div class="data-map__details_effect_content">
-        <el-row>
-          <el-col :span="4">排名</el-col>
-          <el-col :span="8">表名</el-col>
-          <el-col :span="8">数据库</el-col>
-          <el-col :span="4">关联数</el-col>
-        </el-row>
-        <el-row v-for="(item,index) in effectTable" :key="index">
-          <el-col :span="4" style="font-size:18px;font-style:italic;">{{index + 1}}</el-col>
-          <el-col :span="8">{{item.name}}</el-col>
-          <el-col :span="8">{{item.db}}</el-col>
-          <el-col :span="4">{{item.r}}</el-col>
-        </el-row>
+        <p style="color:#fff;">
+          <span>排名</span>
+          <span>表名</span>
+          <span>数据库</span>
+          <span>关联数</span>
+        </p>
+        <vue-seamless-scroll
+          class="data-map__details_effect_content_wrap"
+          :data="effectTable"
+          :class-option="scrollOption"
+        >
+          <p
+            class="data-map__details_effect_content_wrap_item"
+            v-for="(item,index) in effectTable"
+            :key="index"
+          >
+            <span>{{ index + 1}}</span>
+            <span>{{ item.name }}</span>
+            <span>{{ item.db }}</span>
+            <span>{{ item.r }}</span>
+          </p>
+        </vue-seamless-scroll>
       </div>
     </div>
     <div class="data-map__details_metadata">
@@ -124,8 +134,8 @@
     </div>
     <d-map></d-map>
     <!-- <transition name="slide-fade"> -->
-      <!-- <rs-graph ref="rsgraph" v-if="RsGVisible" :RsGData="RsGData"></rs-graph> -->
-      <rs-graph ref="rsgraph" :RsGData="RsGData"></rs-graph>
+    <!-- <rs-graph ref="rsgraph" v-if="RsGVisible" :RsGData="RsGData"></rs-graph> -->
+    <!-- <rs-graph ref="rsgraph" :RsGData="RsGData"></rs-graph> -->
     <!-- </transition> -->
   </div>
 </template>
@@ -137,7 +147,8 @@ export default {
     DataMonitorNav: () => import("./Nav"),
     ScrollCard: () => import("./ScrollCard"),
     DMap: () => import("./DataMapWhole"),
-    RsGraph: () => import("./RsGraph")
+    RsGraph: () => import("./RsGraph"),
+    VueSeamlessScroll: () => import("vue-seamless-scroll")
   },
   data() {
     return {
@@ -147,6 +158,8 @@ export default {
         { name: "教职工信息表", db: "人事系统", r: 35 },
         { name: "一卡通信息表", db: "财务系统", r: 25 },
         { name: "奖学金", db: "财务系统", r: 15 },
+        { name: "图书基本信息", db: "图书馆系统", r: 5 },
+        { name: "图书基本信息", db: "图书馆系统", r: 5 },
         { name: "图书基本信息", db: "图书馆系统", r: 5 }
       ],
       // 元数据变化
@@ -896,6 +909,13 @@ export default {
         fieldArrow.classList.remove("selectBtnTrans");
       }
     }
+  },
+  computed: {
+    scrollOption() {
+      return {
+        step: 0.5
+      };
+    }
   }
 };
 </script>
@@ -980,31 +1000,62 @@ export default {
     }
     &_content {
       position: absolute;
-      top: 30px;
-      width: 100%;
-      // height: 30px;
+      top: 35px;
+      left: 15px;
+      right: 15px;
       font-size: 12px;
-      text-align: center;
+      // text-align: center;
       color: rgba(41, 193, 204, 1);
       line-height: 30px;
       font-weight: 600;
-      padding: 0 15px;
       box-sizing: border-box;
-      .el-row {
-        color: #fff;
+      &_wrap {
+        width: 100%;
+        height: 130px;
+        overflow: hidden;
+      }
+      p {
+        width: 100%;
         height: 26px;
         line-height: 26px;
-        &:nth-child(2) {
+        color: rgba(255, 255, 255, 1);
+        &:nth-child(1) {
           color: rgba(216, 64, 64, 1);
+          font-weight: 600;
+        }
+        &:nth-child(2) {
+          color: rgba(204, 112, 41, 1);
+          font-weight: 600;
         }
         &:nth-child(3) {
-          color: rgba(179, 108, 54, 1);
-        }
-        &:nth-child(4) {
           color: rgba(179, 156, 54, 1);
+          font-weight: 600;
         }
         &:nth-child(2n-1) {
-          background: rgba(63, 100, 209, 0.1);
+          background: rgba(0, 114, 201, 0.1);
+        }
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          &:nth-child(1) {
+            float: left;
+            width: 50px;
+            text-align: center;
+          }
+          &:nth-child(2) {
+            float: left;
+            width: 100px;
+          }
+          &:nth-child(3) {
+            float: left;
+            width: 70px;
+          }
+          &:nth-child(4) {
+            float: left;
+            width: 60px;
+            text-align: center;
+          }
         }
       }
     }

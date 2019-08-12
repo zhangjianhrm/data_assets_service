@@ -271,7 +271,7 @@ export default {
           setsChildPortSpot: false,
           isRealtime: false
         }),
-        allowDragOut: true,
+        allowDragOut: false,
         hasHorizontalScrollbar: false,
         hasVerticalScrollbar: false
         // isReadOnly: true
@@ -303,7 +303,7 @@ export default {
         { fromSpot: go.Spot.RightSide, toSpot: go.Spot.LeftSide },
         // 背景
         $(go.Shape, "RoundedRectangle", {
-          width: 220,
+          // width: 220,
           fill: "rgba(7, 22, 66, 0.7)", // 背景色
           stroke: "#1A4D99", // 描边色
           strokeWidth: 1 // 描边粗细

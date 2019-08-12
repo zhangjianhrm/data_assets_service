@@ -34,7 +34,8 @@ export default {
       lineOpacity: 0.4, // 线条透明度
       // dataCenter: require("@/assets/DataMonitor/ball.png"),
       symbolSize: 80,
-      activeDMap: "API"
+      activeDMap: "API",
+      dataMapEle: null
     };
   },
   async created() {
@@ -47,7 +48,7 @@ export default {
     this.createMap();
   },
   mounted() {
-    this.computedPos();
+    this.computedPos(1);
   },
   methods: {
     changeType(type) {
@@ -55,11 +56,11 @@ export default {
       this.createMap();
     },
     // 自动圆形排列
-    computedPos() {
-      let angle = 360 / (this.pointData.length - 1); // 初始角度
-      let angleX = 360 / (this.pointData.length - 1); // 递增角度
+    computedPos(index) {
+      let angle = 360 / (this.pointData.length - index); // 初始角度
+      let angleX = 360 / (this.pointData.length - index); // 递增角度
       let r = 20; // 半径
-      for (let i = 1; i < this.pointData.length; i++) {
+      for (let i = index; i < this.pointData.length; i++) {
         angle += angleX;
         let x =
           this.pointData[0].coord[0] + r * Math.cos((angle * Math.PI) / 180);
@@ -90,51 +91,65 @@ export default {
         symbol:
           "image://" +
           require("@/assets/icon/datamap/" + data[0].name + ".png"),
-        symbolSize: 100,
-        label: {
-          show: false
-        }
+        symbolSize: 100
       });
       return pointCoord;
     },
     // 获取路线 （点数据，流向）
     getRouteMap(data, type) {
       let routeMap = [];
-      if (type == "out") {
-        // 流出
-        for (let i = 0; i < data.length; i++) {
-          if (data[0].name != data[i].name && data[i].coord[2].out == 0) {
-            routeMap.push({
-              coords: [data[0].coord, data[i].coord],
-              effect: { color: "transparent" },
-              label: { show: false },
-              lineStyle: { width: 1 }
-            });
-          } else if (data[0].name != data[i].name) {
-            routeMap.push({
-              coords: [data[0].coord, data[i].coord]
-            });
+      switch (type) {
+        case "out": // 流出
+          for (let i = 0; i < data.length; i++) {
+            // if (data[0].name != data[i].name && data[i].coord[2].out == 0) {
+            //   routeMap.push({
+            //     coords: [data[0].coord, data[i].coord],
+            //     effect: { color: "transparent" },
+            //     label: { show: false },
+            //     lineStyle: { width: 1 }
+            //   });
+            // } else if (data[0].name != data[i].name) {
+            //   routeMap.push({
+            //     coords: [data[0].coord, data[i].coord]
+            //   });
+            // }
+            if (data[0].name != data[i].name) {
+              if (data[i].linkToQuan) {
+                routeMap.push({
+                  coords: [data[1].coord, data[i].coord]
+                });
+              } else {
+                routeMap.push({
+                  coords: [data[0].coord, data[i].coord]
+                });
+              }
+            }
           }
-        }
-      } else {
-        // 流入
-        for (let i = 0; i < data.length; i++) {
-          if (data[0].name != data[i].name) {
-            routeMap.push({
-              coords: [data[i].coord, data[0].coord]
-            });
+          break;
+        case "in": // 流入
+          for (let i = 0; i < data.length; i++) {
+            if (data[0].name != data[i].name) {
+              if (data[i].linkToQuan) {
+                routeMap.push({
+                  coords: [data[i].coord, data[1].coord]
+                });
+              } else {
+                routeMap.push({
+                  coords: [data[i].coord, data[0].coord]
+                });
+              }
+            }
           }
-        }
+          break;
       }
-      // console.log(JSON.stringify(routeMap));
       return routeMap;
     },
     // 创建地图
     createMap() {
       // eslint-disable-next-line
-      let dataMap = echarts.init(document.querySelector(".dmap__content"));
+      this.dataMapEle = echarts.init(document.querySelector(".dmap__content"));
       //
-      dataMap.on("click", params => {
+      this.dataMapEle.on("click", params => {
         console.log(params);
         if (params.name == "全量库") {
           this.pointData = [
@@ -147,213 +162,239 @@ export default {
             { name: "人事系统", coord: [118, 40, { in: 10, out: 9 }] },
             { name: "教务系统", coord: [114, 43, { in: 10, out: 0 }] }
           ];
+          this.computedPos(1);
         } else {
           this.pointData = [
-            { name: "财务系统", coord: [96, 43] },
-            { name: "全量库", coord: [105, 40, { in: 10, out: 9 }] },
-            { name: "图书馆系统", coord: [92, 40, { in: 10, out: 0 }] },
-            { name: "宿管系统", coord: [96, 36, { in: 10, out: 9 }] },
-            { name: "一卡通系统", coord: [105, 35, { in: 10, out: 9 }] },
-            { name: "资产系统", coord: [114, 36, { in: 10, out: 9 }] },
-            { name: "人事系统", coord: [118, 40, { in: 10, out: 9 }] },
-            { name: "教务系统", coord: [114, 43, { in: 10, out: 0 }] }
+            { name: "财务系统", coord: [95, 40], linkToQuan: true },
+            {
+              name: "全量库",
+              coord: [105, 40, { in: 10, out: 9 }],
+              linkToQuan: false
+            },
+            {
+              name: "图书馆系统",
+              coord: [92, 40, { in: 10, out: 0 }],
+              linkToQuan: false
+            },
+            {
+              name: "宿管系统",
+              coord: [96, 36, { in: 10, out: 9 }],
+              linkToQuan: false
+            },
+            {
+              name: "一卡通系统",
+              coord: [105, 35, { in: 10, out: 9 }],
+              linkToQuan: false
+            },
+            {
+              name: "资产系统",
+              coord: [114, 36, { in: 10, out: 9 }],
+              linkToQuan: true
+            },
+            {
+              name: "人事系统",
+              coord: [118, 40, { in: 10, out: 9 }],
+              linkToQuan: true
+            },
+            {
+              name: "教务系统",
+              coord: [114, 43, { in: 10, out: 0 }],
+              linkToQuan: true
+            }
           ];
+          this.computedPos(2);
         }
-        this.computedPos();
         this.createMap();
       });
       // 图表配置
-      dataMap.setOption(
-        {
-          // 地图
-          geo: {
-            map: "china",
-            center: this.pointData[0].coord, // 地图中心
-            roam: false, // 是否可拖动
-            zoom: 1.5,
-            silent: true, // 是否禁用选中
-            aspectScale: 5 / 3, // 长宽比
-            itemStyle: {
-              opacity: 0
-            }
-          },
-          // 提示框
-          tooltip: {
-            // show: false,
-            trigger: "item",
-            position: "top",
-            formatter: params => {
-              let txt = "";
-              if (params.data.value) {
-                if (params.data.value[2]) {
-                  let data_in = params.data.value[2].in;
-                  let data_out = params.data.value[2].out;
-                  let data_sum = data_in + data_out;
-                  txt = "数据流入流出总和：" + data_sum;
-                }
-              }
-              return txt;
-            },
-            textStyle: {
-              fontSize: 18
-            }
-          },
-          // 图例
-          legend: {
-            show: false,
-            itemWidth: 20,
-            itemHeight: 2,
-            data: ["流入", "流出"],
-            bottom: 150,
-            right: 100,
-            textStyle: {
-              color: "rgba(255,255,255,0.1)"
-            },
-            selectedMode: "multiple"
-          },
-          // 系列列表
-          series: [
-            // 流出
-            {
-              name: "流出",
-              type: "lines",
-              // 数据
-              data: this.getRouteMap(this.pointData, "out"),
-              // 箭头效果
-              effect: {
-                show: true,
-                period: 6, // 特效动画的时间，单位为 s
-                trailLength: 0.1,
-                symbol: this.planePath,
-                symbolSize: 4
-                // color: this.lineColor[0]
-              },
-              // 标签
-              label: {
-                show: true,
-                color: "#fff",
-                position: "middle",
-                formatter: params => {
-                  let txt = "";
-                  if (this.activeDMap == "All") {
-                    if (params.data.coords) {
-                      txt = params.data.coords[1][2].out;
-                    }
-                    return txt + " / " + txt;
-                  } else {
-                    if (params.data.coords) {
-                      txt = params.data.coords[1][2].out;
-                    }
-                    return txt;
-                  }
-                }
-              },
-              // 线条的颜色
-              lineStyle: {
-                color: {
-                  type: "linear",
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "#7effff" // 0% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#43bcd1" // 100% 处的颜色
-                    }
-                  ]
-                },
-                width: this.lineWidth,
-                opacity: this.lineOpacity,
-                curveness: this.lineCurveness
-              }
-            },
-            // 流入
-            {
-              name: "流入",
-              type: "lines",
-              // 数据
-              data: this.getRouteMap(this.pointData, "in"),
-              // 箭头的颜色
-              effect: {
-                show: true,
-                period: 6,
-                trailLength: 0.1,
-                // color: this.lineColor[1],
-                symbol: this.planePath,
-                symbolSize: 4
-              },
-              // 标签
-              label: {
-                show: true,
-                color: "#fff",
-                position: "middle",
-                formatter: params => {
-                  let txt = "";
-                  if (this.activeDMap == "All") {
-                    if (params.data.coords) {
-                      txt = params.data.coords[0][2].in;
-                    }
-                    return txt + " / " + txt;
-                  } else {
-                    if (params.data.coords) {
-                      txt = params.data.coords[0][2].in;
-                    }
-                    return txt;
-                  }
-                }
-              },
-              // 线条的颜色
-              lineStyle: {
-                color: {
-                  type: "linear",
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "#f9dc5c" // 0% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#ed254e" // 100% 处的颜色
-                    }
-                  ]
-                },
-                width: this.lineWidth,
-                opacity: this.lineOpacity,
-                curveness: this.lineCurveness
-              }
-            },
-            // 点
-            {
-              type: "graph",
-              coordinateSystem: "geo",
-              data: this.getPointCoord(this.pointData), // 数据
-              large: true,
-              animation: false,
-              legendHoverLink: false,
-              hoverAnimation: false,
-              label: {
-                show: true, // 文字样式
-                color: "white",
-                fontSize: 18,
-                fontWeight: "lighter",
-                distance: 14,
-                position: "bottom",
-                formatter: "{b}"
-              }
-            }
-          ]
+      this.dataMapEle.setOption({
+        // 地图
+        geo: {
+          map: "china",
+          center: this.pointData[0].coord, // 地图中心
+          roam: false, // 是否可拖动
+          zoom: 1.5,
+          silent: true, // 是否禁用选中
+          aspectScale: 5 / 3, // 长宽比
+          itemStyle: {
+            opacity: 0
+          }
         },
-        true
-      );
+        // 提示框
+        tooltip: {
+          // show: false,
+          trigger: "item",
+          position: "top",
+          formatter: params => {
+            let txt = "";
+            if (params.data.value) {
+              if (params.data.value[2]) {
+                let data_in = params.data.value[2].in;
+                let data_out = params.data.value[2].out;
+                let data_sum = data_in + data_out;
+                txt = "数据流入流出总和：" + data_sum;
+              }
+            }
+            return txt;
+          },
+          textStyle: {
+            fontSize: 18
+          }
+        },
+        // 图例
+        legend: {
+          show: false,
+          itemWidth: 20,
+          itemHeight: 2,
+          data: ["流入", "流出"],
+          bottom: 150,
+          right: 100,
+          textStyle: {
+            color: "rgba(255,255,255,0.1)"
+          },
+          selectedMode: "multiple"
+        },
+        // 系列列表
+        series: [
+          // 流出
+          {
+            name: "流出",
+            type: "lines",
+            // 数据
+            data: this.getRouteMap(this.pointData, "out"),
+            // 箭头效果
+            effect: {
+              show: true,
+              period: 6, // 特效动画的时间，单位为 s
+              trailLength: 0.1,
+              symbol: this.planePath,
+              symbolSize: 4
+              // color: this.lineColor[0]
+            },
+            // 标签
+            label: {
+              show: true,
+              color: "#fff",
+              position: "middle",
+              formatter: params => {
+                let txt = "";
+                if (this.activeDMap == "All") {
+                  if (params.data.coords) {
+                    txt = params.data.coords[1][2].out;
+                  }
+                  return txt + " / " + txt;
+                } else {
+                  if (params.data.coords) {
+                    txt = params.data.coords[1][2].out;
+                  }
+                  return txt;
+                }
+              }
+            },
+            // 线条的颜色
+            lineStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#7effff" // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#43bcd1" // 100% 处的颜色
+                  }
+                ]
+              },
+              width: this.lineWidth,
+              opacity: this.lineOpacity,
+              curveness: this.lineCurveness
+            }
+          },
+          // 流入
+          {
+            name: "流入",
+            type: "lines",
+            // 数据
+            data: this.getRouteMap(this.pointData, "in"),
+            // 箭头的颜色
+            effect: {
+              show: true,
+              period: 6,
+              trailLength: 0.1,
+              // color: this.lineColor[1],
+              symbol: this.planePath,
+              symbolSize: 4
+            },
+            // 标签
+            label: {
+              show: true,
+              color: "#fff",
+              position: "middle",
+              formatter: params => {
+                let txt = "";
+                if (this.activeDMap == "All") {
+                  if (params.data.coords) {
+                    txt = params.data.coords[0][2].in;
+                  }
+                  return txt + " / " + txt;
+                } else {
+                  if (params.data.coords) {
+                    txt = params.data.coords[0][2].in;
+                  }
+                  return txt;
+                }
+              }
+            },
+            // 线条的颜色
+            lineStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#f9dc5c" // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#ed254e" // 100% 处的颜色
+                  }
+                ]
+              },
+              width: this.lineWidth,
+              opacity: this.lineOpacity,
+              curveness: this.lineCurveness
+            }
+          },
+          // 点
+          {
+            type: "graph",
+            coordinateSystem: "geo",
+            data: this.getPointCoord(this.pointData), // 数据
+            large: true,
+            animation: false,
+            legendHoverLink: false,
+            hoverAnimation: false,
+            label: {
+              show: true, // 文字样式
+              color: "white",
+              fontSize: 18,
+              fontWeight: "lighter",
+              distance: 14,
+              position: "bottom",
+              formatter: "{b}"
+            }
+          }
+        ]
+      });
     }
   }
 };

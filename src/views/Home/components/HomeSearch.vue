@@ -7,20 +7,38 @@
         type="primary"
         @click="frameworkVisible = true"
       ></el-button>
-      <el-input clearable placeholder="请输入表名" v-model="value" class="home__search_wrap_search">
-        <el-select v-model="select" slot="prepend" placeholder="请选择业务系统">
-          <el-option
-            v-for="(item,index) in options"
-            :key="index"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-        <el-button slot="append">
-          <i class="su-icon-inquire" style="margin-right:5px;"></i>
-          <span>搜索</span>
-        </el-button>
-      </el-input>
+
+      <el-popover
+        placement="top-start"
+        title="请输入要搜索的表名"
+        width="200"
+        trigger="manual"
+        content="如：学生基本信息"
+        v-model="tipVisible"
+      >
+        <el-input
+          clearable
+          placeholder="请输入表名"
+          v-model="keyword"
+          class="home__search_wrap_search"
+          slot="reference"
+          ref="input"
+          @change="input"
+        >
+          <el-select v-model="select" slot="prepend" placeholder="请选择业务系统">
+            <el-option
+              v-for="(item,index) in options"
+              :key="index"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-button slot="append" @click="goSearchRes()">
+            <i class="su-icon-inquire" style="margin-right:5px;"></i>
+            <span>搜索</span>
+          </el-button>
+        </el-input>
+      </el-popover>
     </div>
     <div class="home__search_cover" v-if="frameworkVisible" @click="frameworkVisible = false">
       <div class="home__search_cover_bg">
@@ -35,18 +53,20 @@
             <div class="home__search_framework_left_arrow"></div>
             <div class="home__search_framework_left_arrow"></div>
             <div class="home__search_framework_left_arrow"></div>
-            <div class="home__search_framework_left_conveyor">
-              <ul>
-                <li v-for="(item,index) in DB" :key="index">
-                  <img :src="item.img" />
-                  <p>{{item.name}}</p>
-                </li>
-                <li v-for="(item2,index2) in DB.slice(0,5)" :key="index2+DB.length">
-                  <img :src="item2.img" />
-                  <p>{{item2.name}}</p>
-                </li>
-              </ul>
-            </div>
+            <vue-seamless-scroll
+              class="home__search_framework_left_conveyor"
+              :data="DB"
+              :class-option="scrollOption"
+            >
+              <div
+                v-for="(item,index) in DB"
+                :key="index"
+                class="home__search_framework_left_conveyor_item"
+              >
+                <img :src="item.img" />
+                <p>{{item.name}}</p>
+              </div>
+            </vue-seamless-scroll>
           </div>
         </div>
         <div class="home__search_framework_right">
@@ -56,16 +76,17 @@
             <div class="home__search_framework_right_arrow"></div>
             <div class="home__search_framework_right_arrow"></div>
             <div class="home__search_framework_right_title">指标库</div>
-            <div class="home__search_framework_right_conveyor">
-              <ul>
-                <li v-for="(item,index) in norm" :key="index">
-                  <p>{{item}}</p>
-                </li>
-                <li v-for="(item2,index2) in norm.slice(0,5)" :key="index2+norm.length">
-                  <p>{{item2}}</p>
-                </li>
-              </ul>
-            </div>
+            <vue-seamless-scroll
+              class="home__search_framework_right_conveyor"
+              :data="norms"
+              :class-option="scrollOption"
+            >
+              <p
+                class="home__search_framework_right_conveyor_item"
+                v-for="(item,index) in norms"
+                :key="index"
+              >{{item}}</p>
+            </vue-seamless-scroll>
           </div>
         </div>
         <div class="home__search_framework_center">
@@ -157,11 +178,16 @@
   </div>
 </template>
 <script>
+import { setTimeout } from "timers";
 export default {
   name: "HomeSearch",
+  components: {
+    VueSeamlessScroll: () => import("vue-seamless-scroll")
+  },
   data() {
     return {
-      value: "",
+      keyword: "",
+      tipVisible: false,
       select: "",
       options: [
         { label: "全量数据中心", value: 1 },
@@ -169,7 +195,7 @@ export default {
         { label: "学工系统", value: 3 },
         { label: "财务系统", value: 4 },
         { label: "教务系统", value: 5 },
-        { label: "科研系统", value: 6 },
+        { label: "科研系统", value: 6 }
       ],
       frameworkVisible: false,
       DB: [
@@ -199,16 +225,53 @@ export default {
         },
         { name: "资产系统", img: require("@/assets/icon/datamap/资产系统.png") }
       ],
-      norm: [
+      norms: [
         "教学指标",
         "科研指标",
         "成绩指标",
+        "科研指标",
         "人数指标",
         "学生指标",
         "资产指标",
-        "很长很长很长的科研指标"
+        "科研指标",
+        "人数指标"
       ]
     };
+  },
+  methods: {
+    input() {
+      this.tipVisible = false;
+    },
+    goSearchRes() {
+      if (this.keyword) {
+        this.$router.push({
+          name: "SearchRes",
+          params: {
+            keyword: this.keyword
+          }
+        });
+      } else {
+        this.tipVisible = true;
+        this.$refs.input.focus();
+      }
+    }
+  },
+  computed: {
+    scrollOption() {
+      return {
+        step: 1,
+        hoverStop: false
+      };
+    }
+  },
+  watch: {
+    tipVisible(n, o) {
+      if (n) {
+        setTimeout(() => {
+          this.tipVisible = false;
+        }, 2000);
+      }
+    }
   }
 };
 </script>
@@ -340,38 +403,23 @@ export default {
       &_conveyor {
         width: 210px;
         height: 520px;
-        box-sizing: border-box;
         overflow: hidden;
-        ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          animation: conveyor 20s linear 0s infinite normal;
-          li {
-            width: 210px;
-            height: 104px;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-            img {
-              width: 100px;
-            }
-            p {
-              position: absolute;
-              top: 0;
-              left: 135px;
-              font-size: 12px;
-              color: rgba(126, 250, 252, 1);
-            }
+        &_item {
+          width: 100%;
+          height: 104px;
+          text-align: center;
+          position: relative;
+          p {
+            position: absolute;
+            line-height: 14px;
+            top: 4px;
+            left: 135px;
+            font-size: 12px;
+            color: #7efafc;
           }
-        }
-      }
-      @keyframes conveyor {
-        from {
-          margin-top: 0;
-        }
-        to {
-          margin-top: -728px;
+          img {
+            width: 100px;
+          }
         }
       }
     }
@@ -393,7 +441,7 @@ export default {
           rgba(0, 9, 77, 0.07) 99%
         );
         box-shadow: 0 0 100px rgba(31, 115, 255, 0.2) inset;
-        border-right: 1px solid rgba(14, 208, 222, 0.4);
+        border-left: 1px solid rgba(14, 208, 222, 0.4);
         transform: rotateY(-10deg);
       }
       &_arrow {
@@ -436,33 +484,22 @@ export default {
         height: 480px;
         box-sizing: border-box;
         overflow: hidden;
-        ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          animation: conveyor_right 20s linear 0s infinite normal;
-          li {
-            width: 210px;
-            height: 96px;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-            background-position: center;
-            background-repeat: no-repeat;
-            p {
-              font-size: 12px;
-              line-height: 96px;
-              color: rgba(126, 250, 252, 1);
-            }
-            &:nth-child(2n-1) {
-              background-image: url("../../../assets/Home/orange.png");
-            }
-            &:nth-child(2n) {
-              background-image: url("../../../assets/Home/gold.png");
-            }
-            &:nth-child(3n) {
-              background-image: url("../../../assets/Home/green.png");
-            }
+        &_item {
+          font-size: 12px;
+          height: 80px;
+          line-height: 80px;
+          color: rgba(126, 250, 252, 1);
+          text-align: center;
+          background-position: center;
+          background-repeat: no-repeat;
+          &:nth-child(3n-2) {
+            background-image: url("../../../assets/Home/orange.png");
+          }
+          &:nth-child(3n-1) {
+            background-image: url("../../../assets/Home/gold.png");
+          }
+          &:nth-child(3n) {
+            background-image: url("../../../assets/Home/green.png");
           }
         }
       }
