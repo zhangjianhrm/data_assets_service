@@ -422,10 +422,10 @@ export default {
                   },
                   new go.Binding("fill", "type", value => {
                     switch (value) {
-                      case "descendants":
+                      case "ancestors":
                         return "rgba(245, 183, 0, 0.2)";
                         break;
-                      case "ancestors":
+                      case "descendants":
                         return "rgba(216, 64, 64, 0.2)";
                         break;
                       default:
@@ -443,10 +443,10 @@ export default {
                   new go.Binding("text", "name"),
                   new go.Binding("stroke", "type", value => {
                     switch (value) {
-                      case "descendants":
+                      case "ancestors":
                         return "rgba(204, 154, 4, 1)";
                         break;
-                      case "ancestors":
+                      case "descendants":
                         return "rgba(245, 47, 87, 1)";
                         break;
                       default:
@@ -549,8 +549,8 @@ export default {
             ancestors: true,
             tableName: "Table_01",
             tableField: [
-              { name: "年龄", type: "descendants" },
-              { name: "班级", type: "ancestors" },
+              { name: "年龄", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -565,7 +565,7 @@ export default {
             group: 2,
             tableName: "Table_01",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -575,7 +575,7 @@ export default {
             group: 2,
             tableName: "Table_02",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -589,7 +589,7 @@ export default {
             group: 3,
             tableName: "Table_01",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -599,7 +599,7 @@ export default {
             group: 3,
             tableName: "Table_02",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -615,7 +615,7 @@ export default {
             ancestors: true,
             tableName: "Table_01",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -626,7 +626,7 @@ export default {
             ancestors: true,
             tableName: "Table_02",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -643,7 +643,7 @@ export default {
             ancestors: true,
             tableName: "Table_01",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -654,7 +654,7 @@ export default {
             ancestors: true,
             tableName: "Table_02",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -668,7 +668,7 @@ export default {
             group: 6,
             tableName: "Table_01",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -678,7 +678,7 @@ export default {
             group: 6,
             tableName: "Table_02",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -694,7 +694,7 @@ export default {
             ancestors: true,
             tableName: "Table_01",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -705,7 +705,7 @@ export default {
             ancestors: true,
             tableName: "Table_02",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -719,7 +719,7 @@ export default {
             group: 9,
             tableName: "Table_01",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -729,7 +729,7 @@ export default {
             group: 9,
             tableName: "Table_02",
             tableField: [
-              { name: "班级", type: "ancestors" },
+              { name: "班级", type: "descendants" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -745,7 +745,7 @@ export default {
             ancestors: true,
             tableName: "Table_01",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -756,7 +756,7 @@ export default {
             ancestors: true,
             tableName: "Table_02",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" }
             ]
           },
@@ -772,7 +772,7 @@ export default {
             ancestors: true,
             tableName: "Table_01",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" },
               { name: "专业", type: "normal" }
             ]
@@ -783,7 +783,7 @@ export default {
             ancestors: true,
             tableName: "Table_02",
             tableField: [
-              { name: "年龄", type: "descendants" },
+              { name: "年龄", type: "ancestors" },
               { name: "姓名", type: "normal" }
             ]
           }
