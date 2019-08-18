@@ -3,6 +3,11 @@ $--color-primary: rgba(44, 98, 255, 1);
 $--color-warning: rgba(255, 129, 19, 1);
 
 /* 改变 icon 字体路径变量，必需 */
-$--font-path: '~sw-ui/lib/theme-chalk/fonts';
+// $--font-path: '~sw-ui/lib/theme-chalk/fonts';
 
-@import "~sw-ui/packages/theme-chalk/src/index";
+// @import "~sw-ui/packages/theme-chalk/src/index";
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";

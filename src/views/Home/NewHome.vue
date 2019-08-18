@@ -37,8 +37,10 @@ export default {
   overflow: hidden;
   position: relative;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  // flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
 
   &__galaxy {
     position: absolute;

@@ -13,9 +13,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 // 树维 UI
-import SwUI from "sw-ui";
-import "sw-ui/lib/theme-chalk/index.css";
-Vue.use(SwUI);
+// import SwUI from "sw-ui";
+// import "sw-ui/lib/theme-chalk/index.css";
+// Vue.use(SwUI);
 
 // 可编辑表格
 import VueElementExtends from "vue-element-extends";
