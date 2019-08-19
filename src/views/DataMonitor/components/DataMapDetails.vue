@@ -135,7 +135,7 @@
     <d-map></d-map>
     <!-- <transition name="slide-fade"> -->
     <!-- <rs-graph ref="rsgraph" v-if="RsGVisible" :RsGData="RsGData"></rs-graph> -->
-    <!-- <rs-graph ref="rsgraph" :RsGData="RsGData"></rs-graph> -->
+    <rs-graph ref="rsgraph" v-if="RsGVisible" :RsGData="RsGData" />
     <!-- </transition> -->
   </div>
 </template>
@@ -397,136 +397,169 @@ export default {
               nodeData: [
                 {
                   key: 1,
+                  isGroup: true,
                   ancestors: true,
-                  header: "全量库",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    }
+                  header: "全量库"
+                },
+                {
+                  key: 101,
+                  group: 1,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
                   ]
                 },
                 {
                   key: 4,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试4",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试4"
+                },
+                {
+                  key: 401,
+                  group: 4,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 402,
+                  group: 4,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 5,
+                  isGroup: true,
                   ancestors: true,
                   header: "测试5",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  table: []
+                },
+                {
+                  key: 501,
+                  group: 5,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 502,
+                  group: 5,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 7,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试7",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试7"
+                },
+                {
+                  key: 701,
+                  group: 7,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 702,
+                  group: 7,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 10,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试10",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试10"
+                },
+                {
+                  key: 1001,
+                  group: 10,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 1002,
+                  group: 10,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 11,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试11",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试11"
+                },
+                {
+                  key: 1101,
+                  group: 11,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 1102,
+                  group: 11,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 }
               ],
               linkData: [
-                { from: 5, to: 1 },
-                { from: 10, to: 1 },
-                { from: 4, to: 5 },
-                { from: 7, to: 5 },
-                { from: 11, to: 10 }
+                { from: 401, to: 501 },
+                { from: 402, to: 502 },
+                { from: 701, to: 501 },
+                { from: 702, to: 502 },
+                { from: 501, to: 101 },
+                { from: 502, to: 101 },
+                { from: 1001, to: 101 },
+                { from: 1002, to: 101 },
+                { from: 1101, to: 1001 },
+                { from: 1102, to: 1002 },
               ]
             };
             break;
@@ -535,109 +568,127 @@ export default {
               nodeData: [
                 {
                   key: 1,
+                  isGroup: true,
                   ancestors: true,
-                  header: "全量库",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    }
+                  header: "全量库"
+                },
+                {
+                  key: 101,
+                  group: 1,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
                   ]
                 },
                 {
                   key: 2,
-                  header: "测试2",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试2"
+                },
+                {
+                  key: 201,
+                  group: 2,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 202,
+                  group: 2,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 3,
-                  header: "测试3",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试3"
+                },
+                {
+                  key: 301,
+                  group: 3,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 302,
+                  group: 3,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 6,
-                  header: "测试6",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试6"
+                },
+                {
+                  key: 601,
+                  group: 6,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 602,
+                  group: 6,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 9,
-                  header: "测试9",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试9"
+                },
+                {
+                  key: 901,
+                  group: 9,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
                   ]
-                }
+                },
+                {
+                  key: 902,
+                  group: 9,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
+                  ]
+                },
               ],
               linkData: [
-                { from: 1, to: 2 },
-                { from: 1, to: 9 },
-                { from: 2, to: 3 },
-                { from: 2, to: 6 }
+                { from: 101, to: 201 },
+                { from: 101, to: 202 },
+                { from: 101, to: 901 },
+                { from: 101, to: 902 },
+                { from: 201, to: 301 },
+                { from: 202, to: 302 },
+                { from: 201, to: 601 },
+                { from: 202, to: 602 }
               ]
             };
             break;
@@ -646,225 +697,274 @@ export default {
               nodeData: [
                 {
                   key: 1,
+                  isGroup: true,
                   ancestors: true,
-                  header: "全量库",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    }
+                  header: "全量库"
+                },
+                {
+                  key: 101,
+                  group: 1,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
                   ]
                 },
                 {
                   key: 2,
-                  header: "测试2",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试2"
+                },
+                {
+                  key: 201,
+                  group: 2,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 202,
+                  group: 2,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 3,
-                  header: "测试3",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试3"
+                },
+                {
+                  key: 301,
+                  group: 3,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 302,
+                  group: 3,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 4,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试4",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试4"
+                },
+                {
+                  key: 401,
+                  group: 4,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 402,
+                  group: 4,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 5,
+                  isGroup: true,
                   ancestors: true,
                   header: "测试5",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  table: []
+                },
+                {
+                  key: 501,
+                  group: 5,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 502,
+                  group: 5,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 6,
-                  header: "测试6",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试6"
+                },
+                {
+                  key: 601,
+                  group: 6,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 602,
+                  group: 6,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 7,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试7",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试7"
+                },
+                {
+                  key: 701,
+                  group: 7,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 702,
+                  group: 7,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 9,
-                  header: "测试9",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "班级", type: "ancestors" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  isGroup: true,
+                  header: "测试9"
+                },
+                {
+                  key: 901,
+                  group: 9,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 902,
+                  group: 9,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "班级", type: "descendants" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 10,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试10",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试10"
+                },
+                {
+                  key: 1001,
+                  group: 10,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 1002,
+                  group: 10,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 },
                 {
                   key: 11,
+                  isGroup: true,
                   ancestors: true,
-                  header: "测试11",
-                  table: [
-                    {
-                      tableName: "Table_01",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" },
-                        { name: "专业", type: "normal" }
-                      ]
-                    },
-                    {
-                      tableName: "Table_02",
-                      tableField: [
-                        { name: "年龄", type: "descendants" },
-                        { name: "姓名", type: "normal" }
-                      ]
-                    }
+                  header: "测试11"
+                },
+                {
+                  key: 1101,
+                  group: 11,
+                  ancestors: true,
+                  tableName: "Table_01",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" },
+                    { name: "专业", type: "normal" }
+                  ]
+                },
+                {
+                  key: 1102,
+                  group: 11,
+                  ancestors: true,
+                  tableName: "Table_02",
+                  tableField: [
+                    { name: "年龄", type: "ancestors" },
+                    { name: "姓名", type: "normal" }
                   ]
                 }
               ],
               linkData: [
-                { from: 1, to: 2 },
-                { from: 5, to: 1 },
-                { from: 1, to: 9 },
-                { from: 10, to: 1 },
-                { from: 4, to: 5 },
-                { from: 7, to: 5 },
-                { from: 11, to: 10 },
-                { from: 2, to: 3 },
-                { from: 2, to: 6 }
+                { from: 401, to: 501 },
+                { from: 402, to: 502 },
+                { from: 701, to: 501 },
+                { from: 702, to: 502 },
+                { from: 501, to: 101 },
+                { from: 502, to: 101 },
+                { from: 1001, to: 101 },
+                { from: 1002, to: 101 },
+                { from: 1101, to: 1001 },
+                { from: 1102, to: 1002 },
+                { from: 101, to: 201 },
+                { from: 101, to: 202 },
+                { from: 101, to: 901 },
+                { from: 101, to: 902 },
+                { from: 201, to: 301 },
+                { from: 202, to: 302 },
+                { from: 201, to: 601 },
+                { from: 202, to: 602 }
               ]
             };
             break;
